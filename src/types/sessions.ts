@@ -1,0 +1,9 @@
+import type { Permission } from './permissions';
+
+export interface Session {
+	sessionId: string;
+	userId?: string | null;
+	challenge?: string | null;
+	lastAccessedAt: number;
+	permissionsOverride?: Permission[];
+}
