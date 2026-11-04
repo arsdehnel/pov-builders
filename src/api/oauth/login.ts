@@ -2,7 +2,7 @@ import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
 import { getOAuthClient } from 'rwsdk-atp/oauth';
 
-async function post({ request }: RequestInfo): Promise<Response> {
+async function post({ ctx, request }: RequestInfo): Promise<Response> {
 	const { handle } = (await request.json()) as { handle?: string };
 
 	if (!handle) {
@@ -10,8 +10,19 @@ async function post({ request }: RequestInfo): Promise<Response> {
 	}
 
 	const client = await getOAuthClient(env);
-	const authUrl = await client.authorize(handle, { scope: env.ATPROTO_OAUTH_SCOPE });
-	return Response.json({ redirectUrl: authUrl.toString() });
+	try {
+		const authUrl = await client.authorize(handle, { scope: env.ATPROTO_OAUTH_SCOPE });
+		return Response.json({ redirectUrl: authUrl.toString() });
+	} catch (err) {
+		const message = err instanceof Error ? err.message : String(err);
+		ctx.logger.error(`[oauth-login] authorize failed for "${handle}": ${message}`);
+		return Response.json(
+			{
+				error: "Handle not found. Make sure you're using a handle on this PDS.",
+			},
+			{ status: 400 },
+		);
+	}
 }
 
 export default { post };
