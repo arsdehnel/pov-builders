@@ -1,4 +1,6 @@
+import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
+import { getOAuthClient } from 'rwsdk-atp/oauth';
 import { LoginForm } from '@/components/login-form';
 
 export default async function Pages__root({ ctx }: RequestInfo): Promise<React.JSX.Element> {
@@ -7,14 +9,20 @@ export default async function Pages__root({ ctx }: RequestInfo): Promise<React.J
 
 	let userHandle: string | null = null;
 	if (did) {
-		const handleRes = await fetch(`https://bsky.social/xrpc/com.atproto.repo.describeRepo?repo=${did}`);
+		const oauthClient = await getOAuthClient(env);
+		const oauthSession = await oauthClient.restore(did);
+		let userPdsUrl = oauthSession.serverMetadata.issuer;
+		if (!userPdsUrl.startsWith('http')) {
+			userPdsUrl = `https://${userPdsUrl}`;
+		}
+		const handleRes = await fetch(`${userPdsUrl}/xrpc/com.atproto.repo.describeRepo?repo=${did}`);
 		const handleData = (await handleRes.json()) as { handle?: string };
 		userHandle = handleData.handle ?? null;
 	}
+
 	return (
 		<>
 			<p>Hey</p>
-			{JSON.stringify(ctx.session, null, 2)}
 			{did ? (
 				<section className="section">
 					<div
