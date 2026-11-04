@@ -41,13 +41,13 @@ export function LoginForm(): React.ReactNode {
 					type="text"
 					value={handle}
 					onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => setHandle(e.target.value)}
-					placeholder="your.bsky.social"
+					placeholder="your.handle.test"
 					disabled={loading}
 					className={styles.input}
-					aria-label="Bluesky handle"
+					aria-label="AT Protocol handle"
 				/>
 				<button type="submit" disabled={loading || !handle.trim()} className={styles.button}>
-					{loading ? 'Redirecting…' : 'Sign in with Bluesky'}
+					{loading ? 'Redirecting…' : 'Sign in with Atmosphere'}
 				</button>
 			</div>
 			{error && <p className={styles.error}>{error}</p>}
