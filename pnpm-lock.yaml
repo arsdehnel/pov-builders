@@ -162,6 +162,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  rwsdk-atp: link:../rwsdk-atp
+  undici: ^8
+
 importers:
 
   .:
@@ -184,6 +188,9 @@ importers:
       rwsdk:
         specifier: 1.7.5
         version: 1.7.5(@cloudflare/vite-plugin@1.50.0(vite@8.2.4(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))(wrangler@4.118.0(@cloudflare/workers-types@5.20260801.1)))(react-dom@19.2.8(react@19.2.8))(react-server-dom-webpack@19.2.8(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(webpack@5.112.2(esbuild@0.28.1)(lightningcss@1.33.0)(postcss@8.5.32)(sharp@0.35.2)))(react@19.2.8)(supports-color@10.2.2)(typescript@7.0.2)(vite@8.2.4(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))(wrangler@4.118.0(@cloudflare/workers-types@5.20260801.1))(yauzl@3.4.0)
+      rwsdk-atp:
+        specifier: link:../rwsdk-atp
+        version: link:../rwsdk-atp
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.5.5
@@ -3652,9 +3659,9 @@ packages:
   undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
-  undici@7.28.0:
-    resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
-    engines: {node: '>=20.18.1'}
+  undici@8.12.3:
+    resolution: {integrity: sha512-+fdndUTwBP86cVjihTp21hZHo7d6oj1c/47XPA3lL8mM0XHs+C4EkcjmgRsFnFk2f/UONGDy9ItBItmXsLOQHw==}
+    engines: {node: '>=22.19.0'}
 
   unenv@2.0.0-rc.24:
     resolution: {integrity: sha512-i7qRCmY42zmCwnYlh9H2SvLEypEFGye5iRmEMKjcGi7zk9UquigRjFtTLz0TYqr0ZGLZhaMHl/foy1bZR+Cwlw==}
@@ -6694,7 +6701,7 @@ snapshots:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       sharp: 0.35.2
-      undici: 7.28.0
+      undici: 8.12.3
       workerd: 1.20260730.1
       ws: 8.21.0
       youch: 4.1.0-beta.10
@@ -7424,7 +7431,7 @@ snapshots:
 
   undici-types@8.3.0: {}
 
-  undici@7.28.0: {}
+  undici@8.12.3: {}
 
   unenv@2.0.0-rc.24:
     dependencies:

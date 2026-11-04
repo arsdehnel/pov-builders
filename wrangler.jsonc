@@ -22,8 +22,31 @@
 		"enabled": true
 	},
 
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "DO_BROWSER_SESSION",
+				"class_name": "BrowserSessionDurableObject"
+			},
+			{
+				"name": "DO_OAUTH_TOKEN",
+				"class_name": "OAuthTokenDurableObject"
+			}
+		]
+	},
+	"exports": {
+		"BrowserSessionDurableObject": { "type": "durable-object", "storage": "sqlite" },
+		"OAuthTokenDurableObject": { "type": "durable-object", "storage": "sqlite" }
+	},
+	"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "KV_OAUTH_STATE_LOCAL" }],
+	"secrets": {
+		"required": ["BROWSER_SESSION_SIGNING_KEY", "OAUTH_STATE_KV_ENCRYPTION_KEYS", "OAUTH_TOKEN_KV_ENCRYPTION_KEYS"]
+	},
+
 	// Environment variables
 	"vars": {
-		// Add your environment variables here
+		"ATPROTO_OAUTH_SCOPE": "atproto repo:xyz.statusphere.status",
+		"SESSION_ID_COOKIE_KEY": "stance-build-session-id",
+		"SESSION_TIMEOUT_SECONDS": 1209600
 	}
 }
