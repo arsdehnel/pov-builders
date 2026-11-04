@@ -10,6 +10,7 @@ export default function headerMiddleware({ response, rw: { nonce } }: RequestInf
 		'frame-ancestors': `'self'`,
 		'frame-src': `'self' https://challenges.cloudflare.com`,
 		'object-src': `'none'`,
+		'connect-src': `'self' https:${import.meta.env.VITE_IS_DEV_SERVER ? ' http://localhost:*' : ''};`,
 	};
 
 	const csp = Object.entries(cspClaims)
