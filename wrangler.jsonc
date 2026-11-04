@@ -3,7 +3,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 
 	// Name of your worker
-	"name": "__change_me__",
+	"name": "stance-build",
 
 	// Entry point for your worker
 	"main": "src/worker.tsx",
@@ -48,5 +48,34 @@
 		"ATPROTO_OAUTH_SCOPE": "atproto repo:xyz.statusphere.status",
 		"SESSION_ID_COOKIE_KEY": "stance-build-session-id",
 		"SESSION_TIMEOUT_SECONDS": 1209600
+	},
+
+	"env": {
+		"docker": {
+			"durable_objects": {
+				"bindings": [
+					{
+						"name": "DO_BROWSER_SESSION",
+						"class_name": "BrowserSessionDurableObject"
+					},
+					{
+						"name": "DO_OAUTH_TOKEN",
+						"class_name": "OAuthTokenDurableObject"
+					}
+				]
+			},
+			"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "KV_OAUTH_STATE_DOCKER" }],
+			"secrets": {
+				"required": ["BROWSER_SESSION_SIGNING_KEY", "OAUTH_STATE_KV_ENCRYPTION_KEYS", "OAUTH_TOKEN_KV_ENCRYPTION_KEYS"]
+			},
+			"vars": {
+				"ATPROTO_OAUTH_SCOPE": "atproto repo:xyz.statusphere.status",
+				"SESSION_ID_COOKIE_KEY": "stance-build-session-id",
+				"SESSION_TIMEOUT_SECONDS": 1209600,
+				"ATPROTO_PDS_URL": "http://localhost:3000",
+				"ATPROTO_PLC_URL": "http://localhost:2582",
+				"ATPROTO_TAP_URL": "http://localhost:2480"
+			}
+		}
 	}
 }
