@@ -2,6 +2,7 @@ import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
 import { getOAuthClient } from 'rwsdk-atp/oauth';
 import { LoginForm } from '@/components/login-form';
+import { StatusPicker } from '@/styles/status-picker/status-picker';
 
 export default async function Pages__root({ ctx }: RequestInfo): Promise<React.JSX.Element> {
 	const did = ctx.session?.did ?? null;
@@ -42,6 +43,7 @@ export default async function Pages__root({ ctx }: RequestInfo): Promise<React.J
 					<p className="prose">
 						<code className="inlineCode">{did}</code>
 					</p>
+					<StatusPicker currentStatus={'🤷🏻‍♂️'} />
 				</section>
 			) : (
 				<section className="section">
