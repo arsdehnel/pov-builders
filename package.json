@@ -44,6 +44,7 @@
 		"rwsdk-atp": "git+https://tangled.org/arsdehnel.com/rwsdk-atp.git#f820d92bf748b9428a773e1fdd48d484b6542bd8"
 	},
 	"devDependencies": {
+		"@atproto/lex": "^0.4.4",
 		"@biomejs/biome": "^2.5.5",
 		"@cloudflare/vite-plugin": "1.50.0",
 		"@cloudflare/workers-types": "5.20260801.1",

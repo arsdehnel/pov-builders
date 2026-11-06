@@ -129,7 +129,7 @@ services:
       TAP_PLC_URL: http://plc:2582
       TAP_DATABASE_URL: sqlite:///data/tap.db
       TAP_DISABLE_ACKS: "true"
-      TAP_WEBHOOK_URL: ${TAP_WEBHOOK_URL:-http://host.docker.internal:5173/webhooks/tap}
+      TAP_WEBHOOK_URL: ${TAP_WEBHOOK_URL:-http://host.docker.internal:5173/api/webhooks/tap}
       TAP_COLLECTION_FILTERS: xyz.statusphere.status
       TAP_LOG_LEVEL: info
     # PDS DID documents record serviceEndpoint as http://localhost:3000 (because PDS_HOSTNAME=localhost).
