@@ -1,5 +1,7 @@
 'use client';
 
+import { EnterIcon } from '@radix-ui/react-icons';
+import { Label } from 'radix-ui';
 import { useState } from 'react';
 import styles from './login-form.module.css';
 
@@ -37,6 +39,9 @@ export function LoginForm(): React.ReactNode {
 	return (
 		<form onSubmit={handleSubmit} className={styles.form}>
 			<div className={styles.inputRow}>
+				<Label.Root className="LabelRoot" htmlFor="firstName">
+					First name
+				</Label.Root>
 				<input
 					type="text"
 					value={handle}
@@ -47,7 +52,14 @@ export function LoginForm(): React.ReactNode {
 					aria-label="AT Protocol handle"
 				/>
 				<button type="submit" disabled={loading || !handle.trim()} className={styles.button}>
-					{loading ? 'Redirecting…' : 'Sign in with Atmosphere'}
+					{loading ? (
+						'Redirecting…'
+					) : (
+						<>
+							<EnterIcon />
+							'Sign in with Atmosphere'
+						</>
+					)}
 				</button>
 			</div>
 			{error && <p className={styles.error}>{error}</p>}

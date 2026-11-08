@@ -1,4 +1,5 @@
 import { env } from 'cloudflare:workers';
+import { ExitIcon } from '@radix-ui/react-icons';
 import type { RequestInfo } from 'rwsdk/worker';
 import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/oauth';
 import { LoginForm } from '@/components/login-form';
@@ -46,7 +47,7 @@ export default async function Pages__root({ ctx }: RequestInfo): Promise<React.J
 						<h2 className="sectionTitle">Signed in{userHandle ? ` as @${userHandle}` : ''}</h2>
 						<form method="post" action="/api/oauth/logout">
 							<button type="submit" className="signOutButton">
-								Sign out
+								<ExitIcon /> Sign out
 							</button>
 						</form>
 					</div>
