@@ -5,8 +5,7 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
-  rwsdk-atp@git+https://tangled.org/arsdehnel.com/rwsdk-atp.git#f820d92bf748b9428a773e1fdd48d484b6542bd8: true
+  rwsdk-atp@git+https://tangled.org/arsdehnel.com/rwsdk-atp.git#cebf8a2b45a4e14ad09d791b49c4e3a3fac5201a: true
   core-js: true
 overrides:
-  rwsdk-atp: link:../rwsdk-atp
   undici: "^8"

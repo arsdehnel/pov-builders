@@ -132,6 +132,9 @@ services:
       TAP_WEBHOOK_URL: ${TAP_WEBHOOK_URL:-http://host.docker.internal:5173/api/webhooks/tap}
       TAP_COLLECTION_FILTERS: xyz.statusphere.status
       TAP_LOG_LEVEL: info
+      # When set, Tap requires this password for its own API (Basic auth) and
+      # forwards the same credentials to the webhook endpoint.
+      TAP_ADMIN_PASSWORD: ${TAP_ADMIN_PASSWORD:-tap-dev-password}
     # PDS DID documents record serviceEndpoint as http://localhost:3000 (because PDS_HOSTNAME=localhost).
     # Inside the Tap container, "localhost" resolves to the container itself, not the host.
     # host-gateway maps both "localhost" and "host.docker.internal" to the host machine,
@@ -164,6 +167,7 @@ services:
     environment:
       PDS_ADMIN_PASSWORD: devnet-admin-password
       HANDLE_DOMAIN: .devnet.test
+      TAP_ADMIN_PASSWORD: ${TAP_ADMIN_PASSWORD:-tap-dev-password}
     entrypoint: /bin/sh
     command: ["/scripts/dc-init.sh"]
     networks:

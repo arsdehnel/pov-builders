@@ -39,6 +39,21 @@
 		"OAuthTokenDurableObject": { "type": "durable-object", "storage": "sqlite" }
 	},
 	"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "KV_OAUTH_STATE_LOCAL" }],
+	"queues": {
+		"consumers": [
+			{
+				"queue": "queue-tap-webhook-local",
+				"max_batch_size": 10,
+				"max_batch_timeout": 5
+			}
+		],
+		"producers": [
+			{
+				"binding": "QUEUE_TAP_WEBHOOK",
+				"queue": "queue-tap-webhook-local"
+			}
+		]
+	},
 	"secrets": {
 		"required": ["BROWSER_SESSION_SIGNING_KEY", "OAUTH_STATE_KV_ENCRYPTION_KEYS", "OAUTH_TOKEN_KV_ENCRYPTION_KEYS"]
 	},
@@ -61,6 +76,21 @@
 					{
 						"name": "DO_OAUTH_TOKEN",
 						"class_name": "OAuthTokenDurableObject"
+					}
+				]
+			},
+			"queues": {
+				"consumers": [
+					{
+						"queue": "queue-tap-webhook-local",
+						"max_batch_size": 10,
+						"max_batch_timeout": 5
+					}
+				],
+				"producers": [
+					{
+						"binding": "QUEUE_TAP_WEBHOOK",
+						"queue": "queue-tap-webhook-local"
 					}
 				]
 			},

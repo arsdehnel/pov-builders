@@ -1,24 +1,34 @@
 import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
-import { getOAuthClient } from 'rwsdk-atp/oauth';
+import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/oauth';
 import { LoginForm } from '@/components/login-form';
 import { StatusPicker } from '@/styles/status-picker/status-picker';
 
 export default async function Pages__root({ ctx }: RequestInfo): Promise<React.JSX.Element> {
-	const did = ctx.session?.did ?? null;
+	let did = ctx.session?.did ?? null;
 	ctx.logger.info(`Logger from ctx: ${JSON.stringify(ctx.session)}`);
 
 	let userHandle: string | null = null;
 	if (did) {
-		const oauthClient = await getOAuthClient(env);
-		const oauthSession = await oauthClient.restore(did);
-		let userPdsUrl = oauthSession.serverMetadata.issuer;
-		if (!userPdsUrl.startsWith('http')) {
-			userPdsUrl = `https://${userPdsUrl}`;
+		let oauthClient: NodeOAuthClient | undefined;
+		try {
+			oauthClient = await getOAuthClient(env);
+			const oauthSession = await oauthClient.restore(did);
+			let userPdsUrl = oauthSession.serverMetadata.issuer;
+			if (!userPdsUrl.startsWith('http')) {
+				userPdsUrl = `https://${userPdsUrl}`;
+			}
+			const handleRes = await fetch(`${userPdsUrl}/xrpc/com.atproto.repo.describeRepo?repo=${did}`);
+			const handleData = (await handleRes.json()) as { handle?: string };
+			userHandle = handleData.handle ?? null;
+		} catch (err) {
+			console.log(`Error fetching session for did ${did}: ${err}`);
+			if (oauthClient) {
+				await oauthClient.revoke(did);
+			}
+			// this will force the user to re-login which might not be great but is better than an error
+			did = null;
 		}
-		const handleRes = await fetch(`${userPdsUrl}/xrpc/com.atproto.repo.describeRepo?repo=${did}`);
-		const handleData = (await handleRes.json()) as { handle?: string };
-		userHandle = handleData.handle ?? null;
 	}
 
 	return (
