@@ -67,10 +67,9 @@ chmod 666 "${DATA_DIR}/accounts.env" 2>/dev/null || true
 log "Done. Credentials written to data/accounts.env"
 
 # ── Register test accounts with Tap ──────────────────────────────
-# Pre-register the test DIDs so Tap delivers webhook events for them
-# immediately, without waiting for an OAuth login. In production, Tap
-# connects to the Bluesky relay and uses collection signals instead —
-# no per-DID registration needed.
+# Pre-register the test DIDs so Tap delivers webhook events for them.
+# In production, Tap connects to a ATP relay and uses collection signals
+# instead no per-DID registration needed.
 TAP_URL="http://tap:2480"
 DIDS=$(grep '_DID=' "${DATA_DIR}/accounts.env" | sed 's/.*_DID=//' | tr '\n' ',' | sed 's/,$//')
 
