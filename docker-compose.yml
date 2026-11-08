@@ -149,7 +149,11 @@ services:
     networks:
       - atproto-devnet
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:2480/health"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q --spider --user=admin --password=${TAP_ADMIN_PASSWORD:-tap-dev-password} http://127.0.0.1:2480/health",
+        ]
       interval: 60s
       timeout: 5s
       retries: 5
@@ -160,6 +164,8 @@ services:
       pds:
         condition: service_healthy
       plc:
+        condition: service_healthy
+      tap:
         condition: service_healthy
     volumes:
       - ./scripts:/scripts:ro
