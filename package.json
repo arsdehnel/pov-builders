@@ -45,7 +45,7 @@
 		"react-dom": "19.2.8",
 		"react-server-dom-webpack": "19.2.8",
 		"rwsdk": "1.7.5",
-		"rwsdk-atp": "git+https://tangled.org/arsdehnel.com/rwsdk-atp.git#cebf8a2b45a4e14ad09d791b49c4e3a3fac5201a"
+		"rwsdk-atp": "git+https://tangled.org/arsdehnel.com/rwsdk-atp.git"
 	},
 	"devDependencies": {
 		"@atproto/lex": "^0.4.4",
