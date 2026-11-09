@@ -165,8 +165,8 @@ services:
         condition: service_healthy
       plc:
         condition: service_healthy
-      tap:
-        condition: service_healthy
+      # tap:
+      #   condition: service_healthy
     volumes:
       - ./scripts:/scripts:ro
       - ./data:/devnet-data
