@@ -18,6 +18,14 @@ npm run dev
 
 Point your browser to the URL displayed in the terminal (e.g. `http://localhost:5173/`). You should see the RedwoodSDK welcome page in your browser.
 
+## Resetting the local D1 database
+
+Each `pnpm docker:up` run recreates the local ATP accounts with new DIDs. Since the D1 statuses table is keyed by DID, restarting the docker setup leaves stale rows behind. Clear the local Miniflare state and re-run migrations to start fresh:
+
+```sh
+rm -rf .wrangler/state/v3/d1 && pnpm db:apply-migrations-local
+```
+
 ## Further Reading
 
 - [RedwoodSDK Documentation](https://docs.rwsdk.com/)

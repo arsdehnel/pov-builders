@@ -34,6 +34,15 @@
 			}
 		]
 	},
+	"d1_databases": [
+		{
+			"binding": "D1_STANCE_BUILD",
+			"database_name": "stance-build-local",
+			"database_id": "local",
+			"migrations_dir": "drizzle",
+			"migrations_pattern": "drizzle/*/migration.sql"
+		}
+	],
 	"exports": {
 		"BrowserSessionDurableObject": { "type": "durable-object", "storage": "sqlite" },
 		"OAuthTokenDurableObject": { "type": "durable-object", "storage": "sqlite" }
@@ -79,10 +88,19 @@
 					}
 				]
 			},
+			"d1_databases": [
+				{
+					"binding": "D1_STANCE_BUILD",
+					"database_name": "stance-build-local",
+					"database_id": "local",
+					"migrations_dir": "drizzle",
+					"migrations_pattern": "drizzle/*/migration.sql"
+				}
+			],
 			"queues": {
 				"consumers": [
 					{
-						"queue": "queue-tap-webhook-local",
+						"queue": "queue-tap-webhook-docker",
 						"max_batch_size": 10,
 						"max_batch_timeout": 5
 					}
@@ -90,7 +108,7 @@
 				"producers": [
 					{
 						"binding": "QUEUE_TAP_WEBHOOK",
-						"queue": "queue-tap-webhook-local"
+						"queue": "queue-tap-webhook-docker"
 					}
 				]
 			},
