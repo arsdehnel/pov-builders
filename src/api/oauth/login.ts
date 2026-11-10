@@ -14,7 +14,7 @@ async function post({ ctx, request }: RequestInfo): Promise<Response> {
 		const authUrl = await client.authorize(handle, { scope: env.ATPROTO_OAUTH_SCOPE });
 		return Response.json({ redirectUrl: authUrl.toString() });
 	} catch (err) {
-		const message = err instanceof Error ? err.message : String(err);
+		const message = err instanceof Error ? (err.cause ? err.cause : err.message) : String(err);
 		ctx.logger.error(`[oauth-login] authorize failed for "${handle}": ${message}`);
 		return Response.json(
 			{
