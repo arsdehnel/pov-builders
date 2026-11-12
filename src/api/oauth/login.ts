@@ -16,6 +16,8 @@ async function post({ ctx, request }: RequestInfo): Promise<Response> {
 	} catch (err) {
 		const message = err instanceof Error ? (err.cause ? err.cause : err.message) : String(err);
 		ctx.logger.error(`[oauth-login] authorize failed for "${handle}": ${message}`);
+		const stack = err instanceof Error ? err.stack : '';
+		ctx.logger.error(stack ?? '');
 		return Response.json(
 			{
 				error: "Handle not found. Make sure you're using a handle on this PDS.",
