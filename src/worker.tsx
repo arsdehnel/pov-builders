@@ -6,6 +6,7 @@ import DefaultDocument from '@/documents/default';
 import headersMiddleware from '@/middleware/headers';
 import loggerMiddleware from '@/middleware/logger';
 import sessionMiddleware from '@/middleware/session';
+import topicMiddleware from '@/middleware/topic';
 import Pages__root from '@/pages/home';
 import tapRegistrations from './tap/registrations';
 
@@ -16,6 +17,7 @@ const app = defineApp([
 	headersMiddleware,
 	loggerMiddleware,
 	sessionMiddleware,
+	topicMiddleware,
 	prefix('/api', apiRoutes),
 	render(DefaultDocument, [route('/', Pages__root)]),
 ]);

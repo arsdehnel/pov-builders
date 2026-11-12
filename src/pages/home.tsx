@@ -3,11 +3,15 @@ import { ExitIcon } from '@radix-ui/react-icons';
 import type { RequestInfo } from 'rwsdk/worker';
 import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/oauth';
 import { LoginForm } from '@/components/login-form';
+import { topics } from '@/content';
 import { StatusPicker } from '@/styles/status-picker/status-picker';
 
 export default async function Pages__root({ ctx }: RequestInfo): Promise<React.JSX.Element> {
 	let did = ctx.session?.did ?? null;
 	ctx.logger.info(`Logger from ctx: ${JSON.stringify(ctx.session)}`);
+
+	const currentTopic = 'ai';
+	const { values, stances } = topics[currentTopic];
 
 	let userHandle: string | null = null;
 	if (did) {
@@ -55,6 +59,8 @@ export default async function Pages__root({ ctx }: RequestInfo): Promise<React.J
 						<code className="inlineCode">{did}</code>
 					</p>
 					<StatusPicker currentStatus={'🤷🏻‍♂️'} />
+					<p>{JSON.stringify(values)}</p>
+					<p>{JSON.stringify(stances)}</p>
 				</section>
 			) : (
 				<section className="section">
