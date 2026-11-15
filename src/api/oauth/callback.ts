@@ -2,6 +2,7 @@ import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
 import { saveSession } from 'rwsdk-atp/browser-sessions';
 import { getOAuthClient, type OAuthSession } from 'rwsdk-atp/oauth';
+import { upsertUser } from '@/repositories';
 
 async function get({ ctx, request, response }: RequestInfo): Promise<Response> {
 	const client = await getOAuthClient(env);
@@ -14,8 +15,12 @@ async function get({ ctx, request, response }: RequestInfo): Promise<Response> {
 		return new Response(null, { status: 302, headers: response.headers });
 	}
 
-	await saveSession(env, request.url, null, response.headers, { did: session.did });
+	const savedUser = await upsertUser(session.did, null, null, ctx.logger);
+	ctx.logger.info(`Upserted user for did: ${session.did}`);
+
+	await saveSession(env, request.url, null, response.headers, { did: session.did, userId: savedUser.id });
 	ctx.logger.info(`Saved session for did: ${session.did}`);
+
 	response.headers.set('Location', '/');
 	return new Response(null, { status: 302, headers: response.headers });
 }

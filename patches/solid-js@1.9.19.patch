@@ -1,0 +1,10 @@
+diff --git a/web/dist/web.js b/web/dist/web.js
+index 051f69e2190a3a0afe40db1b1be0044c90cf3ac9..965d9bcde6f6987b1a08f929fd0af44264d0eede 100644
+--- a/web/dist/web.js
++++ b/web/dist/web.js
+@@ -773,4 +773,4 @@ function Dynamic(props) {
+   return createDynamic(() => props.component, others);
+ }
+ 
+-export { Aliases, voidFn as Assets, ChildProperties, DOMElements, DelegatedEvents, Dynamic, Hydration, voidFn as HydrationScript, NoHydration, Portal, Properties, RequestContext, SVGElements, SVGNamespace, addEventListener, assign, classList, className, clearDelegatedEvents, createDynamic, delegateEvents, dynamicProperty, escape, voidFn as generateHydrationScript, voidFn as getAssets, getHydrationKey, getNextElement, getNextMarker, getNextMatch, getPropAlias, voidFn as getRequestEvent, hydrate, innerHTML, insert, isDev, isServer, memo, render, renderToStream, renderToString, renderToStringAsync, resolveSSRNode, runHydrationEvents, setAttribute, setAttributeNS, setBoolAttribute, setProperty, setStyleProperty, spread, ssr, ssrAttribute, ssrClassList, ssrElement, ssrHydrationKey, ssrSpread, ssrStyle, style, template, use, voidFn as useAssets };
++export { Aliases, voidFn as Assets, ChildProperties, DOMElements, DelegatedEvents, Dynamic, Hydration, voidFn as HydrationScript, NoHydration, Portal, Properties, RequestContext, SVGElements, SVGNamespace, addEventListener, assign, classList, className, clearDelegatedEvents, createDynamic, delegateEvents, dynamicProperty, escape, voidFn as generateHydrationScript, voidFn as getAssets, getHydrationKey, getNextElement, getNextMarker, getNextMatch, getPropAlias, voidFn as getRequestEvent, hydrate, innerHTML, insert, isDev, isServer, memo, render, renderToStream, renderToString, renderToStringAsync, resolveSSRNode, runHydrationEvents, setAttribute, setAttributeNS, setBoolAttribute, setProperty, setStyleProperty, spread, ssr, ssrAttribute, ssrClassList, ssrElement, ssrHydrationKey, ssrSpread, ssrStyle, voidFn as ssrStyleProperty, style, template, use, voidFn as useAssets };

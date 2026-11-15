@@ -1,0 +1,47 @@
+.overlay {
+	background-color: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+}
+
+.content {
+	background: white;
+	border-radius: 4px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+	padding: 1.5rem;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 101;
+	min-width: 300px;
+	max-width: 450px;
+	width: 90vw;
+}
+
+.title {
+	margin: 0 0 0.5rem;
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+
+.description {
+	margin: 0 0 0.5rem;
+	color: #555;
+}
+
+.actions {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: flex-end;
+	margin-top: 1.25rem;
+}
+
+.cancel {
+	cursor: pointer;
+}
+
+.confirm {
+	cursor: pointer;
+}

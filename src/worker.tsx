@@ -1,6 +1,6 @@
 import { prefix, render, route } from 'rwsdk/router';
 import { defineApp } from 'rwsdk/worker';
-
+import { botMiddleware } from 'rwsdk-atp/middleware';
 import apiRoutes from '@/api/_routes';
 import DefaultDocument from '@/documents/default';
 import headersMiddleware from '@/middleware/headers';
@@ -8,18 +8,26 @@ import loggerMiddleware from '@/middleware/logger';
 import sessionMiddleware from '@/middleware/session';
 import topicMiddleware from '@/middleware/topic';
 import Pages__root from '@/pages/home';
+import apiKeyMiddleware from './middleware/api-key';
+import permissionsMiddleware from './middleware/permissions';
+import userMiddleware from './middleware/user';
+import profileRoutes from './pages/profile/_routes';
 import tapRegistrations from './tap/registrations';
 
 export { BrowserSessionDurableObject } from 'rwsdk-atp/browser-sessions';
 export { OAuthTokenDurableObject } from 'rwsdk-atp/oauth';
 
 const app = defineApp([
-	headersMiddleware,
+	botMiddleware,
 	loggerMiddleware,
-	sessionMiddleware,
 	topicMiddleware,
+	headersMiddleware,
+	sessionMiddleware,
+	apiKeyMiddleware,
+	userMiddleware,
+	permissionsMiddleware,
 	prefix('/api', apiRoutes),
-	render(DefaultDocument, [route('/', Pages__root)]),
+	render(DefaultDocument, [route('/', Pages__root), prefix('/profile', profileRoutes.app)]),
 ]);
 
 export default {

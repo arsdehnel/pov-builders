@@ -1,0 +1,18 @@
+import { z } from 'zod';
+import { permissionValues } from '@/data/permissions';
+import { requiredString } from './utils';
+
+const formSchema = z.object({
+	id: z
+		.union([z.string().uuid('Must be a valid UUID'), z.literal('')])
+		.transform(val => (val === '' ? undefined : val))
+		.optional(), // Present for update, absent for create
+	userId: z.string().uuid('Must be a valid UUID'),
+	name: requiredString('Name', 255),
+	permissions: z.array(z.enum(permissionValues)).min(1, 'At least one permission is required'),
+	revokeAt: z.string().date(),
+});
+
+export const apiKeysSchemas = {
+	form: formSchema,
+};
