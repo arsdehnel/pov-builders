@@ -1,7 +1,7 @@
 {
 	"version": "7",
 	"dialect": "sqlite",
-	"id": "caebd71e-8ef9-47ba-8cf9-655cfe491475",
+	"id": "e6aa52b8-4082-4452-8166-57bc29bc6328",
 	"prevIds": ["00000000-0000-0000-0000-000000000000"],
 	"ddl": [
 		{
@@ -145,9 +145,9 @@
 			"table": "api_keys"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
-			"autoincrement": true,
+			"autoincrement": false,
 			"default": null,
 			"generated": null,
 			"name": "id",
@@ -255,9 +255,9 @@
 			"table": "stances"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
-			"autoincrement": true,
+			"autoincrement": false,
 			"default": null,
 			"generated": null,
 			"name": "id",
@@ -445,9 +445,9 @@
 			"table": "users"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
-			"autoincrement": true,
+			"autoincrement": false,
 			"default": null,
 			"generated": null,
 			"name": "id",
@@ -455,7 +455,7 @@
 			"table": "values"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
 			"default": null,
@@ -814,6 +814,28 @@
 		{
 			"columns": [
 				{
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
+					"value": "slug",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "stances_topic_id_slug_unique",
+			"entityType": "indexes",
+			"table": "stances"
+		},
+		{
+			"columns": [
+				{
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
 					"value": "order",
 					"isExpression": false
 				}
@@ -821,7 +843,7 @@
 			"isUnique": false,
 			"where": null,
 			"origin": "manual",
-			"name": "stances_order_unique",
+			"name": "stances_topic_id_order_idx",
 			"entityType": "indexes",
 			"table": "stances"
 		},
@@ -856,14 +878,36 @@
 		{
 			"columns": [
 				{
-					"value": "order",
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
+					"value": "slug",
 					"isExpression": false
 				}
 			],
 			"isUnique": true,
 			"where": null,
 			"origin": "manual",
-			"name": "values_order_unique",
+			"name": "values_topic_id_slug_unique",
+			"entityType": "indexes",
+			"table": "values"
+		},
+		{
+			"columns": [
+				{
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
+					"value": "order",
+					"isExpression": false
+				}
+			],
+			"isUnique": false,
+			"where": null,
+			"origin": "manual",
+			"name": "values_topic_id_order_idx",
 			"entityType": "indexes",
 			"table": "values"
 		}

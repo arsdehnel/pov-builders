@@ -1,11 +1,14 @@
+import crypto from 'node:crypto';
 import { sql } from 'drizzle-orm';
-import { type AnySQLiteColumn, integer, snakeCase, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
+import { type AnySQLiteColumn, snakeCase, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { users } from './users';
 
 export const topics = snakeCase.table(
 	'topics',
 	{
-		id: integer().primaryKey({ autoIncrement: true }),
+		id: text()
+			.primaryKey()
+			.$defaultFn(() => crypto.randomUUID()),
 		subdomain: text().notNull(),
 		title: text().notNull(),
 		createdAt: text().notNull().default(sql`(datetime('now', 'localtime'))`),

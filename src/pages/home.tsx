@@ -4,14 +4,23 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/oauth';
 import { LoginForm } from '@/components/login-form';
 import { topics } from '@/content';
+import StandardLayout from '@/layouts/standard';
+import { getStancesByTopicId, getTopicBySubdomain, getValuesByTopicId } from '@/repositories';
 import { StatusPicker } from '@/styles/status-picker/status-picker';
+import type { StanceDBRead, ValueDBRead } from '@/types';
 
 export default async function Pages__root({ ctx }: RequestInfo): Promise<React.JSX.Element> {
 	let did = ctx.session?.did ?? null;
 	ctx.logger.info(`Logger from ctx: ${JSON.stringify(ctx.session)}`);
 
-	const currentTopic = 'ai';
-	const { values, stances } = topics[currentTopic];
+	const topicFromDb = await getTopicBySubdomain(ctx.topic, ctx.logger);
+	let valuesFromDb: ValueDBRead[] = [];
+	let stancesFromDb: StanceDBRead[] = [];
+	if (topicFromDb) {
+		valuesFromDb = await getValuesByTopicId(topicFromDb.id, ctx.logger);
+		stancesFromDb = await getStancesByTopicId(topicFromDb.id, ctx.logger);
+	}
+	const { values, stances } = topics[ctx.topic];
 
 	let userHandle: string | null = null;
 	if (did) {
@@ -37,7 +46,7 @@ export default async function Pages__root({ ctx }: RequestInfo): Promise<React.J
 	}
 
 	return (
-		<>
+		<StandardLayout pageTitle="Home" currentBasePage="home" ctx={ctx}>
 			<p>Hey</p>
 			{did ? (
 				<section className="section">
@@ -61,6 +70,9 @@ export default async function Pages__root({ ctx }: RequestInfo): Promise<React.J
 					<StatusPicker currentStatus={'🤷🏻‍♂️'} />
 					<p>{JSON.stringify(values)}</p>
 					<p>{JSON.stringify(stances)}</p>
+					<p>{JSON.stringify(topicFromDb)}</p>
+					<p>{JSON.stringify(valuesFromDb)}</p>
+					<p>{JSON.stringify(stancesFromDb)}</p>
 				</section>
 			) : (
 				<section className="section">
@@ -72,6 +84,6 @@ export default async function Pages__root({ ctx }: RequestInfo): Promise<React.J
 					<LoginForm />
 				</section>
 			)}
-		</>
+		</StandardLayout>
 	);
 }

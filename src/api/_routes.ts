@@ -1,16 +1,23 @@
-import { route } from 'rwsdk/router';
-import oauthCallback from './oauth/callback';
-import oauthLogin from './oauth/login';
-import oauthLogout from './oauth/logout';
+import { except, route } from 'rwsdk/router';
+import { apiErrorResponse } from 'rwsdk-atp/response';
+
+import oauthRoutes from './oauth';
 import oauthClientMetadata from './oauth-client-metadata';
-import tap from './webhooks/tap';
+import topicsRoutes from './topics';
+import webhookRoutes from './webhooks';
 
 export default [
-	// except(error => apiErrorResponse(error)),
-	route('/oauth/login', oauthLogin),
-	route('/oauth/callback', oauthCallback),
-	route('/oauth/logout', oauthLogout),
+	except(error => apiErrorResponse(error, 'An error occurred', import.meta.env.DEV)),
+	route('/oauth/callback', oauthRoutes.callback),
+	route('/oauth/login', oauthRoutes.login),
+	route('/oauth/logout', oauthRoutes.logout),
 	route('/oauth-client-metadata', oauthClientMetadata),
-	route('/webhooks/tap', tap),
+	route('/topics', topicsRoutes.topics),
+	route('/topics/:topicId', topicsRoutes.topic),
+	route('/topics/:topicId/stances', topicsRoutes.topicStances),
+	route('/topics/:topicId/stances/:stanceId', topicsRoutes.topicStance),
+	route('/topics/:topicId/values', topicsRoutes.topicValues),
+	route('/topics/:topicId/values/:valueId', topicsRoutes.topicValue),
+	route('/webhooks/tap', webhookRoutes.tap),
 	route('*', () => Response.json({ success: false, error: 'Not found' }, { status: 404 })),
 ];

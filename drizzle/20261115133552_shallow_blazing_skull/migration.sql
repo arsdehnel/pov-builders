@@ -18,7 +18,7 @@ CREATE TABLE `api_keys` (
 );
 --> statement-breakpoint
 CREATE TABLE `stances` (
-	`id` integer PRIMARY KEY AUTOINCREMENT,
+	`id` text PRIMARY KEY,
 	`topic_id` text NOT NULL,
 	`slug` text NOT NULL,
 	`label` text NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `stances` (
 );
 --> statement-breakpoint
 CREATE TABLE `topics` (
-	`id` integer PRIMARY KEY AUTOINCREMENT,
+	`id` text PRIMARY KEY,
 	`subdomain` text NOT NULL,
 	`title` text NOT NULL,
 	`created_at` text DEFAULT (datetime('now', 'localtime')) NOT NULL,
@@ -67,8 +67,8 @@ CREATE TABLE `users` (
 );
 --> statement-breakpoint
 CREATE TABLE `values` (
-	`id` integer PRIMARY KEY AUTOINCREMENT,
-	`topic_id` integer NOT NULL,
+	`id` text PRIMARY KEY,
+	`topic_id` text NOT NULL,
 	`slug` text NOT NULL,
 	`label` text NOT NULL,
 	`description` text NOT NULL,
@@ -86,7 +86,9 @@ CREATE TABLE `values` (
 );
 --> statement-breakpoint
 CREATE INDEX `api_keys_user_id_idx` ON `api_keys` (`user_id`);--> statement-breakpoint
-CREATE INDEX `stances_order_unique` ON `stances` (`order`);--> statement-breakpoint
+CREATE UNIQUE INDEX `stances_topic_id_slug_unique` ON `stances` (`topic_id`,`slug`);--> statement-breakpoint
+CREATE INDEX `stances_topic_id_order_idx` ON `stances` (`topic_id`,`order`);--> statement-breakpoint
 CREATE UNIQUE INDEX `topics_subdomain_unique` ON `topics` (`subdomain`);--> statement-breakpoint
 CREATE UNIQUE INDEX `users_did_idx` ON `users` (`did`);--> statement-breakpoint
-CREATE UNIQUE INDEX `values_order_unique` ON `values` (`order`);
+CREATE UNIQUE INDEX `values_topic_id_slug_unique` ON `values` (`topic_id`,`slug`);--> statement-breakpoint
+CREATE INDEX `values_topic_id_order_idx` ON `values` (`topic_id`,`order`);

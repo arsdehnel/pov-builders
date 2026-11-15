@@ -1,12 +1,15 @@
+import crypto from 'node:crypto';
 import { sql } from 'drizzle-orm';
-import { type AnySQLiteColumn, index, integer, snakeCase, text } from 'drizzle-orm/sqlite-core';
+import { type AnySQLiteColumn, index, integer, snakeCase, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { topics } from './topics';
 import { users } from './users';
 
 export const stances = snakeCase.table(
 	'stances',
 	{
-		id: integer().primaryKey({ autoIncrement: true }),
+		id: text()
+			.primaryKey()
+			.$defaultFn(() => crypto.randomUUID()),
 		topicId: text()
 			.notNull()
 			.references((): AnySQLiteColumn => topics.id),
@@ -20,5 +23,8 @@ export const stances = snakeCase.table(
 		deletedAt: text(),
 		deletedBy: text().references((): AnySQLiteColumn => users.id),
 	},
-	table => [index('stances_order_unique').on(table.order)],
+	table => [
+		uniqueIndex('stances_topic_id_slug_unique').on(table.topicId, table.slug),
+		index('stances_topic_id_order_idx').on(table.topicId, table.order),
+	],
 );

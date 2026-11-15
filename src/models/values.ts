@@ -1,13 +1,16 @@
+import crypto from 'node:crypto';
 import { sql } from 'drizzle-orm';
-import { type AnySQLiteColumn, integer, snakeCase, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
+import { type AnySQLiteColumn, index, integer, snakeCase, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { topics } from './topics';
 import { users } from './users';
 
 export const values = snakeCase.table(
 	'values',
 	{
-		id: integer().primaryKey({ autoIncrement: true }),
-		topicId: integer()
+		id: text()
+			.primaryKey()
+			.$defaultFn(() => crypto.randomUUID()),
+		topicId: text()
 			.notNull()
 			.references((): AnySQLiteColumn => topics.id),
 		slug: text().notNull(),
@@ -21,5 +24,8 @@ export const values = snakeCase.table(
 		deletedAt: text(),
 		deletedBy: text().references((): AnySQLiteColumn => users.id),
 	},
-	table => [uniqueIndex('values_order_unique').on(table.order)],
+	table => [
+		uniqueIndex('values_topic_id_slug_unique').on(table.topicId, table.slug),
+		index('values_topic_id_order_idx').on(table.topicId, table.order),
+	],
 );
