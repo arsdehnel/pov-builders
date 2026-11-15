@@ -1,13 +1,10 @@
 import { isValidDid } from '@atproto/syntax';
-// import { and, eq, isNull, sql } from 'drizzle-orm';
-import { eq, sql } from 'drizzle-orm';
-import { RepositoryError, RepositoryErrorTypes } from 'rwsdk-atp/errors';
+import { and, eq, isNull, sql } from 'drizzle-orm';
+import { InvalidDIDError, InvalidUUIDError, NoRecordFoundError } from 'rwsdk-atp/errors';
 import type { Logger } from 'rwsdk-atp/logger';
-// import { flattenError, validateUuid } from 'rwsdk-atp/utils';
-import { flattenError } from 'rwsdk-atp/utils';
+import { flattenError, validateUuid } from 'rwsdk-atp/utils';
 import db from '@/db';
 import { users } from '@/models';
-// import type { UserDBRead, UserWriteInput } from '@/types';
 import type { UserDBRead } from '@/types';
 
 // export async function getUsers(logger: Logger, includeDeleted = false): Promise<UserDBRead[]> {
@@ -35,8 +32,11 @@ import type { UserDBRead } from '@/types';
 // 		.where(and(eq(users.id, id), isNull(users.deletedAt)))
 // 		.returning();
 
+// 	if (updated.length === 0) {
+// 		throw new RepositoryError(RepositoryErrorTypes.NoRecordFound, ['User']);
+// 	}
 // 	if (updated.length !== 1) {
-// 		throw new RepositoryError(RepositoryErrorTypes.UnexpectedRecordCount, [updated.length, 1, 'User']);
+// 		throw new RepositoryError(RepositoryErrorTypes.TooManyRecordsFound, [updated.length, 1, 'User']);
 // 	}
 
 // 	logger.info(`Updated user ${id}`);
@@ -68,39 +68,42 @@ import type { UserDBRead } from '@/types';
 // 		.where(eq(users.id, id))
 // 		.returning();
 
+// 	if (deleted.length === 0) {
+// 		throw new RepositoryError(RepositoryErrorTypes.NoRecordFound, ['User']);
+// 	}
 // 	if (deleted.length !== 1) {
-// 		throw new RepositoryError(RepositoryErrorTypes.UnexpectedRecordCount, [deleted.length, 1, 'User']);
+// 		throw new RepositoryError(RepositoryErrorTypes.TooManyRecordsFound, [deleted.length, 1, 'User']);
 // 	}
 
 // 	logger.info(`Deleted user ${id}`);
 // 	return deleted[0];
 // }
 
-// export async function getUserById(userId: string, logger: Logger): Promise<UserDBRead> {
-// 	if (!validateUuid(userId)) {
-// 		throw new RepositoryError(RepositoryErrorTypes.InvalidUUID, [userId, 'User']);
-// 	}
+export async function getUserById(userId: string, logger: Logger): Promise<UserDBRead> {
+	if (!validateUuid(userId)) {
+		throw new InvalidUUIDError(userId, 'User');
+	}
 
-// 	logger.debug(`Fetching user ${userId}`);
-// 	let user: UserDBRead | undefined;
-// 	try {
-// 		const matchedUsers = await db
-// 			.select()
-// 			.from(users)
-// 			.where(and(eq(users.id, userId), isNull(users.deletedAt)));
-// 		user = matchedUsers[0];
-// 	} catch (err) {
-// 		const { message, error } = flattenError(err);
-// 		logger.error(`Error fetching user ${userId}${message}`, { err: error });
-// 		throw error;
-// 	}
+	logger.debug(`Fetching user ${userId}`);
+	let user: UserDBRead | undefined;
+	try {
+		const matchedUsers = await db
+			.select()
+			.from(users)
+			.where(and(eq(users.id, userId), isNull(users.deletedAt)));
+		user = matchedUsers[0];
+	} catch (err) {
+		const { message, error } = flattenError(err);
+		logger.error(`Error fetching user ${userId}${message}`, { err: error });
+		throw error;
+	}
 
-// 	if (!user) {
-// 		throw new RepositoryError(RepositoryErrorTypes.UnexpectedRecordCount, [0, 1, 'User']);
-// 	}
+	if (!user) {
+		throw new NoRecordFoundError('User');
+	}
 
-// 	return user;
-// }
+	return user;
+}
 
 export async function upsertUser(
 	did: string,
@@ -109,7 +112,7 @@ export async function upsertUser(
 	logger: Logger,
 ): Promise<UserDBRead> {
 	if (!isValidDid(did)) {
-		throw new RepositoryError(RepositoryErrorTypes.InvalidDID, [did, 'User']);
+		throw new InvalidDIDError(did, 'User');
 	}
 
 	logger.debug(`Upserting user ${did}`);
@@ -138,7 +141,7 @@ export async function upsertUser(
 	}
 
 	if (!user) {
-		throw new RepositoryError(RepositoryErrorTypes.UnexpectedRecordCount, [0, 1, 'User']);
+		throw new NoRecordFoundError('User', 500);
 	}
 
 	return user;
