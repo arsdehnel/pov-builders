@@ -2,6 +2,19 @@ import { readdir, readFile } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import chalk from 'chalk-template';
+import matter from 'gray-matter';
+
+class SyncError extends Error {
+	public code: number | undefined;
+	public data: Record<string, string[]> | undefined;
+
+	constructor(code: number, message: string, data: Record<string, string[]>) {
+		super();
+		this.code = code;
+		this.data = data;
+		this.message = message;
+	}
+}
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const CONTENT_DIR = join(__dirname, '..', 'content', 'topics');
@@ -15,7 +28,6 @@ if (!STANCE_BUILD_API_KEY) {
 }
 
 interface ApiResponse<T> {
-	success: boolean;
 	data: T;
 }
 
@@ -42,22 +54,6 @@ interface Value {
 	order: number;
 }
 
-type Frontmatter = Record<string, string | number>;
-
-function parseFrontmatter(content: string): Frontmatter {
-	const match = content.match(/^---\n([\s\S]*?)\n---/);
-	if (!match) return {};
-	const result: Frontmatter = {};
-	for (const line of match[1].split('\n')) {
-		const colonIdx = line.indexOf(':');
-		if (colonIdx === -1) continue;
-		const key = line.slice(0, colonIdx).trim();
-		const value = line.slice(colonIdx + 1).trim();
-		result[key] = /^\d+$/.test(value) ? Number(value) : value;
-	}
-	return result;
-}
-
 function toTitleCase(str: string): string {
 	return str
 		.split('-')
@@ -77,7 +73,10 @@ async function apiRequest<T>(method: string, path: string, body?: unknown): Prom
 
 	if (!res.ok) {
 		const text = await res.text();
-		throw new Error(`API ${method} ${path} failed (${res.status}): ${text}`);
+		// const data = (await res.json()) as ApiResponse<T>;
+		// console.log(text);
+		// console.log(JSON.parse(text));
+		throw new SyncError(res.status, `API ${method} ${path} failed (${res.status})`, JSON.parse(text));
 	}
 
 	const data = (await res.json()) as ApiResponse<T>;
@@ -104,7 +103,7 @@ async function syncValues(topic: Topic, topicDir: string): Promise<void> {
 		contentSlugs.add(slug);
 
 		const content = await readFile(join(valuesDir, filename), 'utf-8');
-		const fm = parseFrontmatter(content);
+		const fm = matter(content).data;
 
 		if (!fm.description) {
 			throw new Error(`Missing description frontmatter in ${join(valuesDir, filename)}`);
@@ -155,12 +154,18 @@ async function syncStances(topic: Topic, topicDir: string): Promise<void> {
 		contentSlugs.add(slug);
 
 		const content = await readFile(join(stancesDir, filename), 'utf-8');
-		const fm = parseFrontmatter(content);
+		const fm = matter(content).data;
 
 		const payload = {
 			slug,
 			label: String(fm.title),
 			order: Number(fm.order),
+			color: String(fm.color),
+			description: String(fm.description),
+			example: String(fm.example),
+			characterName: String(fm.characterName),
+			characterTagline: String(fm.characterTagline),
+			characterBio: String(fm.characterBio),
 		};
 
 		const current = existingBySlug.get(slug);
@@ -220,6 +225,11 @@ async function main(): Promise<void> {
 main()
 	.then(() => console.log('\nSync complete'))
 	.catch(err => {
-		console.error(chalk`\n🚨 Sync failed {red ${err instanceof Error ? err.message : err}}`);
+		console.log(err);
+		if (err.data) {
+			console.error(chalk`\n🚨 Sync failed {red ${err.message}}:\n${JSON.stringify(err.data, null, 4)}`);
+		} else {
+			console.error(chalk`\n🚨 Sync failed {red ${err instanceof Error ? err.message : err}}`);
+		}
 		process.exit(1);
 	});

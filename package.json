@@ -72,6 +72,7 @@
 		"@types/react-dom": "19.2.4",
 		"chalk-template": "^1.1.3",
 		"drizzle-kit": "^1.0.0-rc.5",
+		"gray-matter": "^4.0.3",
 		"husky": "^9.1.7",
 		"knip": "^6.32.2",
 		"lint-staged": "^16.4.0",
