@@ -1,7 +1,16 @@
 import { EnterIcon, ExitIcon, HomeIcon } from '@radix-ui/react-icons';
 import type { Permission } from '@/types';
 
-type NavItem = {
+export type ViewMode = { key: string; label: string };
+
+export const VIEW_MODES: ViewMode[] = [
+	{ key: 'survey', label: 'Survey' },
+	{ key: 'statements', label: 'Statements' },
+	{ key: 'choose-your-own-adventure', label: 'Choose Your Own Adventure' },
+	{ key: 'character-builder', label: 'Character Builder' },
+];
+
+export type NavItem = {
 	key: string;
 	label: string;
 	href: string;
@@ -9,6 +18,9 @@ type NavItem = {
 	requiredPermission: Permission;
 	basePage?: string;
 };
+
+/** Serializable subset of NavItem safe to pass across the RSC boundary to client components. */
+export type ClientNavItem = Omit<NavItem, 'icon'>;
 
 export const navItems: Record<string, NavItem[]> = {
 	profile: [

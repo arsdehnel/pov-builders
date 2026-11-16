@@ -1,70 +1,29 @@
-import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
-import classNames from 'classnames';
 import { StrictMode } from 'react';
-import type { DefaultAppContext } from 'rwsdk/worker';
-import { getNavItems } from '@/data/navigation';
+import SiteHeader from '@/components/nav/site-header';
+import type { AppContext } from '@/types';
 
 export default function StandardLayout({
 	children,
-	currentBasePage,
 	pageTitle,
 	ctx,
+	userHandle = null,
+	userAvatarUrl = null,
+	currentBasePage: _currentBasePage,
+	leftNav: _leftNav,
 }: {
 	children: React.ReactNode;
-	currentBasePage: string | undefined;
 	pageTitle: string;
-	ctx: DefaultAppContext;
-	leftNav?: 'recipes' | 'profile';
+	ctx: AppContext;
+	userHandle?: string | null;
+	userAvatarUrl?: string | null;
+	/** @deprecated kept for call-site compatibility while pages migrate */
+	currentBasePage?: string;
+	/** @deprecated kept for call-site compatibility while pages migrate */
+	leftNav?: string;
 }): React.ReactNode {
-	const userPerms = ctx.permissions;
-
-	const mainNavItems = getNavItems('main', userPerms);
-	const profileNavItems = getNavItems('profile', userPerms);
-
 	return (
 		<StrictMode>
-			<header>
-				<nav className="main-nav">
-					{mainNavItems.map(item => {
-						const Icon = item.icon || QuestionMarkCircledIcon;
-						return (
-							<a
-								key={item.key}
-								className={classNames({
-									'nav-item': true,
-									'nav-item-active': currentBasePage === item.key,
-								})}
-								href={item.href}
-							>
-								<span className="nav-item-icon">
-									<Icon />
-								</span>
-								<span className="nav-item-label">{item.label}</span>
-							</a>
-						);
-					})}
-				</nav>
-				<nav className="profile-nav">
-					{profileNavItems.map(item => {
-						const Icon = item.icon || QuestionMarkCircledIcon;
-						return (
-							<a
-								key={item.key}
-								className={classNames({
-									'nav-item': true,
-									'nav-item-active': currentBasePage === item.key,
-								})}
-								href={item.href}
-							>
-								<span className="nav-item-icon">
-									<Icon />
-								</span>
-								<span className="nav-item-label">{item.label}</span>
-							</a>
-						);
-					})}
-				</nav>
-			</header>
+			<SiteHeader ctx={ctx} userHandle={userHandle} userAvatarUrl={userAvatarUrl} />
 			<main>
 				<h2 className="page-title">{pageTitle}</h2>
 				<div className="app-layout-content">{children}</div>

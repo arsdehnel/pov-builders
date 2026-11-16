@@ -2,6 +2,7 @@ import type { Logger } from 'rwsdk-atp/logger';
 import type { ApiKeyDBRead } from './api-keys';
 import type { Permission } from './permissions';
 import type { Session } from './sessions';
+import type { TopicDBRead } from './topics';
 import type { UserDBRead } from './users';
 
 export interface AppContext {
@@ -9,6 +10,6 @@ export interface AppContext {
 	logger: Logger;
 	permissions: Permission[];
 	session?: Session | null;
-	topic: string;
+	topic?: TopicDBRead;
 	user?: UserDBRead | undefined;
 }

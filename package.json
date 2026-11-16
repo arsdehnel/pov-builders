@@ -75,6 +75,7 @@
 		"gray-matter": "^4.0.3",
 		"husky": "^9.1.7",
 		"knip": "^6.32.2",
+		"less": "^4.9.1",
 		"lint-staged": "^16.4.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-packagejson": "^3.0.2",
