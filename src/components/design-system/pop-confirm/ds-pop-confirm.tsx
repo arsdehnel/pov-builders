@@ -1,5 +1,5 @@
 'use client';
-import { Dialog } from 'radix-ui';
+import { AlertDialog } from 'radix-ui';
 import styleClasses from './ds-pop-confirm.module.css';
 
 export default function DSPopConfirm({
@@ -18,27 +18,27 @@ export default function DSPopConfirm({
 	children: React.ReactNode;
 }): React.ReactNode {
 	return (
-		<Dialog.Root>
-			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Portal>
-				<Dialog.Overlay className={styleClasses.overlay} />
-				<Dialog.Content className={styleClasses.content}>
-					<Dialog.Title className={styleClasses.title}>{title}</Dialog.Title>
-					{description && <Dialog.Description className={styleClasses.description}>{description}</Dialog.Description>}
+		<AlertDialog.Root>
+			<AlertDialog.Trigger asChild>{children}</AlertDialog.Trigger>
+			<AlertDialog.Portal>
+				<AlertDialog.Overlay className={styleClasses.overlay} />
+				<AlertDialog.Content className={styleClasses.content}>
+					<AlertDialog.Title className={styleClasses.title}>{title}</AlertDialog.Title>
+					{description && <AlertDialog.Description className={styleClasses.description}>{description}</AlertDialog.Description>}
 					<div className={styleClasses.actions}>
-						<Dialog.Close asChild>
+						<AlertDialog.Cancel asChild>
 							<button type="button" className={styleClasses.cancel}>
 								{cancelLabel}
 							</button>
-						</Dialog.Close>
-						<Dialog.Close asChild>
-							<button type="button" className={styleClasses.confirm} onClick={onConfirm}>
+						</AlertDialog.Cancel>
+						<AlertDialog.Action asChild onClick={onConfirm}>
+							<button type="button" className={styleClasses.confirm}>
 								{confirmLabel}
 							</button>
-						</Dialog.Close>
+						</AlertDialog.Action>
 					</div>
-				</Dialog.Content>
-			</Dialog.Portal>
-		</Dialog.Root>
+				</AlertDialog.Content>
+			</AlertDialog.Portal>
+		</AlertDialog.Root>
 	);
 }
