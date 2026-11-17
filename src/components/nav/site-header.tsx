@@ -9,10 +9,12 @@ export default async function SiteHeader({
 	ctx,
 	userHandle = null,
 	userAvatarUrl = null,
+	siteSection,
 }: {
 	ctx: AppContext;
 	userHandle?: string | null;
 	userAvatarUrl?: string | null;
+	siteSection: string;
 }): Promise<React.ReactNode> {
 	const profileNavItems = getNavItems('profile', ctx.permissions).map(({ icon: _, ...item }) => item);
 	const topics = await getTopics(ctx.logger);
@@ -26,7 +28,7 @@ export default async function SiteHeader({
 				</a>
 				{ctx.topic && <span className="topic-name">{ctx.topic.title}</span>}
 				<div className="header-controls">
-					<NavMenu topics={topics} currentTopic={ctx.topic?.subdomain ?? null} />
+					<NavMenu topics={topics} currentTopic={ctx.topic?.subdomain ?? null} siteSection={siteSection} />
 				</div>
 				<div className="profile-wrapper">
 					<NavProfile

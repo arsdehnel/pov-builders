@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import DSButton from './DSButton';
+import DSButton from './ds-button';
 
 const meta: Meta<typeof DSButton> = {
 	component: DSButton,

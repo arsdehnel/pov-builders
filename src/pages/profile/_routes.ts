@@ -5,7 +5,7 @@ import Pages__api_keys__edit from './edit-api-key';
 import Pages__profile__root from './root';
 
 export default {
-	app: [
+	default: [
 		route('/', [requireAuthentication, requirePermissions('profile:read'), Pages__profile__root]),
 		route('/api-keys', [requireAuthentication, requirePermissions('profile:read'), Pages__profile__api_keys]),
 		route('/api-keys/new', [requireAuthentication, requirePermissions('api-keys:read'), Pages__api_keys__edit]),

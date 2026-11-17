@@ -28,6 +28,12 @@
 	background: #f3f4f6;
 }
 
+.trigger[data-active] {
+	font-weight: 600;
+	color: #111827;
+	background: #f3f4f6;
+}
+
 .navLink {
 	display: flex;
 	align-items: center;
@@ -38,8 +44,14 @@
 	border-radius: 4px;
 }
 
-.navLink:hover {
+.navLink:hover,
+.navLink[data-active] {
 	background: #f3f4f6;
+}
+
+.navLink[data-active] {
+	font-weight: 600;
+	color: #111827;
 }
 
 /* content renders inside the viewport, not inline */

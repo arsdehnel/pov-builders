@@ -7,15 +7,19 @@ import styles from './nav-menu.module.css';
 export default function NavMenu({
 	topics,
 	currentTopic,
+	siteSection,
 }: {
 	topics: TopicDBRead[];
 	currentTopic: string | null;
+	siteSection: string;
 }): React.ReactNode {
 	return (
 		<NavigationMenu.Root className={styles.root}>
 			<NavigationMenu.List className={styles.list}>
 				<NavigationMenu.Item>
-					<NavigationMenu.Trigger className={styles.trigger}>Topics</NavigationMenu.Trigger>
+					<NavigationMenu.Trigger className={styles.trigger} data-active={siteSection === 'topics' || undefined}>
+						Topics
+					</NavigationMenu.Trigger>
 					<NavigationMenu.Content className={styles.content}>
 						<ul className={styles.dropdownList}>
 							{topics.map(topic => (
@@ -34,12 +38,14 @@ export default function NavMenu({
 				</NavigationMenu.Item>
 
 				<NavigationMenu.Item>
-					<NavigationMenu.Trigger className={styles.trigger}>Views</NavigationMenu.Trigger>
+					<NavigationMenu.Trigger className={styles.trigger} data-active={siteSection === 'views' || undefined}>
+						Views
+					</NavigationMenu.Trigger>
 					<NavigationMenu.Content className={styles.content}>
 						<ul className={styles.dropdownList}>
 							{VIEW_MODES.map(view => (
 								<li key={view.key}>
-									<NavigationMenu.Link href={`/${currentTopic ?? 'ai'}/${view.key}`} className={styles.dropdownLink}>
+									<NavigationMenu.Link href={`/views/${view.key}`} className={styles.dropdownLink}>
 										{view.label}
 									</NavigationMenu.Link>
 								</li>
@@ -49,7 +55,7 @@ export default function NavMenu({
 				</NavigationMenu.Item>
 
 				<NavigationMenu.Item>
-					<NavigationMenu.Link href="/about" className={styles.navLink}>
+					<NavigationMenu.Link href="/about" className={styles.navLink} data-active={siteSection === 'about' || undefined}>
 						About
 					</NavigationMenu.Link>
 				</NavigationMenu.Item>

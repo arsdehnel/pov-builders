@@ -1,0 +1,82 @@
+.stance-radio-cards {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.75rem;
+
+	@media (min-width: 800px) {
+		grid-template-columns: repeat(2, 1fr);
+
+		// lone last card on its own row: center it at the same width as a normal card
+		> .stance-radio-card:last-child:nth-child(odd) {
+			grid-column: 1 / -1;
+			justify-self: center;
+			width: calc((100% - 0.75rem) / 2);
+		}
+	}
+}
+
+.stance-radio-card {
+	// button reset
+	appearance: none;
+	background: none;
+	font: inherit;
+	padding: 0;
+
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	text-align: left;
+	cursor: pointer;
+
+	border-radius: 0.5rem;
+	border: 2px solid var(--stance-color);
+	background-color: color-mix(in srgb, var(--stance-color) 2%, transparent);
+	overflow: hidden;
+
+	transition:
+		background-color 0.15s ease,
+		border-width 0.1s ease;
+
+	&:hover {
+		background-color: color-mix(in srgb, var(--stance-color) 10%, transparent);
+	}
+
+	&[data-state="checked"] {
+		border-width: 3px;
+		background-color: color-mix(in srgb, var(--stance-color) 22%, transparent);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--stance-color);
+		outline-offset: 2px;
+	}
+
+	.stance-radio-card-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		padding: 0 1.5rem;
+		color: var(--stance-color);
+		border-right: 1px solid color-mix(in srgb, var(--stance-color) 25%, transparent);
+	}
+
+	.stance-radio-card-content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+
+		.stance-radio-card-title {
+			padding: 0.5rem 0.75rem;
+			font-weight: 600;
+			background-color: color-mix(in srgb, var(--stance-color) 50%, transparent);
+			color: white;
+		}
+
+		.stance-radio-card-body {
+			flex: 1;
+			padding: 0.75rem;
+		}
+	}
+}

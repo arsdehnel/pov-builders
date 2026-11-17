@@ -8,6 +8,11 @@ import { rwsdkAtp } from 'rwsdk-atp/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+	css: {
+		modules: {
+			localsConvention: 'camelCase',
+		},
+	},
 	server: {
 		// Bind to 127.0.0.1 so the OAuth redirect URI (http://127.0.0.1:5173/oauth/callback)
 		// matches the address the dev server is actually listening on.

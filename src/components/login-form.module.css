@@ -17,7 +17,6 @@
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 6px;
 	font-size: 0.9375rem;
-	font-family: var(--font-noto);
 	background: var(--color-cream);
 	color: var(--text-color);
 	transition: border-color 0.15s;
@@ -40,7 +39,6 @@
 	border: none;
 	border-radius: 6px;
 	font-size: 0.9375rem;
-	font-family: var(--font-noto);
 	font-weight: 500;
 	cursor: pointer;
 	white-space: nowrap;

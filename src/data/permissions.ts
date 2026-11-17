@@ -21,6 +21,10 @@ const permissions = {
 		login: ['PUBLIC'],
 		logout: ['BASIC', 'ADMIN'],
 	},
+	positions: {
+		read: ['*'],
+		update: ['BASIC', 'ADMIN'],
+	},
 	profile: {
 		read: ['BASIC', 'ADMIN'],
 		update: ['ADMIN'],

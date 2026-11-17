@@ -1,7 +1,7 @@
 {
 	"version": "7",
 	"dialect": "sqlite",
-	"id": "e6aa52b8-4082-4452-8166-57bc29bc6328",
+	"id": "683f5616-7055-447f-946b-59985ca89c99",
 	"prevIds": ["00000000-0000-0000-0000-000000000000"],
 	"ddl": [
 		{
@@ -181,6 +181,66 @@
 			"default": null,
 			"generated": null,
 			"name": "label",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "color",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "description",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "example",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "character_name",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "character_tagline",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "character_bio",
 			"entityType": "columns",
 			"table": "stances"
 		},
