@@ -7,6 +7,7 @@ allowBuilds:
   workerd: true
   rwsdk-atp@git+https://tangled.org/arsdehnel.com/rwsdk-atp.git#f05bd294ae398d1177334514bcb34e753f84cbff: true
   core-js: true
+  "@parcel/watcher": true
 overrides:
   rwsdk-atp: link:../rwsdk-atp
   undici: "^8"

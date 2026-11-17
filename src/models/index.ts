@@ -1,6 +1,7 @@
 import _relations from './_relations';
 
 export * from './api-keys';
+export * from './positions';
 export * from './stances';
 export * from './topics';
 export * from './users';

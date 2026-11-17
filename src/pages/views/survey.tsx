@@ -25,7 +25,7 @@ export default async function Pages__views__survey({ ctx }: RequestInfo): Promis
 			<link rel="stylesheet" href={stanceRadioCardsStylesUrl} precedence="component" />
 			<div className="survey-view">
 				<p>Which one of these best describes your overall stance on {ctx.topic.title}?</p>
-				<StanceRadioCards stances={stances} name="stance" />
+				<StanceRadioCards stances={stances} topicId={ctx.topic.id} name="stance" />
 			</div>
 		</StandardLayout>
 	);
