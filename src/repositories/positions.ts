@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm';
+import { and, eq, isNull, sql } from 'drizzle-orm';
 import type { Logger } from 'rwsdk-atp/logger';
 import db from '@/db';
 import { positions } from '@/models';
@@ -32,4 +32,17 @@ export async function upsertPosition(
 
 	logger.info(`Upserted position ${result.id}`);
 	return result;
+}
+
+export async function getPositionByUserIdAndTopicId(
+	userId: string,
+	topicId: string,
+	logger: Logger,
+): Promise<PositionDBRead | undefined> {
+	logger.debug(`Fetching position for user ${userId} topic ${topicId}`);
+	const results = await db
+		.select()
+		.from(positions)
+		.where(and(eq(positions.userId, userId), eq(positions.topicId, topicId), isNull(positions.deletedAt)));
+	return results[0];
 }

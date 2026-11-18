@@ -20,10 +20,7 @@ export default function StandardLayout({
 	return (
 		<StrictMode>
 			<SiteHeader ctx={ctx} userHandle={userHandle} userAvatarUrl={userAvatarUrl} siteSection={siteSection} />
-			<main>
-				<h2 className="page-title">{pageTitle}</h2>
-				<div className="app-layout-content">{children}</div>
-			</main>
+			<main>{children}</main>
 		</StrictMode>
 	);
 }

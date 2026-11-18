@@ -3,6 +3,16 @@
 	grid-template-columns: 1fr;
 	gap: 0.75rem;
 
+	&--exiting {
+		animation: stanceCardsExit 0.35s ease forwards;
+		pointer-events: none;
+	}
+
+	&--exiting-back {
+		animation: stanceCardsExitBack 0.35s ease forwards;
+		pointer-events: none;
+	}
+
 	@media (min-width: 800px) {
 		grid-template-columns: repeat(2, 1fr);
 
@@ -12,6 +22,28 @@
 			justify-self: center;
 			width: calc((100% - 0.75rem) / 2);
 		}
+	}
+}
+
+@keyframes stanceCardsExit {
+	from {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(-2rem);
+	}
+}
+
+@keyframes stanceCardsExitBack {
+	from {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(2rem);
 	}
 }
 

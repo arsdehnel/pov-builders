@@ -15,6 +15,7 @@ export const stances = snakeCase.table(
 			.references((): AnySQLiteColumn => topics.id),
 		slug: text().notNull(),
 		label: text().notNull(),
+		icon: text().notNull(),
 		color: text().notNull(),
 		description: text().notNull(),
 		example: text().notNull(),

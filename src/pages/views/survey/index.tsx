@@ -1,19 +1,28 @@
 import type { RequestInfo } from 'rwsdk/worker';
 import StanceRadioCards from '@/components/survey/stance-radio-cards';
 import StandardLayout from '@/layouts/standard';
-import { getStancesByTopicId } from '@/repositories';
-import stanceRadioCardsStylesUrl from '../../components/survey/stance-radio-cards.less?url';
+import { getPositionByUserIdAndTopicId, getStancesByTopicId } from '@/repositories';
+import stanceRadioCardsStylesUrl from '../../../components/survey/stance-radio-cards.less?url';
 import surveyStylesUrl from './survey.less?url';
 
-export default async function Pages__views__survey({ ctx }: RequestInfo): Promise<React.JSX.Element> {
+export default async function Pages__views__survey({ ctx, request }: RequestInfo): Promise<React.JSX.Element> {
 	if (!ctx.topic) {
 		return <p>No topic set, cannot view the survey</p>;
+	}
+
+	// Redirect users who already have an overall stance, unless they're here to change it.
+	const isChanging = new URL(request.url).searchParams.has('change');
+	if (!isChanging && ctx.user) {
+		const existing = await getPositionByUserIdAndTopicId(ctx.user.id, ctx.topic.id, ctx.logger);
+		if (existing) {
+			throw new Response(null, { status: 302, headers: { Location: '/views/survey/reflect' } });
+		}
 	}
 
 	const stancesFromDb = await getStancesByTopicId(ctx.topic.id, ctx.logger);
 	const stances = stancesFromDb.map(s => ({
 		id: s.id,
-		slug: s.slug,
+		icon: s.icon,
 		label: s.label,
 		description: s.description,
 		color: s.color,
@@ -25,7 +34,7 @@ export default async function Pages__views__survey({ ctx }: RequestInfo): Promis
 			<link rel="stylesheet" href={stanceRadioCardsStylesUrl} precedence="component" />
 			<div className="survey-view">
 				<p>Which one of these best describes your overall stance on {ctx.topic.title}?</p>
-				<StanceRadioCards stances={stances} topicId={ctx.topic.id} name="stance" />
+				<StanceRadioCards stances={stances} topicId={ctx.topic.id} name="stance" redirectTo="/views/survey/reflect" />
 			</div>
 		</StandardLayout>
 	);

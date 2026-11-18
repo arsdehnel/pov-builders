@@ -1,0 +1,73 @@
+@keyframes reflectEnter {
+	from {
+		opacity: 0;
+		transform: translateX(2rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.reflect-view {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 2rem 0;
+	animation: reflectEnter 0.4s ease;
+
+	h2 {
+		margin-bottom: 0.5rem;
+	}
+
+	> p {
+		margin-bottom: 1.5rem;
+		color: #6b7280;
+	}
+}
+
+.overall-stance-strip {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.625rem 0.875rem;
+	margin-bottom: 1.5rem;
+	border-radius: 0.5rem;
+	background: color-mix(in srgb, var(--overall-stance-color) 10%, white);
+	border: 1px solid color-mix(in srgb, var(--overall-stance-color) 30%, transparent);
+	color: color-mix(in srgb, var(--overall-stance-color) 80%, #111827);
+	font-size: 0.9375rem;
+
+	strong {
+		font-weight: 600;
+	}
+}
+
+.overall-stance-change {
+	margin-left: auto;
+	font-size: 0.875rem;
+	color: color-mix(in srgb, var(--overall-stance-color) 70%, #111827);
+	text-decoration: none;
+	font-weight: 500;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.values-section-divider {
+	border: none;
+	border-top: 1px solid #e5e7eb;
+	margin: 2rem 0 1.5rem;
+}
+
+.reflect-back-link {
+	display: inline-block;
+	margin-bottom: 1.5rem;
+	color: #6b7280;
+	text-decoration: none;
+	font-size: 0.9375rem;
+
+	&:hover {
+		color: var(--text-color);
+	}
+}

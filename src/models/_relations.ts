@@ -1,12 +1,13 @@
 import { defineRelations } from 'drizzle-orm';
 import { apiKeys } from './api-keys';
+import { positionValues } from './position-values';
 import { positions } from './positions';
 import { stances } from './stances';
 import { topics } from './topics';
 import { users } from './users';
 import { values } from './values';
 
-export default defineRelations({ topics, values, stances, users, apiKeys, positions }, r => ({
+export default defineRelations({ topics, values, stances, users, apiKeys, positions, positionValues }, r => ({
 	topics: {
 		values: r.many.values({
 			from: r.topics.id,
@@ -67,6 +68,23 @@ export default defineRelations({ topics, values, stances, users, apiKeys, positi
 		user: r.one.users({
 			from: r.apiKeys.userId,
 			to: r.users.id,
+			optional: false,
+		}),
+	},
+	positionValues: {
+		position: r.one.positions({
+			from: r.positionValues.positionId,
+			to: r.positions.id,
+			optional: false,
+		}),
+		value: r.one.values({
+			from: r.positionValues.valueId,
+			to: r.values.id,
+			optional: false,
+		}),
+		stance: r.one.stances({
+			from: r.positionValues.stanceId,
+			to: r.stances.id,
 			optional: false,
 		}),
 	},

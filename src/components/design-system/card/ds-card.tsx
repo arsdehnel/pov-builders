@@ -8,24 +8,38 @@ export default function DSCard({
 	title,
 	body,
 	children,
+	band,
 	actions,
+	alignment = 'horizontal',
 	userPermissions,
 	className,
+	style,
 }: {
 	title: string;
 	body?: string | React.ReactNode;
 	children?: React.ReactNode;
+	band?: React.ReactNode;
 	actions?: DSLinkType[];
+	alignment?: 'horizontal' | 'vertical';
 	userPermissions: Permission[];
 	className?: string;
+	style?: React.CSSProperties;
 }): React.ReactNode {
 	const bodyContent = body ?? children;
 	return (
-		<div className={classnames(styleClasses.dsCard, className)}>
+		<div
+			className={classnames(styleClasses.dsCard, 'ds-card', alignment === 'vertical' && styleClasses.dsCardVertical, className)}
+			style={style}
+		>
 			<div className={classnames(styleClasses.dsCardTitle, 'ds-card-title')}>{title}</div>
-			{bodyContent && <div className={styleClasses.dsCardBody}>{bodyContent}</div>}
+			{(bodyContent || band) && (
+				<div className={classnames(styleClasses.dsCardBody, 'ds-card-body')}>
+					{bodyContent}
+					{band && <div className={classnames(styleClasses.dsCardBand, 'ds-card-band')}>{band}</div>}
+				</div>
+			)}
 			{actions && (
-				<div className={styleClasses.dsCardActions}>
+				<div className={classnames(styleClasses.dsCardActions, 'ds-card-actions')}>
 					{actions.map(a => {
 						return <DSLink key={a.href} userPermissions={userPermissions} {...a} />;
 					})}

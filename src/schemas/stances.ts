@@ -10,6 +10,7 @@ const hexColor = z
 const sharedFields = {
 	slug: requiredString('Slug', 63),
 	label: requiredString('Label', 255),
+	icon: requiredString('Icon', 255),
 	color: hexColor,
 	description: requiredString('Description'),
 	example: requiredString('Example'),

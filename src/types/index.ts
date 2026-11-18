@@ -2,6 +2,7 @@ export * from './api-keys';
 export * from './app-context';
 export * from './design-system';
 export * from './permissions';
+export * from './position-values';
 export * from './positions';
 export * from './sessions';
 export * from './stances';

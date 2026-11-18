@@ -1,59 +1,58 @@
 'use client';
-import {
-	ColumnSpacingIcon,
-	CropIcon,
-	HandIcon,
-	LoopIcon,
-	PauseIcon,
-	RulerSquareIcon,
-	TransformIcon,
-} from '@radix-ui/react-icons';
 import { RadioGroup } from 'radix-ui';
 import { useState } from 'react';
+import { savePositionValue } from '@/actions/position-values';
 import { savePosition } from '@/actions/positions';
 import { DSToast } from '@/components/design-system';
+import { STANCE_ICONS } from '@/content';
 
 export type StanceOption = {
 	id: string;
-	slug: string;
+	icon: string;
 	label: string;
 	description: string;
 	color: string;
 };
 
-const STANCE_ICONS: Record<string, React.ComponentType<{ width?: number; height?: number }>> = {
-	refuse: HandIcon,
-	'wait-and-see': PauseIcon,
-	constrain: CropIcon,
-	compensate: LoopIcon,
-	'rethink-the-work': TransformIcon,
-	'shape-the-ecosystem': RulerSquareIcon,
-	drift: ColumnSpacingIcon,
-};
-
 export default function StanceRadioCards({
 	stances,
 	topicId,
+	valueId,
 	name,
+	redirectTo,
+	initialStanceId,
 }: {
 	stances: StanceOption[];
 	topicId: string;
+	valueId?: string;
 	name?: string;
+	redirectTo?: string;
+	initialStanceId?: string;
 }): React.ReactNode {
-	const [value, setValue] = useState('');
+	const [value, setValue] = useState(initialStanceId ?? '');
 	const [toastOpen, setToastOpen] = useState(false);
+	const [exiting, setExiting] = useState(false);
 
-	async function handleSavePosition(overallStanceId: string): Promise<void> {
-		const result = await savePosition({ topicId, overallStanceId });
+	async function handleSavePosition(stanceId: string): Promise<void> {
+		const result = valueId
+			? await savePositionValue({ topicId, valueId, stanceId })
+			: await savePosition({ topicId, overallStanceId: stanceId });
 		if (result.success) {
-			setToastOpen(true);
+			if (redirectTo) {
+				setExiting(true);
+				setTimeout(() => {
+					window.location.href = redirectTo;
+				}, 350);
+			} else {
+				setToastOpen(true);
+			}
 		}
 	}
 
 	return (
 		<>
 			<RadioGroup.Root
-				className="stance-radio-cards"
+				className={`stance-radio-cards${exiting ? ' stance-radio-cards--exiting' : ''}`}
 				value={value}
 				onValueChange={(newValue: string): void => {
 					setValue(newValue);
@@ -63,7 +62,7 @@ export default function StanceRadioCards({
 				aria-label="Select your stance"
 			>
 				{stances.map(stance => {
-					const Icon = STANCE_ICONS[stance.slug];
+					const Icon = STANCE_ICONS[stance.icon];
 					return (
 						<RadioGroup.Item
 							key={stance.id}
@@ -84,7 +83,7 @@ export default function StanceRadioCards({
 					);
 				})}
 			</RadioGroup.Root>
-			<DSToast open={toastOpen} onOpenChange={setToastOpen} title="Position saved" />
+			{!redirectTo && <DSToast open={toastOpen} onOpenChange={setToastOpen} title="Position saved" />}
 		</>
 	);
 }

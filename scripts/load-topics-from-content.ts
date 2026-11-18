@@ -160,6 +160,7 @@ async function syncStances(topic: Topic, topicDir: string): Promise<void> {
 			slug,
 			label: String(fm.title),
 			order: Number(fm.order),
+			icon: String(fm.icon),
 			color: String(fm.color),
 			description: String(fm.description),
 			example: String(fm.example),
