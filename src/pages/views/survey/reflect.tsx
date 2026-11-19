@@ -43,6 +43,40 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 	const unexploredValues = values.filter(v => !positionValueMap.has(v.id));
 	const exploredValues = values.filter(v => positionValueMap.has(v.id));
 	const OverallIcon = overallStance ? STANCE_ICONS[overallStance.icon] : null;
+	const isSplit = unexploredValues.length > 0 && exploredValues.length > 0;
+	const isAllExplored = unexploredValues.length === 0 && exploredValues.length > 0;
+
+	const exploredCards = exploredValues.map(value => {
+		const stance = positionValueMap.get(value.id);
+		if (!stance) return null;
+		const Icon = STANCE_ICONS[stance.icon];
+		return (
+			<DSCard
+				key={value.id}
+				title={value.label}
+				alignment="vertical"
+				className="ds-card--explored"
+				style={{ '--value-stance-color': stance.color } as React.CSSProperties}
+				userPermissions={ctx.permissions}
+				band={
+					Icon ? (
+						<div className="value-stance-band">
+							<span className="value-stance-band-label">Stance:</span>
+							<Icon width={14} height={14} />
+							<span>{stance.label}</span>
+						</div>
+					) : undefined
+				}
+				actions={[
+					{
+						href: `/views/survey/reflect/${value.id}`,
+						label: 'Change',
+						requiredPermission: 'positions:update',
+					},
+				]}
+			/>
+		);
+	});
 
 	return (
 		<StandardLayout pageTitle="Reflect" siteSection="views" ctx={ctx}>
@@ -64,67 +98,40 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 				<h2>How does this affect what you value?</h2>
 				<p>Select each value to reflect on your stance.</p>
 
-				{unexploredValues.length > 0 && (
-					<div className="value-cards-grid">
-						{unexploredValues.map(value => (
-							<DSCard
-								key={value.id}
-								title={value.label}
-								alignment="vertical"
-								className="ds-card--unexplored"
-								userPermissions={ctx.permissions}
-								actions={[
-									{
-										href: `/views/survey/reflect/${value.id}`,
-										label: 'Set',
-										requiredPermission: 'positions:update',
-									},
-								]}
-							>
-								<p className="value-description">{value.description}</p>
-							</DSCard>
-						))}
-					</div>
-				)}
-
-				{exploredValues.length > 0 && (
-					<>
-						{unexploredValues.length > 0 && <div className="values-section-divider" />}
-						<div className="value-cards-grid value-cards-grid--compact">
-							{exploredValues.map(value => {
-								const stance = positionValueMap.get(value.id);
-								if (!stance) return null;
-								const Icon = STANCE_ICONS[stance.icon];
-								return (
+				<div className={isSplit ? 'reflect-columns reflect-columns--split' : 'reflect-columns'}>
+					<div className="reflect-main">
+						{unexploredValues.length > 0 && (
+							<div className="value-cards-grid">
+								{unexploredValues.map(value => (
 									<DSCard
 										key={value.id}
 										title={value.label}
 										alignment="vertical"
-										className="ds-card--explored"
-										style={{ '--value-stance-color': stance.color } as React.CSSProperties}
+										className="ds-card--unexplored"
 										userPermissions={ctx.permissions}
-										band={
-											Icon ? (
-												<div className="value-stance-band">
-													<Icon width={14} height={14} />
-													<span className="value-stance-band-label">Stance:</span>
-													<span>{stance.label}</span>
-												</div>
-											) : undefined
-										}
 										actions={[
 											{
 												href: `/views/survey/reflect/${value.id}`,
-												label: 'Change',
+												label: 'Set',
 												requiredPermission: 'positions:update',
 											},
 										]}
-									/>
-								);
-							})}
-						</div>
-					</>
-				)}
+									>
+										<p className="value-description">{value.description}</p>
+									</DSCard>
+								))}
+							</div>
+						)}
+						{isAllExplored && <div className="value-cards-grid value-cards-grid--compact">{exploredCards}</div>}
+					</div>
+
+					{isSplit && (
+						<aside className="reflect-rail">
+							<h3 className="reflect-rail-heading">Explored</h3>
+							<div className="value-cards-rail">{exploredCards}</div>
+						</aside>
+					)}
+				</div>
 			</div>
 		</StandardLayout>
 	);

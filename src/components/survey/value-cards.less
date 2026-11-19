@@ -70,6 +70,29 @@
 	}
 }
 
+.value-cards-rail {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	.ds-card {
+		width: 100%;
+		margin: 0;
+		transition:
+			transform 0.1s ease,
+			box-shadow 0.1s ease;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		}
+	}
+
+	.ds-card-body {
+		padding: 0;
+	}
+}
+
 .value-description {
 	padding: 0.75rem;
 	flex: 1;
