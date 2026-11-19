@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { savePositionValue } from '@/actions/position-values';
 import { savePosition } from '@/actions/positions';
 import { DSToast } from '@/components/design-system';
-import { STANCE_ICONS } from '@/content';
+import { STANCE_ICONS } from '@/content/icons-map';
 
 export type StanceOption = {
 	id: string;

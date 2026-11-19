@@ -1,6 +1,6 @@
 import type { RequestInfo } from 'rwsdk/worker';
 import { DSCard } from '@/components/design-system';
-import { STANCE_ICONS } from '@/content';
+import { STANCE_ICONS } from '@/content/icons-map';
 import StandardLayout from '@/layouts/standard';
 import {
 	getPositionByUserIdAndTopicId,
