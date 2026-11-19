@@ -3,6 +3,7 @@ import { getNavItems } from '@/data/navigation';
 import { getTopics } from '@/repositories';
 import type { AppContext } from '@/types';
 import NavMenu from './nav-menu';
+import navMenuStylesUrl from './nav-menu.less?url';
 import NavProfile from './nav-profile';
 import stylesUrl from './site-header.less?url';
 
@@ -25,6 +26,7 @@ export default async function SiteHeader({
 	return (
 		<>
 			<link rel="stylesheet" href={stylesUrl} precedence="component" />
+			<link rel="stylesheet" href={navMenuStylesUrl} precedence="component" />
 			<header className="site-header">
 				<a href="/" className="logo">
 					Stance Build
