@@ -1,6 +1,22 @@
 import type { DefaultAppContext, RequestInfo } from 'rwsdk/worker';
 import { getTopicBySubdomain } from '@/repositories';
 
-export default async function topicMiddleware({ ctx }: RequestInfo<DefaultAppContext>): Promise<void> {
-	ctx.topic = await getTopicBySubdomain('ai', ctx.logger);
+export default async function topicMiddleware({ ctx, request }: RequestInfo<DefaultAppContext>): Promise<void> {
+	let subdomain: string | undefined;
+	if (import.meta.env.DEV) {
+		// In dev, topic is controlled via /dev/topic/:subdomain and stored on globalThis.
+		(globalThis as { __devTopic?: string }).__devTopic ?? 'ai';
+		subdomain = (globalThis as { __devTopic?: string }).__devTopic ?? 'ai';
+	} else {
+		const hostname = new URL(request.url).hostname;
+		subdomain = hostname.split('.')[0];
+	}
+
+	if (subdomain) {
+		try {
+			ctx.topic = await getTopicBySubdomain(subdomain, ctx.logger);
+		} catch {
+			ctx.logger.warn(`Topic ${subdomain} failed to be retrieved`);
+		}
+	}
 }

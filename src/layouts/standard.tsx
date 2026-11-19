@@ -4,14 +4,12 @@ import type { AppContext } from '@/types';
 
 export default function StandardLayout({
 	children,
-	pageTitle,
 	ctx,
 	userHandle = null,
 	userAvatarUrl = null,
 	siteSection,
 }: {
 	children: React.ReactNode;
-	pageTitle: string;
 	ctx: AppContext;
 	userHandle?: string | null;
 	userAvatarUrl?: string | null;

@@ -11,6 +11,7 @@ import sessionMiddleware from '@/middleware/session';
 import topicMiddleware from '@/middleware/topic';
 import userMiddleware from '@/middleware/user';
 import authRoutes from '@/pages/auth/_routes';
+import devRoutes from '@/pages/dev/_routes';
 import Pages__root from '@/pages/home';
 import profileRoutes from '@/pages/profile/_routes';
 import viewRoutes from '@/pages/views/_routes';
@@ -29,6 +30,7 @@ const app = defineApp([
 	userMiddleware,
 	permissionsMiddleware,
 	prefix('/api', apiRoutes),
+	...(import.meta.env.DEV ? [prefix('/dev', devRoutes.default)] : []),
 	render(DefaultDocument, [
 		route('/', Pages__root),
 		prefix('/auth', authRoutes.default),

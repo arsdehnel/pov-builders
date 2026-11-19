@@ -1,3 +1,4 @@
+import { requestInfo } from 'rwsdk/worker';
 import { getNavItems } from '@/data/navigation';
 import { getTopics } from '@/repositories';
 import type { AppContext } from '@/types';
@@ -16,6 +17,8 @@ export default async function SiteHeader({
 	userAvatarUrl?: string | null;
 	siteSection: string;
 }): Promise<React.ReactNode> {
+	const { request } = requestInfo;
+	const currentHostname = new URL(request.url).hostname;
 	const profileNavItems = getNavItems('profile', ctx.permissions).map(({ icon: _, ...item }) => item);
 	const topics = await getTopics(ctx.logger);
 
@@ -28,7 +31,12 @@ export default async function SiteHeader({
 				</a>
 				{ctx.topic && <span className="topic-name">{ctx.topic.title}</span>}
 				<div className="header-controls">
-					<NavMenu topics={topics} currentTopic={ctx.topic?.subdomain ?? null} siteSection={siteSection} />
+					<NavMenu
+						topics={topics}
+						currentTopic={ctx.topic?.subdomain ?? null}
+						siteSection={siteSection}
+						currentHostname={currentHostname}
+					/>
 				</div>
 				<div className="profile-wrapper">
 					<NavProfile

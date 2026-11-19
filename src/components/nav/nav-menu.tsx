@@ -4,15 +4,36 @@ import { VIEW_MODES } from '@/data/navigation';
 import type { TopicDBRead } from '@/types';
 import styles from './nav-menu.module.css';
 
+function devTopicUrl(topicSubdomain: string, _currentHostname: string): string {
+	return `/dev/topic/${topicSubdomain}`;
+}
+
+// topic.env.real-domain.com
+// env.real-domain.com
+// topic.real-domain.com
+// real-domain.com
+function cfTopicUrl(topicSubdomain: string, currentHostname: string): string {
+	const cfDomain = 'stance.build';
+	const envs = ['integration', 'staging'];
+	const [firstPortion, ...rest] = currentHostname.split('.');
+	if (envs.includes(firstPortion) || firstPortion === cfDomain) {
+		return `${topicSubdomain}.${currentHostname}`;
+	}
+	return `${topicSubdomain}.${rest.join('.')}`;
+}
+
 export default function NavMenu({
 	topics,
 	currentTopic,
 	siteSection,
+	currentHostname,
 }: {
 	topics: TopicDBRead[];
 	currentTopic: string | null;
 	siteSection: string;
+	currentHostname: string;
 }): React.ReactNode {
+	const topicUrlGenerator = import.meta.env.DEV ? devTopicUrl : cfTopicUrl;
 	return (
 		<NavigationMenu.Root className={styles.root}>
 			<NavigationMenu.List className={styles.list}>
@@ -25,7 +46,7 @@ export default function NavMenu({
 							{topics.map(topic => (
 								<li key={topic.subdomain}>
 									<NavigationMenu.Link
-										href={`/${topic.subdomain}`}
+										href={topicUrlGenerator(topic.subdomain, currentHostname)}
 										className={styles.dropdownLink}
 										data-active={topic.subdomain === currentTopic || undefined}
 									>
