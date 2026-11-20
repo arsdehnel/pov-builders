@@ -1,6 +1,7 @@
-import { prefix, render, route } from 'rwsdk/router';
-import { defineApp } from 'rwsdk/worker';
+import { except, prefix, render, route } from 'rwsdk/router';
+import { type DefaultAppContext, defineApp, type RequestInfo } from 'rwsdk/worker';
 import { botMiddleware } from 'rwsdk-atp/middleware';
+import { handlePageError } from 'rwsdk-atp/worker-error';
 import apiRoutes from '@/api/_routes';
 import DefaultDocument from '@/documents/default';
 import apiKeyMiddleware from '@/middleware/api-key';
@@ -13,6 +14,7 @@ import userMiddleware from '@/middleware/user';
 import authRoutes from '@/pages/auth/_routes';
 import devRoutes from '@/pages/dev/_routes';
 import Pages__root from '@/pages/home';
+import NotFound from '@/pages/not-found';
 import profileRoutes from '@/pages/profile/_routes';
 import viewRoutes from '@/pages/views/_routes';
 import tapRegistrations from '@/tap/registrations';
@@ -32,10 +34,12 @@ const app = defineApp([
 	prefix('/api', apiRoutes),
 	...(import.meta.env.DEV ? [prefix('/dev', devRoutes.default)] : []),
 	render(DefaultDocument, [
+		except<RequestInfo<DefaultAppContext>>(handlePageError),
 		route('/', Pages__root),
 		prefix('/auth', authRoutes.default),
 		prefix('/profile', profileRoutes.default),
 		prefix('/views', viewRoutes.default),
+		route('*', NotFound),
 	]),
 ]);
 
