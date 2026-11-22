@@ -82,6 +82,25 @@ export async function updateTopic(
 	return updated[0];
 }
 
+export async function setTopicAtpRecord(id: string, atpUri: string, atpCid: string, logger: Logger): Promise<TopicDBRead> {
+	if (!validateUuid(id)) {
+		throw new InvalidUUIDError(id, 'Topic');
+	}
+	logger.debug(`Setting ATP record for topic ${id}`);
+	const updated = await db
+		.update(topics)
+		.set({ atpUri, atpCid })
+		.where(and(eq(topics.id, id), isNull(topics.deletedAt)))
+		.returning();
+
+	if (updated.length === 0) {
+		throw new NoRecordFoundError('Topic');
+	}
+
+	logger.info(`Set ATP record for topic ${id}: ${atpUri}`);
+	return updated[0];
+}
+
 export async function deleteTopic(id: string, actingUserId: string, logger: Logger): Promise<TopicDBRead> {
 	if (!validateUuid(id)) {
 		throw new InvalidUUIDError(id, 'Topic');

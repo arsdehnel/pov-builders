@@ -72,6 +72,25 @@ export async function updateValue(
 	return updated[0];
 }
 
+export async function setValueAtpRecord(id: string, atpUri: string, atpCid: string, logger: Logger): Promise<ValueDBRead> {
+	if (!validateUuid(id)) {
+		throw new InvalidUUIDError(id, 'Value');
+	}
+	logger.debug(`Setting ATP record for value ${id}`);
+	const updated = await db
+		.update(values)
+		.set({ atpUri, atpCid })
+		.where(and(eq(values.id, id), isNull(values.deletedAt)))
+		.returning();
+
+	if (updated.length === 0) {
+		throw new NoRecordFoundError('Value');
+	}
+
+	logger.info(`Set ATP record for value ${id}: ${atpUri}`);
+	return updated[0];
+}
+
 export async function deleteValue(id: string, actingUserId: string, logger: Logger): Promise<ValueDBRead> {
 	if (!validateUuid(id)) {
 		throw new InvalidUUIDError(id, 'Value');

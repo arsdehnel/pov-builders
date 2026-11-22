@@ -76,6 +76,25 @@ export async function updateStance(
 	return updated[0];
 }
 
+export async function setStanceAtpRecord(id: string, atpUri: string, atpCid: string, logger: Logger): Promise<StanceDBRead> {
+	if (!validateUuid(id)) {
+		throw new InvalidUUIDError(id, 'Stance');
+	}
+	logger.debug(`Setting ATP record for stance ${id}`);
+	const updated = await db
+		.update(stances)
+		.set({ atpUri, atpCid })
+		.where(and(eq(stances.id, id), isNull(stances.deletedAt)))
+		.returning();
+
+	if (updated.length === 0) {
+		throw new NoRecordFoundError('Stance');
+	}
+
+	logger.info(`Set ATP record for stance ${id}: ${atpUri}`);
+	return updated[0];
+}
+
 export async function deleteStance(id: string, actingUserId: string, logger: Logger): Promise<StanceDBRead> {
 	if (!validateUuid(id)) {
 		throw new InvalidUUIDError(id, 'Stance');
