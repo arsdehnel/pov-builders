@@ -17,6 +17,8 @@ export const values = snakeCase.table(
 		label: text().notNull(),
 		description: text().notNull(),
 		order: integer().notNull(),
+		atpUri: text(),
+		atpCid: text(),
 		createdAt: text().notNull().default(sql`(datetime('now', 'localtime'))`),
 		createdBy: text().references((): AnySQLiteColumn => users.id),
 		updatedAt: text(),

@@ -11,6 +11,8 @@ export const topics = snakeCase.table(
 			.$defaultFn(() => crypto.randomUUID()),
 		subdomain: text().notNull(),
 		title: text().notNull(),
+		atpUri: text(),
+		atpCid: text(),
 		createdAt: text().notNull().default(sql`(datetime('now', 'localtime'))`),
 		createdBy: text().references((): AnySQLiteColumn => users.id),
 		updatedAt: text(),

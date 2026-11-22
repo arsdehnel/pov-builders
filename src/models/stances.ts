@@ -23,6 +23,8 @@ export const stances = snakeCase.table(
 		characterTagline: text().notNull(),
 		characterBio: text().notNull(),
 		order: integer().notNull(),
+		atpUri: text(),
+		atpCid: text(),
 		createdAt: text().notNull().default(sql`(datetime('now', 'localtime'))`),
 		createdBy: text().references((): AnySQLiteColumn => users.id),
 		updatedAt: text(),
