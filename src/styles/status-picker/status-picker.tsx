@@ -27,9 +27,7 @@ const EMOJIS = [
 ];
 
 interface StatusPickerProps {
-	// did: string;
 	currentStatus?: string | null;
-	// onSuccess?: () => void;
 }
 
 export function StatusPicker({ currentStatus }: StatusPickerProps): React.ReactNode {
@@ -56,8 +54,6 @@ export function StatusPicker({ currentStatus }: StatusPickerProps): React.ReactN
 				}
 				throw new Error('Failed to update status');
 			}
-
-			// onSuccess?.();
 		} catch (err) {
 			// biome-ignore lint/suspicious/noConsole: temporary during implementation
 			console.error('Failed to update status:', err);
