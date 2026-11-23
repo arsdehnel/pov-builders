@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
+import { getOAuthClient, type OAuthSession } from 'rwsdk-atp/auth';
 import { saveSession } from 'rwsdk-atp/browser-sessions';
-import { getOAuthClient, type OAuthSession } from 'rwsdk-atp/oauth';
 import { upsertUser } from '@/repositories';
 
 async function get({ ctx, request, response }: RequestInfo): Promise<Response> {

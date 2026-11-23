@@ -3,7 +3,7 @@
 import { env } from 'cloudflare:workers';
 import { Client, type DatetimeString } from '@atproto/lex';
 import { requestInfo } from 'rwsdk/worker';
-import { getOAuthClient, type OAuthSession } from 'rwsdk-atp/oauth';
+import { getOAuthClient, type OAuthSession } from 'rwsdk-atp/auth';
 import statusSchema from '@/lexicons/xyz/statusphere/status';
 import type { AppContext } from '@/types';
 
