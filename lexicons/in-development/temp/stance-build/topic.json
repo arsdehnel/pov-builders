@@ -1,0 +1,46 @@
+{
+	"id": "in-development.temp.stance-build.topic",
+	"lexicon": 1,
+	"defs": {
+		"strongRef": {
+			"type": "object",
+			"description": "A strong reference to a in-development.temp.stance-build.topic record",
+			"required": ["uri", "cid"],
+			"properties": {
+				"uri": { "type": "string", "format": "at-uri" },
+				"cid": { "type": "string", "format": "cid" }
+			}
+		},
+		"main": {
+			"description": "The top-level entity in the position data model defining the subject itself",
+			"type": "record",
+			"key": "tid",
+			"record": {
+				"type": "object",
+				"required": ["subdomain", "title", "createdAt"],
+				"properties": {
+					"subdomain": {
+						"description": "The subdomain/slug for the topic",
+						"maxLength": 20,
+						"minLength": 1,
+						"type": "string"
+					},
+					"title": {
+						"description": "The title-case name of the topic",
+						"maxLength": 100,
+						"minLength": 1,
+						"type": "string"
+					},
+					"createdAt": {
+						"format": "datetime",
+						"type": "string"
+					},
+					"updatedAt": {
+						"format": "datetime",
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}

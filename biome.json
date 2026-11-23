@@ -42,7 +42,8 @@
 			"!**/playwright-report",
 			"!**/test-results",
 			"!**/.pnpm-store",
-			"!**/lexicons"
+			"!**/lexicons/*",
+			"**/lexicons/in-development"
 		]
 	},
 	"overrides": [

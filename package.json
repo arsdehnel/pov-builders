@@ -28,6 +28,8 @@
 		"generate": "rw-scripts ensure-env && wrangler types --include-runtime false && tsx scripts/fix-env-types.ts",
 		"knip:check": "knip",
 		"knip:fix": "knip --fix",
+		"lex:build": "lex build --import-ext \"\"",
+		"lex:install": "lex install --ci",
 		"prepare": "husky",
 		"prettier:check": "prettier --check .",
 		"prettier:fix": "prettier --write .",

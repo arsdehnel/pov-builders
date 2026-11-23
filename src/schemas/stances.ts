@@ -8,12 +8,12 @@ const hexColor = z
 	.pipe(z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Color must be a valid 6-digit hex color code (e.g. #ff0000)'));
 
 const sharedFields = {
-	slug: requiredString('Slug', 63),
-	label: requiredString('Label', 255),
+	slug: requiredString('Slug', 30),
+	label: requiredString('Label', 100),
 	icon: requiredString('Icon', 255),
 	color: hexColor,
-	description: requiredString('Description'),
-	example: requiredString('Example'),
+	description: requiredString('Description', 500),
+	example: requiredString('Example', 500),
 	characterName: requiredString('Character name', 255),
 	characterTagline: requiredString('Character tagline', 255),
 	characterBio: requiredString('Character bio'),

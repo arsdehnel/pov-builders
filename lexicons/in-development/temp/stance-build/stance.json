@@ -1,0 +1,60 @@
+{
+	"id": "in-development.temp.stance-build.stance",
+	"lexicon": 1,
+	"defs": {
+		"strongRef": {
+			"type": "object",
+			"description": "A strong reference to a in-development.temp.stance-build.stance record",
+			"required": ["uri", "cid"],
+			"properties": {
+				"uri": { "type": "string", "format": "at-uri" },
+				"cid": { "type": "string", "format": "cid" }
+			}
+		},
+		"main": {
+			"description": "Stance definitions within the referenced topic",
+			"type": "record",
+			"key": "tid",
+			"record": {
+				"type": "object",
+				"required": ["topic", "slug", "label", "description", "order", "createdAt"],
+				"properties": {
+					"topic": {
+						"type": "ref",
+						"ref": "in-development.temp.stance-build.topic#strongRef"
+					},
+					"slug": {
+						"description": "A url-friendly identifier unique within a topic for the stance",
+						"maxLength": 30,
+						"minLength": 1,
+						"type": "string"
+					},
+					"label": {
+						"description": "The title-case version of the stance for humans to read",
+						"maxLength": 100,
+						"minLength": 1,
+						"type": "string"
+					},
+					"description": {
+						"description": "Longer but still brief description of the stance",
+						"maxLength": 500,
+						"minLength": 1,
+						"type": "string"
+					},
+					"order": {
+						"type": "integer",
+						"minimum": 0
+					},
+					"createdAt": {
+						"format": "datetime",
+						"type": "string"
+					},
+					"updatedAt": {
+						"format": "datetime",
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}

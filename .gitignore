@@ -71,5 +71,6 @@ data/*
 !data/.gitkeep
 
 # AT Protocol lexicons — run `pnpm lex:install && pnpm lex:generate` to rebuild
-lexicons/
+lexicons/*
+!lexicons/in-development
 src/lexicons/
