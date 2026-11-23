@@ -29,7 +29,7 @@ export default async function Pages__views__survey({ ctx, request }: RequestInfo
 	}));
 
 	return (
-		<StandardLayout pageTitle="Survey View" siteSection="views" ctx={ctx}>
+		<StandardLayout siteSection="views" ctx={ctx}>
 			<link rel="stylesheet" href={surveyStylesUrl} precedence="component" />
 			<link rel="stylesheet" href={stanceRadioCardsStylesUrl} precedence="component" />
 			<div className="survey-view">

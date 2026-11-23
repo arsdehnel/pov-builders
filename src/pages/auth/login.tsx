@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
-import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/oauth';
+import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/auth';
 import { LoginForm } from '@/components/login-form';
 import StandardLayout from '@/layouts/standard';
 
@@ -31,7 +31,7 @@ export default async function Pages__auth__login({ ctx }: RequestInfo): Promise<
 	}
 
 	return (
-		<StandardLayout pageTitle="Home" siteSection="home" ctx={ctx} userHandle={userHandle}>
+		<StandardLayout siteSection="home" ctx={ctx} userHandle={userHandle}>
 			{did ? (
 				<section className="section">
 					<p>Already logged in as {userHandle}</p>

@@ -39,7 +39,7 @@ export default async function Pages__views__reflect_value({ ctx, params }: Reque
 	}
 
 	return (
-		<StandardLayout pageTitle={value.label} siteSection="views" ctx={ctx}>
+		<StandardLayout siteSection="views" ctx={ctx}>
 			<link rel="stylesheet" href={reflectStylesUrl} precedence="component" />
 			<link rel="stylesheet" href={stanceRadioCardsStylesUrl} precedence="component" />
 			<div className="reflect-view">

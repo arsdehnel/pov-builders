@@ -12,7 +12,7 @@ export default async function Pages__profile__api_keys({ ctx }: RequestInfo): Pr
 	try {
 		const apiKeys = await getApiKeysByUserId(userId, ctx.logger);
 		return (
-			<StandardLayout siteSection="profile" pageTitle="Profile" ctx={ctx}>
+			<StandardLayout siteSection="profile" ctx={ctx}>
 				<h2>API Keys</h2>
 				<Suspense fallback={<div>Loading API keys...</div>}>
 					<ApiKeysTable apiKeys={apiKeys} userPermissions={ctx.permissions} />
@@ -28,7 +28,7 @@ export default async function Pages__profile__api_keys({ ctx }: RequestInfo): Pr
 	} catch (err) {
 		ctx.logger.error('Failed to fetch API keys', { err });
 		return (
-			<StandardLayout siteSection="profile" pageTitle="Profile" ctx={ctx}>
+			<StandardLayout siteSection="profile" ctx={ctx}>
 				<h2>API Keys</h2>
 				<p className="error">{import.meta.env.DEV && err instanceof Error ? err.message : 'Something went wrong.'}</p>
 			</StandardLayout>

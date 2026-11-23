@@ -79,7 +79,7 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 	});
 
 	return (
-		<StandardLayout pageTitle="Reflect" siteSection="views" ctx={ctx}>
+		<StandardLayout siteSection="views" ctx={ctx}>
 			<link rel="stylesheet" href={reflectStylesUrl} precedence="component" />
 			<link rel="stylesheet" href={valueCardsStylesUrl} precedence="component" />
 			<div className="reflect-view">

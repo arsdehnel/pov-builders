@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { ExitIcon } from '@radix-ui/react-icons';
 import type { RequestInfo } from 'rwsdk/worker';
-import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/oauth';
+import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/auth';
 import { LoginForm } from '@/components/login-form';
 import StandardLayout from '@/layouts/standard';
 import { StatusPicker } from '@/styles/status-picker/status-picker';
@@ -34,7 +34,7 @@ export default async function Pages__root({ ctx }: RequestInfo): Promise<React.J
 	}
 
 	return (
-		<StandardLayout pageTitle="Home" siteSection="home" ctx={ctx} userHandle={userHandle}>
+		<StandardLayout siteSection="home" ctx={ctx} userHandle={userHandle}>
 			<p>Hey</p>
 			{did ? (
 				<section className="section">

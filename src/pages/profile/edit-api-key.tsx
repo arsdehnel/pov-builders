@@ -20,7 +20,7 @@ export default async function Pages__profile__edit_api_key({ ctx, params }: Requ
 	}
 
 	return (
-		<StandardLayout siteSection="profile" pageTitle="API Key" ctx={ctx}>
+		<StandardLayout siteSection="profile" ctx={ctx}>
 			<Suspense fallback={<div>Loading API Key...</div>}>
 				<h3>{apiKey?.id ? `Edit ${apiKey.name}` : 'New API Key'}</h3>
 				{apiKey?.id && (
