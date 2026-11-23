@@ -56,6 +56,19 @@ export const navItems: Record<string, NavItem[]> = {
 	main: [{ key: 'home', label: 'Home', href: '/', icon: HomeIcon, requiredPermission: '__controls:read' }],
 };
 
+export function topicUrl(subdomain: string, currentHostname: string): string {
+	if (import.meta.env.DEV) {
+		return `/dev/topic/${subdomain}`;
+	}
+	const cfDomain = 'stance.build';
+	const envs = ['integration', 'staging'];
+	const [firstPortion, ...rest] = currentHostname.split('.');
+	if (envs.includes(firstPortion) || firstPortion === cfDomain) {
+		return `https://${subdomain}.${currentHostname}`;
+	}
+	return `https://${subdomain}.${rest.join('.')}`;
+}
+
 export function getNavItems(navType: keyof typeof navItems, userPerms: Permission[] = []): NavItem[] {
 	const typeNavItems = navItems[navType];
 	return typeNavItems.filter(i => {

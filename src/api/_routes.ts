@@ -4,8 +4,6 @@ import { apiErrorResponse } from 'rwsdk-atp/response';
 import oauthRoutes from './oauth';
 import oauthClientMetadata from './oauth-client-metadata';
 import topicsRoutes from './topics';
-import webhookRoutes from './webhooks';
-
 export default [
 	except(error => apiErrorResponse(error, 'An error occurred', import.meta.env.DEV)),
 	route('/oauth/callback', oauthRoutes.callback),
@@ -18,6 +16,5 @@ export default [
 	route('/topics/:topicId/stances/:stanceId', topicsRoutes.topicStance),
 	route('/topics/:topicId/values', topicsRoutes.topicValues),
 	route('/topics/:topicId/values/:valueId', topicsRoutes.topicValue),
-	route('/webhooks/tap', webhookRoutes.tap),
 	route('*', () => Response.json({ success: false, error: 'Not found' }, { status: 404 })),
 ];

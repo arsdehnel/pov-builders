@@ -17,7 +17,6 @@ import Pages__root from '@/pages/home';
 import NotFound from '@/pages/not-found';
 import profileRoutes from '@/pages/profile/_routes';
 import viewRoutes from '@/pages/views/_routes';
-import tapRegistrations from '@/tap/registrations';
 
 export { BrowserSessionDurableObject } from 'rwsdk-atp/browser-sessions';
 export { AtpOAuthDurableObject } from 'rwsdk-atp/oauth';
@@ -43,7 +42,4 @@ const app = defineApp([
 	]),
 ]);
 
-export default {
-	fetch: app.fetch,
-	queue: tapRegistrations.workerQueueHelper,
-};
+export default { fetch: app.fetch };

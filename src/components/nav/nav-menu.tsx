@@ -1,26 +1,8 @@
 'use client';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { NavigationMenu } from 'radix-ui';
-import { VIEW_MODES } from '@/data/navigation';
+import { topicUrl, VIEW_MODES } from '@/data/navigation';
 import type { TopicDBRead } from '@/types';
-
-function devTopicUrl(topicSubdomain: string, _currentHostname: string): string {
-	return `/dev/topic/${topicSubdomain}`;
-}
-
-// topic.env.real-domain.com
-// env.real-domain.com
-// topic.real-domain.com
-// real-domain.com
-function cfTopicUrl(topicSubdomain: string, currentHostname: string): string {
-	const cfDomain = 'stance.build';
-	const envs = ['integration', 'staging'];
-	const [firstPortion, ...rest] = currentHostname.split('.');
-	if (envs.includes(firstPortion) || firstPortion === cfDomain) {
-		return `${topicSubdomain}.${currentHostname}`;
-	}
-	return `${topicSubdomain}.${rest.join('.')}`;
-}
 
 export default function NavMenu({
 	topics,
@@ -33,7 +15,6 @@ export default function NavMenu({
 	siteSection: string;
 	currentHostname: string;
 }): React.ReactNode {
-	const topicUrlGenerator = import.meta.env.DEV ? devTopicUrl : cfTopicUrl;
 	return (
 		<NavigationMenu.Root className="nav-menu-root">
 			<NavigationMenu.List className="nav-menu-list">
@@ -47,7 +28,7 @@ export default function NavMenu({
 							{topics.map(topic => (
 								<NavigationMenu.Link
 									key={topic.subdomain}
-									href={topicUrlGenerator(topic.subdomain, currentHostname)}
+									href={topicUrl(topic.subdomain, currentHostname)}
 									className="nav-menu-topic-card"
 									data-active={topic.subdomain === currentTopic || undefined}
 								>
