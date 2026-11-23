@@ -23,7 +23,7 @@
 		"dev": "pnpm run clean:vite && vite dev",
 		"dev:docker": "pnpm run clean:vite && vite dev --mode docker",
 		"dev:init": "rw-scripts dev-init",
-		"docker:down": "docker compose down -v",
+		"docker:down": "docker compose down -v --remove-orphans",
 		"docker:sync-vars": "sh scripts/sync-dev-vars.sh",
 		"docker:up": "docker compose up -d",
 		"generate": "rw-scripts ensure-env && wrangler types --include-runtime false && tsx scripts/fix-env-types.ts",
