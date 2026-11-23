@@ -2,7 +2,7 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { validateUuid } from 'rwsdk-atp/utils';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { deleteStance, getStanceById, updateStance } from '@/repositories';
+import { deleteStance, getStanceById, setStanceAtpRecord, syncStanceAtpRecord, updateStance } from '@/repositories';
 import { stancesSchemas } from '@/schemas';
 
 export default {
@@ -39,6 +39,8 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 		const body = await request.json();
 		const parsed = stancesSchemas.apiUpdate.parse(body);
 		const stance = await updateStance(id, parsed, userId, ctx.logger);
+		const { uri, cid } = await syncStanceAtpRecord(stance, ctx.logger);
+		await setStanceAtpRecord(stance.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(stance);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error updating stance', import.meta.env.DEV);

@@ -2,7 +2,7 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { validateUuid } from 'rwsdk-atp/utils';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { deleteValue, getValueById, updateValue } from '@/repositories';
+import { deleteValue, getValueById, setValueAtpRecord, syncValueAtpRecord, updateValue } from '@/repositories';
 import { valuesSchemas } from '@/schemas';
 
 export default {
@@ -39,6 +39,8 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 		const body = await request.json();
 		const parsed = valuesSchemas.apiUpdate.parse(body);
 		const value = await updateValue(id, parsed, userId, ctx.logger);
+		const { uri, cid } = await syncValueAtpRecord(value, ctx.logger);
+		await setValueAtpRecord(value.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(value);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error updating value', import.meta.env.DEV);

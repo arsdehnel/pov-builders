@@ -1,5 +1,5 @@
 import { env } from 'cloudflare:workers';
-import { getOAuthClient } from 'rwsdk-atp/oauth';
+import { getOAuthClient } from 'rwsdk-atp/auth';
 
 async function get(): Promise<Response> {
 	const client = await getOAuthClient(env);

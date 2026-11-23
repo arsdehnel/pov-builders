@@ -2,7 +2,19 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { validateUuid } from 'rwsdk-atp/utils';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { deleteTopic, getTopicById, updateTopic } from '@/repositories';
+import {
+	deleteTopic,
+	getStancesByTopicId,
+	getTopicById,
+	getValuesByTopicId,
+	setStanceAtpRecord,
+	setTopicAtpRecord,
+	setValueAtpRecord,
+	syncStanceAtpRecord,
+	syncTopicAtpRecord,
+	syncValueAtpRecord,
+	updateTopic,
+} from '@/repositories';
 import { topicsSchemas } from '@/schemas';
 
 export default {
@@ -43,6 +55,19 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 		const body = await request.json();
 		const parsed = topicsSchemas.apiUpdate.parse(body);
 		const topic = await updateTopic(id, parsed, userId, ctx.logger);
+		const { uri, cid } = await syncTopicAtpRecord(topic, ctx.logger);
+		await setTopicAtpRecord(topic.id, uri, cid, ctx.logger);
+
+		const [stances, values] = await Promise.all([getStancesByTopicId(id, ctx.logger), getValuesByTopicId(id, ctx.logger)]);
+		for (const stance of stances) {
+			const { uri: stanceUri, cid: stanceCid } = await syncStanceAtpRecord(stance, ctx.logger);
+			await setStanceAtpRecord(stance.id, stanceUri, stanceCid, ctx.logger);
+		}
+		for (const value of values) {
+			const { uri: valueUri, cid: valueCid } = await syncValueAtpRecord(value, ctx.logger);
+			await setValueAtpRecord(value.id, valueUri, valueCid, ctx.logger);
+		}
+
 		return apiSuccessResponse(topic);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error updating topic', import.meta.env.DEV);

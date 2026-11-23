@@ -19,7 +19,7 @@ export const apiKeys = snakeCase.table(
 		apiKey: text()
 			.notNull()
 			.$defaultFn(() => `sb_std_${crypto.randomBytes(32).toString('hex')}`),
-		createdAt: text().notNull().default(sql`(datetime('now', 'localtime'))`),
+		createdAt: text().notNull().default(sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`),
 		createdBy: text().references((): AnySQLiteColumn => users.id),
 		updatedAt: text(),
 		updatedBy: text().references((): AnySQLiteColumn => users.id),

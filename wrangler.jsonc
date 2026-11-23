@@ -29,7 +29,7 @@
 				"class_name": "BrowserSessionDurableObject"
 			},
 			{
-				"name": "DO_OAUTH_TOKEN",
+				"name": "DO_ATP_AUTH",
 				"class_name": "AtpOAuthDurableObject"
 			}
 		]
@@ -64,7 +64,13 @@
 		]
 	},
 	"secrets": {
-		"required": ["BROWSER_SESSION_SIGNING_KEY", "OAUTH_STATE_KV_ENCRYPTION_KEYS", "OAUTH_TOKEN_KV_ENCRYPTION_KEYS"]
+		"required": [
+			"BROWSER_SESSION_SIGNING_KEY",
+			"OAUTH_STATE_KV_ENCRYPTION_KEYS",
+			"OAUTH_TOKEN_KV_ENCRYPTION_KEYS",
+			"ATP_SERVICE_DID",
+			"ATP_SERVICE_APP_PASSWORD"
+		]
 	},
 
 	// Environment variables
@@ -83,7 +89,7 @@
 						"class_name": "BrowserSessionDurableObject"
 					},
 					{
-						"name": "DO_OAUTH_TOKEN",
+						"name": "DO_ATP_AUTH",
 						"class_name": "AtpOAuthDurableObject"
 					}
 				]

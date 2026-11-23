@@ -12,7 +12,7 @@ export const users = snakeCase.table(
 		did: text().primaryKey(),
 		handle: text(),
 		role: text({ enum: userDbRecordRoles }).default('BASIC').notNull(),
-		createdAt: text().notNull().default(sql`(datetime('now', 'localtime'))`),
+		createdAt: text().notNull().default(sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`),
 		createdBy: text().references((): AnySQLiteColumn => users.did),
 		updatedAt: text(),
 		updatedBy: text().references((): AnySQLiteColumn => users.did),

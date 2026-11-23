@@ -1,7 +1,7 @@
 import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { createTopic, getTopics } from '@/repositories';
+import { createTopic, getTopics, setTopicAtpRecord, syncTopicAtpRecord } from '@/repositories';
 import { topicsSchemas } from '@/schemas';
 
 export default {
@@ -32,6 +32,8 @@ export async function _postHandler({ request, ctx }: RequestInfo): Promise<Respo
 		const body = await request.json();
 		const parsed = topicsSchemas.apiInsert.parse(body);
 		const topic = await createTopic(parsed, userId, ctx.logger);
+		const { uri, cid } = await syncTopicAtpRecord(topic, ctx.logger);
+		await setTopicAtpRecord(topic.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(topic, 201);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error creating topic', import.meta.env.DEV);

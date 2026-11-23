@@ -21,7 +21,7 @@ export const positions = snakeCase.table(
 		overallStanceId: text()
 			.notNull()
 			.references((): AnySQLiteColumn => stances.id),
-		createdAt: text().notNull().default(sql`(datetime('now', 'localtime'))`),
+		createdAt: text().notNull().default(sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`),
 		createdBy: text().references((): AnySQLiteColumn => users.id),
 		updatedAt: text(),
 		updatedBy: text().references((): AnySQLiteColumn => users.id),

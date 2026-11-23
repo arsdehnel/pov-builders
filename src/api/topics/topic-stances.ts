@@ -2,7 +2,7 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { validateUuid } from 'rwsdk-atp/utils';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { createStance, getStancesByTopicId } from '@/repositories';
+import { createStance, getStancesByTopicId, setStanceAtpRecord, syncStanceAtpRecord } from '@/repositories';
 import { stancesSchemas } from '@/schemas';
 
 export default {
@@ -38,6 +38,8 @@ export async function _postHandler({ request, ctx, params }: RequestInfo): Promi
 		const body = await request.json();
 		const parsed = stancesSchemas.apiInsert.parse(body);
 		const stance = await createStance({ ...parsed, topicId }, userId, ctx.logger);
+		const { uri, cid } = await syncStanceAtpRecord(stance, ctx.logger);
+		await setStanceAtpRecord(stance.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(stance, 201);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error creating stance', import.meta.env.DEV);
