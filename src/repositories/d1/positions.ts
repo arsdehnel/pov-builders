@@ -24,7 +24,7 @@ export async function upsertPosition(
 			target: [positions.userId, positions.topicId, positions.label],
 			set: {
 				overallStanceId: data.overallStanceId,
-				updatedAt: sql`(datetime('now', 'localtime'))`,
+				updatedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`,
 				updatedBy: actingUserId,
 			},
 		})

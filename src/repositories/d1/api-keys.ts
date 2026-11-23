@@ -77,7 +77,7 @@ export async function deleteApiKey(apiKeyId: string, actingUserId: string, logge
 	logger.debug(`Deleting API key ${apiKeyId}`);
 	const deleted = await db
 		.update(apiKeys)
-		.set({ deletedAt: sql`(datetime('now', 'localtime'))`, deletedBy: actingUserId })
+		.set({ deletedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`, deletedBy: actingUserId })
 		.where(eq(apiKeys.id, apiKeyId))
 		.returning();
 
@@ -107,7 +107,7 @@ export async function updateApiKey(
 		.update(apiKeys)
 		.set({
 			...apiKey,
-			updatedAt: sql`(datetime('now', 'localtime'))`,
+			updatedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`,
 			updatedBy: actingUserId,
 		})
 		.where(eq(apiKeys.id, apiKeyId))

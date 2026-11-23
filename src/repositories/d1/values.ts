@@ -57,7 +57,7 @@ export async function updateValue(
 	logger.debug(`Updating value ${id}`);
 	const updated = await db
 		.update(values)
-		.set({ ...data, updatedAt: sql`(datetime('now', 'localtime'))`, updatedBy: actingUserId })
+		.set({ ...data, updatedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`, updatedBy: actingUserId })
 		.where(and(eq(values.id, id), isNull(values.deletedAt)))
 		.returning();
 
@@ -98,7 +98,7 @@ export async function deleteValue(id: string, actingUserId: string, logger: Logg
 	logger.debug(`Deleting value ${id}`);
 	const deleted = await db
 		.update(values)
-		.set({ deletedAt: sql`(datetime('now', 'localtime'))`, deletedBy: actingUserId })
+		.set({ deletedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`, deletedBy: actingUserId })
 		.where(eq(values.id, id))
 		.returning();
 

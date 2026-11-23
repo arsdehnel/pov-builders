@@ -23,7 +23,7 @@ export async function upsertPositionValue(
 			target: [positionValues.positionId, positionValues.valueId],
 			set: {
 				stanceId: data.stanceId,
-				updatedAt: sql`(datetime('now', 'localtime'))`,
+				updatedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`,
 				updatedBy: actingUserId,
 			},
 		})

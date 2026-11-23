@@ -61,7 +61,7 @@ export async function updateStance(
 	logger.debug(`Updating stance ${id}`);
 	const updated = await db
 		.update(stances)
-		.set({ ...data, updatedAt: sql`(datetime('now', 'localtime'))`, updatedBy: actingUserId })
+		.set({ ...data, updatedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`, updatedBy: actingUserId })
 		.where(and(eq(stances.id, id), isNull(stances.deletedAt)))
 		.returning();
 
@@ -102,7 +102,7 @@ export async function deleteStance(id: string, actingUserId: string, logger: Log
 	logger.debug(`Deleting stance ${id}`);
 	const deleted = await db
 		.update(stances)
-		.set({ deletedAt: sql`(datetime('now', 'localtime'))`, deletedBy: actingUserId })
+		.set({ deletedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`, deletedBy: actingUserId })
 		.where(eq(stances.id, id))
 		.returning();
 

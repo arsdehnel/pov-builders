@@ -67,7 +67,7 @@ export async function updateTopic(
 	logger.debug(`Updating topic ${id}`);
 	const updated = await db
 		.update(topics)
-		.set({ ...data, updatedAt: sql`(datetime('now', 'localtime'))`, updatedBy: actingUserId })
+		.set({ ...data, updatedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`, updatedBy: actingUserId })
 		.where(and(eq(topics.id, id), isNull(topics.deletedAt)))
 		.returning();
 
@@ -108,7 +108,7 @@ export async function deleteTopic(id: string, actingUserId: string, logger: Logg
 	logger.debug(`Deleting topic ${id}`);
 	const deleted = await db
 		.update(topics)
-		.set({ deletedAt: sql`(datetime('now', 'localtime'))`, deletedBy: actingUserId })
+		.set({ deletedAt: sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`, deletedBy: actingUserId })
 		.where(eq(topics.id, id))
 		.returning();
 
