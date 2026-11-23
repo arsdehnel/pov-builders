@@ -8,6 +8,10 @@
 #   bob.devnet.test  (password: bob-devnet-pass)
 #   carol.devnet.test  (password: carol-devnet-pass)
 #
+# A service account (service.devnet.test) is also created with an app password
+# for PasswordSession auth. Run 'pnpm docker:sync-vars' to copy its credentials
+# into .dev.vars.
+#
 # Services adapted from https://github.com/OpenMeet-Team/atproto-devnet
 
 services:

@@ -55,12 +55,58 @@ create_account() {
     >> "${DATA_DIR}/accounts.env"
 }
 
+# create_service_account creates a PDS account and then provisions an app
+# password for it. App passwords are the credential used by PasswordSession
+# (service-to-PDS auth) — the main account password is not stored.
+create_service_account() {
+  local handle="$1"
+  local email="$2"
+  local password="$3"
+  local var_prefix="$4"
+  local app_password_name="$5"
+
+  create_account "$handle" "$email" "$password" "$var_prefix"
+
+  local did
+  did=$(grep "^${var_prefix}_DID=" "${DATA_DIR}/accounts.env" | cut -d= -f2)
+  if [ -z "$did" ] || [ "$did" = "null" ]; then
+    log "WARNING: Skipping app password for ${handle} — no DID found"
+    return 0
+  fi
+
+  log "Authenticating ${handle} to provision app password..."
+  AUTH_RESULT=$(curl -s -X POST "${PDS_URL}/xrpc/com.atproto.server.createSession" \
+    -H "Content-Type: application/json" \
+    -d "{\"identifier\": \"${did}\", \"password\": \"${password}\"}")
+
+  ACCESS_JWT=$(echo "$AUTH_RESULT" | jq -r '.accessJwt')
+  if [ "$ACCESS_JWT" = "null" ] || [ -z "$ACCESS_JWT" ]; then
+    log "WARNING: Failed to authenticate ${handle}: $(echo "$AUTH_RESULT" | jq -r '.message // "unknown error"')"
+    return 0
+  fi
+
+  APP_PASS_RESULT=$(curl -s -X POST "${PDS_URL}/xrpc/com.atproto.server.createAppPassword" \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer ${ACCESS_JWT}" \
+    -d "{\"name\": \"${app_password_name}\"}")
+
+  APP_PASSWORD=$(echo "$APP_PASS_RESULT" | jq -r '.password')
+  if [ "$APP_PASSWORD" = "null" ] || [ -z "$APP_PASSWORD" ]; then
+    log "WARNING: Failed to create app password for ${handle}: $(echo "$APP_PASS_RESULT" | jq -r '.message // "unknown error"')"
+    return 0
+  fi
+
+  log "Created app password for ${handle}"
+  printf '%s_APP_PASSWORD=%s\n' "$var_prefix" "$APP_PASSWORD" >> "${DATA_DIR}/accounts.env"
+}
+
 : > "${DATA_DIR}/accounts.env"
 printf 'DEVNET_INVITE_CODE=%s\n' "$INVITE_CODE" >> "${DATA_DIR}/accounts.env"
 
 create_account "alice${HANDLE_DOMAIN}" "alice@devnet.test" "alice-devnet-pass" "ALICE"
 create_account "bob${HANDLE_DOMAIN}" "bob@devnet.test" "bob-devnet-pass" "BOB"
 create_account "carol${HANDLE_DOMAIN}" "carol@devnet.test" "carol-devnet-pass" "CAROL"
+create_service_account "stance-build${HANDLE_DOMAIN}" "stance-build@devnet.test" "stance-build-devnet-pass" "SERVICE" "stance-build"
 
 chmod 666 "${DATA_DIR}/accounts.env" 2>/dev/null || true
 
