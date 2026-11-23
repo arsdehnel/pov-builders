@@ -22,30 +22,32 @@ const permissions = {
 		logout: ['BASIC', 'ADMIN'],
 	},
 	positions: {
-		read: ['*'],
+		read: ['BASIC', 'ADMIN'],
+		create: [],
 		update: ['BASIC', 'ADMIN'],
+		delete: ['BASIC', 'ADMIN'],
 	},
 	profile: {
 		read: ['BASIC', 'ADMIN'],
 		update: ['ADMIN'],
 	},
 	topics: {
-		read: ['BASIC', 'ADMIN'],
+		read: ['*'],
 		create: ['ADMIN'],
 		update: ['ADMIN'],
 		delete: ['ADMIN'],
 	},
 	values: {
-		read: ['BASIC', 'ADMIN'],
+		read: ['*'],
 		create: ['ADMIN'],
 		update: ['ADMIN'],
 		delete: ['ADMIN'],
 	},
 	stances: {
-		read: ['BASIC', 'ADMIN'],
-		create: ['BASIC', 'ADMIN'],
-		update: ['BASIC', 'ADMIN'],
-		delete: ['BASIC', 'ADMIN'],
+		read: ['*'],
+		create: ['ADMIN'],
+		update: ['ADMIN'],
+		delete: ['ADMIN'],
 	},
 } as const satisfies Record<string, Record<string, RoleEntry[]>>;
 
