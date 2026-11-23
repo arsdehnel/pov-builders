@@ -30,7 +30,7 @@
 			},
 			{
 				"name": "DO_OAUTH_TOKEN",
-				"class_name": "OAuthTokenDurableObject"
+				"class_name": "AtpOAuthDurableObject"
 			}
 		]
 	},
@@ -45,7 +45,7 @@
 	],
 	"exports": {
 		"BrowserSessionDurableObject": { "type": "durable-object", "storage": "sqlite" },
-		"OAuthTokenDurableObject": { "type": "durable-object", "storage": "sqlite" }
+		"AtpOAuthDurableObject": { "type": "durable-object", "storage": "sqlite" }
 	},
 	"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "KV_OAUTH_STATE_LOCAL" }],
 	"queues": {
@@ -84,7 +84,7 @@
 					},
 					{
 						"name": "DO_OAUTH_TOKEN",
-						"class_name": "OAuthTokenDurableObject"
+						"class_name": "AtpOAuthDurableObject"
 					}
 				]
 			},

@@ -20,7 +20,7 @@ import viewRoutes from '@/pages/views/_routes';
 import tapRegistrations from '@/tap/registrations';
 
 export { BrowserSessionDurableObject } from 'rwsdk-atp/browser-sessions';
-export { OAuthTokenDurableObject } from 'rwsdk-atp/oauth';
+export { AtpOAuthDurableObject } from 'rwsdk-atp/oauth';
 
 const app = defineApp([
 	botMiddleware,
