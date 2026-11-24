@@ -21,7 +21,7 @@ const permissions = {
 		login: ['PUBLIC'],
 		logout: ['BASIC', 'ADMIN'],
 	},
-	positions: {
+	views: {
 		read: ['BASIC', 'ADMIN'],
 		create: [],
 		update: ['BASIC', 'ADMIN'],

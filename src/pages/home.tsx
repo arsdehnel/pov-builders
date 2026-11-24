@@ -14,9 +14,9 @@ export default async function Pages__root({ ctx, request }: RequestInfo): Promis
 			<link rel="stylesheet" href={homeStylesUrl} precedence="page" />
 			<div className="home-hero">
 				<div className="home-hero-inner">
-					<h1>Build your stance.</h1>
+					<h1>Build your POV</h1>
 					<p>
-						Take a position on the topics that matter. Share it verifiably with the world via AT Protocol, with full control over
+						Build your POV on the topics that matter. Share it verifiably with the world via AT Protocol, with full control over
 						your own data.
 					</p>
 				</div>

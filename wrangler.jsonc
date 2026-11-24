@@ -36,7 +36,7 @@
 	},
 	"d1_databases": [
 		{
-			"binding": "D1_STANCE_BUILD",
+			"binding": "D1_POV_BUILDERS",
 			"database_name": "pov-builders-local",
 			"database_id": "local",
 			"migrations_dir": "drizzle",
@@ -81,7 +81,7 @@
 			},
 			"d1_databases": [
 				{
-					"binding": "D1_STANCE_BUILD",
+					"binding": "D1_POV_BUILDERS",
 					"database_name": "pov-builders-local",
 					"database_id": "local",
 					"migrations_dir": "drizzle",

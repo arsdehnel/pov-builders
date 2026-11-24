@@ -14,14 +14,14 @@ export default async function Pages__views__survey({ ctx, request }: RequestInfo
 	// Redirect users who already have an overall stance, unless they're here to change it.
 	const isChanging = new URL(request.url).searchParams.has('change');
 	if (!isChanging && ctx.user) {
-		let hasPosition = false;
+		let hasView = false;
 		try {
-			await d1.getPositionByUserIdAndTopicId(ctx.user.id, ctx.topic.id, ctx.logger);
-			hasPosition = true;
+			await d1.getViewByUserIdAndTopicId(ctx.user.id, ctx.topic.id, ctx.logger);
+			hasView = true;
 		} catch (err) {
 			if (!(err instanceof NoRecordFoundError)) throw err;
 		}
-		if (hasPosition) {
+		if (hasView) {
 			throw new Response(null, { status: 302, headers: { Location: '/views/survey/reflect' } });
 		}
 	}

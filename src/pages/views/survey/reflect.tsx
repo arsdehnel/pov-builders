@@ -21,17 +21,17 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 
 	const stanceMap = new Map<string, StanceSummary>(stances.map(s => [s.id, { icon: s.icon, label: s.label, color: s.color }]));
 
-	const positionValueMap = new Map<string, StanceSummary>(); // valueId → stance
+	const viewValueMap = new Map<string, StanceSummary>(); // valueId → stance
 	let overallStance: StanceSummary | undefined;
 	const userId = ctx.user?.id;
 	if (userId) {
 		try {
-			const position = await d1.getPositionByUserIdAndTopicId(userId, ctx.topic.id, ctx.logger);
-			overallStance = stanceMap.get(position.overallStanceId);
-			const positionValues = await d1.getPositionValuesByPositionId(position.id, ctx.logger);
-			for (const pv of positionValues) {
+			const view = await d1.getViewByUserIdAndTopicId(userId, ctx.topic.id, ctx.logger);
+			overallStance = stanceMap.get(view.overallStanceId);
+			const viewValues = await d1.getViewValuesByViewId(view.id, ctx.logger);
+			for (const pv of viewValues) {
 				const stance = stanceMap.get(pv.stanceId);
-				if (stance) positionValueMap.set(pv.valueId, stance);
+				if (stance) viewValueMap.set(pv.valueId, stance);
 			}
 		} catch (err) {
 			if (err instanceof NoRecordFoundError) {
@@ -41,14 +41,14 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 		}
 	}
 
-	const unexploredValues = values.filter(v => !positionValueMap.has(v.id));
-	const exploredValues = values.filter(v => positionValueMap.has(v.id));
+	const unexploredValues = values.filter(v => !viewValueMap.has(v.id));
+	const exploredValues = values.filter(v => viewValueMap.has(v.id));
 	const OverallIcon = overallStance ? STANCE_ICONS[overallStance.icon] : null;
 	const isSplit = unexploredValues.length > 0 && exploredValues.length > 0;
 	const isAllExplored = unexploredValues.length === 0 && exploredValues.length > 0;
 
 	const exploredCards = exploredValues.map(value => {
-		const stance = positionValueMap.get(value.id);
+		const stance = viewValueMap.get(value.id);
 		if (!stance) return null;
 		const Icon = STANCE_ICONS[stance.icon];
 		return (
@@ -72,7 +72,7 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 					{
 						href: `/views/survey/reflect/${value.id}`,
 						label: 'Change',
-						requiredPermission: 'positions:update',
+						requiredPermission: 'views:update',
 					},
 				]}
 			/>
@@ -114,7 +114,7 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 											{
 												href: `/views/survey/reflect/${value.id}`,
 												label: 'Set',
-												requiredPermission: 'positions:update',
+												requiredPermission: 'views:update',
 											},
 										]}
 									>

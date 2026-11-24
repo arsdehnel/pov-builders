@@ -33,9 +33,9 @@ export default async function Pages__views__reflect_value({ ctx, params }: Reque
 	const userId = ctx.user?.id;
 	if (userId) {
 		try {
-			const position = await d1.getPositionByUserIdAndTopicId(userId, ctx.topic.id, ctx.logger);
-			const positionValues = await d1.getPositionValuesByPositionId(position.id, ctx.logger);
-			initialStanceId = positionValues.find(pv => pv.valueId === valueId)?.stanceId;
+			const view = await d1.getViewByUserIdAndTopicId(userId, ctx.topic.id, ctx.logger);
+			const viewValues = await d1.getViewValuesByViewId(view.id, ctx.logger);
+			initialStanceId = viewValues.find(pv => pv.valueId === valueId)?.stanceId;
 		} catch (err) {
 			if (err instanceof NoRecordFoundError) {
 				throw new Response(null, { status: 302, headers: { Location: '/views/survey' } });

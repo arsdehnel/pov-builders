@@ -1,8 +1,8 @@
 'use client';
 import { RadioGroup } from 'radix-ui';
 import { useState } from 'react';
-import { savePositionValue } from '@/actions/position-values';
-import { savePosition } from '@/actions/positions';
+import { saveViewValue } from '@/actions/view-values';
+import { saveView } from '@/actions/views';
 import { DSToast } from '@/components/design-system';
 import { STANCE_ICONS } from '@/content/icons-map';
 
@@ -33,10 +33,10 @@ export default function StanceRadioCards({
 	const [toastOpen, setToastOpen] = useState(false);
 	const [exiting, setExiting] = useState(false);
 
-	async function handleSavePosition(stanceId: string): Promise<void> {
+	async function handleSaveView(stanceId: string): Promise<void> {
 		const result = valueId
-			? await savePositionValue({ topicId, valueId, stanceId })
-			: await savePosition({ topicId, overallStanceId: stanceId });
+			? await saveViewValue({ topicId, valueId, stanceId })
+			: await saveView({ topicId, overallStanceId: stanceId });
 		if (result.success) {
 			if (redirectTo) {
 				setExiting(true);
@@ -56,7 +56,7 @@ export default function StanceRadioCards({
 				value={value}
 				onValueChange={(newValue: string): void => {
 					setValue(newValue);
-					void handleSavePosition(newValue);
+					void handleSaveView(newValue);
 				}}
 				name={name}
 				aria-label="Select your stance"
@@ -83,7 +83,7 @@ export default function StanceRadioCards({
 					);
 				})}
 			</RadioGroup.Root>
-			{!redirectTo && <DSToast open={toastOpen} onOpenChange={setToastOpen} title="Position saved" />}
+			{!redirectTo && <DSToast open={toastOpen} onOpenChange={setToastOpen} title="View saved" />}
 		</>
 	);
 }
