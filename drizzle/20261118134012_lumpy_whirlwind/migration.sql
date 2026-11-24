@@ -1,1 +1,0 @@
-ALTER TABLE `stances` ADD `icon` text NOT NULL DEFAULT '';
