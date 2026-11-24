@@ -72,5 +72,5 @@ data/*
 
 # AT Protocol lexicons — run `pnpm lex:install && pnpm lex:generate` to rebuild
 lexicons/*
-!lexicons/in-development
+!lexicons/builders
 src/lexicons/

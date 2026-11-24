@@ -15,7 +15,7 @@ export async function syncValueAtpRecord(value: ValueDBRead, logger: Logger): Pr
 	const client = await getServicePdsClient();
 
 	const record = {
-		$type: 'dev.stance-build.value' as const,
+		$type: 'builders.pov.value' as const,
 		topic: { uri: topic.atpUri, cid: topic.atpCid },
 		slug: value.slug,
 		label: value.label,

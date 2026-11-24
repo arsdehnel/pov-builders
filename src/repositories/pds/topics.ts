@@ -7,7 +7,7 @@ export async function syncTopicAtpRecord(topic: TopicDBRead, logger: Logger): Pr
 	const client = await getServicePdsClient();
 
 	const record = {
-		$type: 'dev.stance-build.topic' as const,
+		$type: 'builders.pov.topic' as const,
 		subdomain: topic.subdomain,
 		title: topic.title,
 		createdAt: topic.createdAt,

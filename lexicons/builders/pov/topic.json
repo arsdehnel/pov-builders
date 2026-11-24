@@ -1,10 +1,10 @@
 {
-	"id": "in-development.temp.stance-build.topic",
+	"id": "builders.pov.topic",
 	"lexicon": 1,
 	"defs": {
 		"strongRef": {
 			"type": "object",
-			"description": "A strong reference to a in-development.temp.stance-build.topic record",
+			"description": "A strong reference to a builders.pov.topic record",
 			"required": ["uri", "cid"],
 			"properties": {
 				"uri": { "type": "string", "format": "at-uri" },
@@ -12,7 +12,7 @@
 			}
 		},
 		"main": {
-			"description": "The top-level entity in the position data model defining the subject itself",
+			"description": "The top-level entity in the POV Builders data model defining the subject itself",
 			"type": "record",
 			"key": "tid",
 			"record": {

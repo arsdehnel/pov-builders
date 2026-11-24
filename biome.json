@@ -43,7 +43,7 @@
 			"!**/test-results",
 			"!**/.pnpm-store",
 			"!**/lexicons/*",
-			"**/lexicons/in-development"
+			"**/lexicons/builders"
 		]
 	},
 	"overrides": [

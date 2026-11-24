@@ -1,10 +1,10 @@
 {
-	"id": "in-development.temp.stance-build.value",
+	"id": "builders.pov.stance",
 	"lexicon": 1,
 	"defs": {
 		"strongRef": {
 			"type": "object",
-			"description": "A strong reference to a in-development.temp.stance-build.value record",
+			"description": "A strong reference to a builders.pov.stance record",
 			"required": ["uri", "cid"],
 			"properties": {
 				"uri": { "type": "string", "format": "at-uri" },
@@ -12,7 +12,7 @@
 			}
 		},
 		"main": {
-			"description": "Value definition within the referenced topic",
+			"description": "Stance definitions within the referenced topic",
 			"type": "record",
 			"key": "tid",
 			"record": {
@@ -21,22 +21,22 @@
 				"properties": {
 					"topic": {
 						"type": "ref",
-						"ref": "in-development.temp.stance-build.topic#strongRef"
+						"ref": "builders.pov.topic#strongRef"
 					},
 					"slug": {
-						"description": "A url-friendly identifier unique within a topic for the value",
+						"description": "A url-friendly identifier unique within a topic for the stance",
 						"maxLength": 30,
 						"minLength": 1,
 						"type": "string"
 					},
 					"label": {
-						"description": "The title-case version of the value for humans to read",
+						"description": "The title-case version of the stance for humans to read",
 						"maxLength": 100,
 						"minLength": 1,
 						"type": "string"
 					},
 					"description": {
-						"description": "Longer but still brief description of the value",
+						"description": "Longer but still brief description of the stance",
 						"maxLength": 500,
 						"minLength": 1,
 						"type": "string"

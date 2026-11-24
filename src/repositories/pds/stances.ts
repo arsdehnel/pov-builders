@@ -15,7 +15,7 @@ export async function syncStanceAtpRecord(stance: StanceDBRead, logger: Logger):
 	const client = await getServicePdsClient();
 
 	const record = {
-		$type: 'dev.stance-build.stance' as const,
+		$type: 'builders.pov.stance' as const,
 		topic: { uri: topic.atpUri, cid: topic.atpCid },
 		slug: stance.slug,
 		label: stance.label,
