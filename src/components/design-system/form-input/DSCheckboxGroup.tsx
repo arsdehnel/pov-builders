@@ -1,3 +1,5 @@
+import styles from './ds-checkbox-group.module.css';
+
 export function DSCheckboxGroup({
 	options,
 	value,
@@ -8,9 +10,9 @@ export function DSCheckboxGroup({
 	onChange: (value: string[]) => void;
 }): React.ReactNode {
 	return (
-		<>
+		<div className={styles['ds-checkbox-group']}>
 			{options.map(option => (
-				<label key={option.value}>
+				<label key={option.value} className={styles['ds-checkbox-group-item']}>
 					<input
 						type="checkbox"
 						checked={value.includes(option.value)}
@@ -26,6 +28,6 @@ export function DSCheckboxGroup({
 					{option.label}
 				</label>
 			))}
-		</>
+		</div>
 	);
 }
