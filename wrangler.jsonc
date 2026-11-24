@@ -3,7 +3,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 
 	// Name of your worker
-	"name": "stance-build",
+	"name": "pov-builders",
 
 	// Entry point for your worker
 	"main": "src/worker.tsx",
@@ -37,7 +37,7 @@
 	"d1_databases": [
 		{
 			"binding": "D1_STANCE_BUILD",
-			"database_name": "stance-build-local",
+			"database_name": "pov-builders-local",
 			"database_id": "local",
 			"migrations_dir": "drizzle",
 			"migrations_pattern": "drizzle/*/migration.sql"
@@ -61,7 +61,7 @@
 	// Environment variables
 	"vars": {
 		"ATPROTO_OAUTH_SCOPE": "atproto",
-		"SESSION_ID_COOKIE_KEY": "stance-build-session-id",
+		"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
 		"SESSION_TIMEOUT_SECONDS": 1209600
 	},
 
@@ -82,7 +82,7 @@
 			"d1_databases": [
 				{
 					"binding": "D1_STANCE_BUILD",
-					"database_name": "stance-build-local",
+					"database_name": "pov-builders-local",
 					"database_id": "local",
 					"migrations_dir": "drizzle",
 					"migrations_pattern": "drizzle/*/migration.sql"
@@ -94,7 +94,7 @@
 			},
 			"vars": {
 				"ATPROTO_OAUTH_SCOPE": "atproto",
-				"SESSION_ID_COOKIE_KEY": "stance-build-session-id",
+				"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
 				"SESSION_TIMEOUT_SECONDS": 1209600,
 				"ATPROTO_PDS_URL": "http://localhost:3000",
 				"ATPROTO_PLC_URL": "http://localhost:2582"

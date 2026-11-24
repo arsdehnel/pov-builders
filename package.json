@@ -1,8 +1,8 @@
 {
-	"name": "stance-build",
+	"name": "pov-builders",
 	"version": "0.0.1",
 	"private": true,
-	"description": "Build a real and shareable stance on the messy topics of the real world",
+	"description": "Build a real and shareable POV on the messy topics of the real world and published to the AT Proto",
 	"keywords": [],
 	"license": "MIT",
 	"author": "",

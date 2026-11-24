@@ -106,7 +106,7 @@ printf 'DEVNET_INVITE_CODE=%s\n' "$INVITE_CODE" >> "${DATA_DIR}/accounts.env"
 create_account "alice${HANDLE_DOMAIN}" "alice@devnet.test" "alice-devnet-pass" "ALICE"
 create_account "bob${HANDLE_DOMAIN}" "bob@devnet.test" "bob-devnet-pass" "BOB"
 create_account "carol${HANDLE_DOMAIN}" "carol@devnet.test" "carol-devnet-pass" "CAROL"
-create_service_account "stance-build${HANDLE_DOMAIN}" "stance-build@devnet.test" "stance-build-devnet-pass" "SERVICE" "stance-build"
+create_service_account "pov-builders${HANDLE_DOMAIN}" "pov-builders@devnet.test" "pov-builders-devnet-pass" "SERVICE" "pov-builders"
 
 chmod 666 "${DATA_DIR}/accounts.env" 2>/dev/null || true
 
