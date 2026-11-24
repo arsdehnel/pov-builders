@@ -2,27 +2,25 @@ import crypto from 'node:crypto';
 import { sql } from 'drizzle-orm';
 import { type AnySQLiteColumn, snakeCase, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { stances } from './stances';
-import { topics } from './topics';
 import { users } from './users';
+import { values } from './values';
+import { views } from './views';
 
-export const positions = snakeCase.table(
-	'positions',
+export const viewValues = snakeCase.table(
+	'view_values',
 	{
 		id: text()
 			.primaryKey()
 			.$defaultFn(() => crypto.randomUUID()),
-		userId: text()
+		viewId: text()
 			.notNull()
-			.references((): AnySQLiteColumn => users.id),
-		topicId: text()
+			.references((): AnySQLiteColumn => views.id),
+		valueId: text()
 			.notNull()
-			.references((): AnySQLiteColumn => topics.id),
-		label: text().notNull(),
-		overallStanceId: text()
+			.references((): AnySQLiteColumn => values.id),
+		stanceId: text()
 			.notNull()
 			.references((): AnySQLiteColumn => stances.id),
-		atpUri: text(),
-		atpCid: text(),
 		createdAt: text().notNull().default(sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`),
 		createdBy: text().references((): AnySQLiteColumn => users.id),
 		updatedAt: text(),
@@ -30,5 +28,5 @@ export const positions = snakeCase.table(
 		deletedAt: text(),
 		deletedBy: text().references((): AnySQLiteColumn => users.id),
 	},
-	table => [uniqueIndex('positions_user_id_topic_id_label_unique').on(table.userId, table.topicId, table.label)],
+	table => [uniqueIndex('view_values_view_id_value_id_unique').on(table.viewId, table.valueId)],
 );

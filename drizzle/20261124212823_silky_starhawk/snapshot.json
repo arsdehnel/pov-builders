@@ -1,0 +1,1470 @@
+{
+	"version": "7",
+	"dialect": "sqlite",
+	"id": "ac98e801-dc02-4665-b759-5db80cf5eb04",
+	"prevIds": ["00000000-0000-0000-0000-000000000000"],
+	"ddl": [
+		{
+			"name": "api_keys",
+			"entityType": "tables"
+		},
+		{
+			"name": "stances",
+			"entityType": "tables"
+		},
+		{
+			"name": "topics",
+			"entityType": "tables"
+		},
+		{
+			"name": "users",
+			"entityType": "tables"
+		},
+		{
+			"name": "values",
+			"entityType": "tables"
+		},
+		{
+			"name": "view_values",
+			"entityType": "tables"
+		},
+		{
+			"name": "views",
+			"entityType": "tables"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "id",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "user_id",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "name",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "'[]'",
+			"generated": null,
+			"name": "permissions",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "revoke_at",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "api_key",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
+			"generated": null,
+			"name": "created_at",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "created_by",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_at",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_by",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_at",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_by",
+			"entityType": "columns",
+			"table": "api_keys"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "id",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "topic_id",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "slug",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "label",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "icon",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "color",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "description",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "example",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "character_name",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "character_tagline",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "character_bio",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "order",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "atp_uri",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "atp_cid",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
+			"generated": null,
+			"name": "created_at",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "created_by",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_at",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_by",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_at",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_by",
+			"entityType": "columns",
+			"table": "stances"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "id",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "subdomain",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "title",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "atp_uri",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "atp_cid",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
+			"generated": null,
+			"name": "created_at",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "created_by",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_at",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_by",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_at",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_by",
+			"entityType": "columns",
+			"table": "topics"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "id",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "did",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "handle",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "'BASIC'",
+			"generated": null,
+			"name": "role",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
+			"generated": null,
+			"name": "created_at",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "created_by",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_at",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_by",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_at",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_by",
+			"entityType": "columns",
+			"table": "users"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "id",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "topic_id",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "slug",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "label",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "description",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "integer",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "order",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "atp_uri",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "atp_cid",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
+			"generated": null,
+			"name": "created_at",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "created_by",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_at",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_by",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_at",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_by",
+			"entityType": "columns",
+			"table": "values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "id",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "view_id",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "value_id",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "stance_id",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
+			"generated": null,
+			"name": "created_at",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "created_by",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_at",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_by",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_at",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_by",
+			"entityType": "columns",
+			"table": "view_values"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "id",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "user_id",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "topic_id",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "label",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "overall_stance_id",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "atp_uri",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "atp_cid",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": true,
+			"autoincrement": false,
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))",
+			"generated": null,
+			"name": "created_at",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "created_by",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_at",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "updated_by",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_at",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"type": "text",
+			"notNull": false,
+			"autoincrement": false,
+			"default": null,
+			"generated": null,
+			"name": "deleted_by",
+			"entityType": "columns",
+			"table": "views"
+		},
+		{
+			"columns": ["user_id"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "CASCADE",
+			"nameExplicit": false,
+			"name": "fk_api_keys_user_id_users_id_fk",
+			"entityType": "fks",
+			"table": "api_keys"
+		},
+		{
+			"columns": ["created_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_api_keys_created_by_users_id_fk",
+			"entityType": "fks",
+			"table": "api_keys"
+		},
+		{
+			"columns": ["updated_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_api_keys_updated_by_users_id_fk",
+			"entityType": "fks",
+			"table": "api_keys"
+		},
+		{
+			"columns": ["deleted_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_api_keys_deleted_by_users_id_fk",
+			"entityType": "fks",
+			"table": "api_keys"
+		},
+		{
+			"columns": ["topic_id"],
+			"tableTo": "topics",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_stances_topic_id_topics_id_fk",
+			"entityType": "fks",
+			"table": "stances"
+		},
+		{
+			"columns": ["created_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_stances_created_by_users_id_fk",
+			"entityType": "fks",
+			"table": "stances"
+		},
+		{
+			"columns": ["updated_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_stances_updated_by_users_id_fk",
+			"entityType": "fks",
+			"table": "stances"
+		},
+		{
+			"columns": ["deleted_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_stances_deleted_by_users_id_fk",
+			"entityType": "fks",
+			"table": "stances"
+		},
+		{
+			"columns": ["created_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_topics_created_by_users_id_fk",
+			"entityType": "fks",
+			"table": "topics"
+		},
+		{
+			"columns": ["updated_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_topics_updated_by_users_id_fk",
+			"entityType": "fks",
+			"table": "topics"
+		},
+		{
+			"columns": ["deleted_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_topics_deleted_by_users_id_fk",
+			"entityType": "fks",
+			"table": "topics"
+		},
+		{
+			"columns": ["created_by"],
+			"tableTo": "users",
+			"columnsTo": ["did"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_users_created_by_users_did_fk",
+			"entityType": "fks",
+			"table": "users"
+		},
+		{
+			"columns": ["updated_by"],
+			"tableTo": "users",
+			"columnsTo": ["did"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_users_updated_by_users_did_fk",
+			"entityType": "fks",
+			"table": "users"
+		},
+		{
+			"columns": ["deleted_by"],
+			"tableTo": "users",
+			"columnsTo": ["did"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_users_deleted_by_users_did_fk",
+			"entityType": "fks",
+			"table": "users"
+		},
+		{
+			"columns": ["topic_id"],
+			"tableTo": "topics",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_values_topic_id_topics_id_fk",
+			"entityType": "fks",
+			"table": "values"
+		},
+		{
+			"columns": ["created_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_values_created_by_users_id_fk",
+			"entityType": "fks",
+			"table": "values"
+		},
+		{
+			"columns": ["updated_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_values_updated_by_users_id_fk",
+			"entityType": "fks",
+			"table": "values"
+		},
+		{
+			"columns": ["deleted_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_values_deleted_by_users_id_fk",
+			"entityType": "fks",
+			"table": "values"
+		},
+		{
+			"columns": ["view_id"],
+			"tableTo": "views",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_view_values_view_id_views_id_fk",
+			"entityType": "fks",
+			"table": "view_values"
+		},
+		{
+			"columns": ["value_id"],
+			"tableTo": "values",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_view_values_value_id_values_id_fk",
+			"entityType": "fks",
+			"table": "view_values"
+		},
+		{
+			"columns": ["stance_id"],
+			"tableTo": "stances",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_view_values_stance_id_stances_id_fk",
+			"entityType": "fks",
+			"table": "view_values"
+		},
+		{
+			"columns": ["created_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_view_values_created_by_users_id_fk",
+			"entityType": "fks",
+			"table": "view_values"
+		},
+		{
+			"columns": ["updated_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_view_values_updated_by_users_id_fk",
+			"entityType": "fks",
+			"table": "view_values"
+		},
+		{
+			"columns": ["deleted_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_view_values_deleted_by_users_id_fk",
+			"entityType": "fks",
+			"table": "view_values"
+		},
+		{
+			"columns": ["user_id"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_views_user_id_users_id_fk",
+			"entityType": "fks",
+			"table": "views"
+		},
+		{
+			"columns": ["topic_id"],
+			"tableTo": "topics",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_views_topic_id_topics_id_fk",
+			"entityType": "fks",
+			"table": "views"
+		},
+		{
+			"columns": ["overall_stance_id"],
+			"tableTo": "stances",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_views_overall_stance_id_stances_id_fk",
+			"entityType": "fks",
+			"table": "views"
+		},
+		{
+			"columns": ["created_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_views_created_by_users_id_fk",
+			"entityType": "fks",
+			"table": "views"
+		},
+		{
+			"columns": ["updated_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_views_updated_by_users_id_fk",
+			"entityType": "fks",
+			"table": "views"
+		},
+		{
+			"columns": ["deleted_by"],
+			"tableTo": "users",
+			"columnsTo": ["id"],
+			"onUpdate": "NO ACTION",
+			"onDelete": "NO ACTION",
+			"nameExplicit": false,
+			"name": "fk_views_deleted_by_users_id_fk",
+			"entityType": "fks",
+			"table": "views"
+		},
+		{
+			"columns": ["id"],
+			"nameExplicit": false,
+			"name": "api_keys_pk",
+			"table": "api_keys",
+			"entityType": "pks"
+		},
+		{
+			"columns": ["id"],
+			"nameExplicit": false,
+			"name": "stances_pk",
+			"table": "stances",
+			"entityType": "pks"
+		},
+		{
+			"columns": ["id"],
+			"nameExplicit": false,
+			"name": "topics_pk",
+			"table": "topics",
+			"entityType": "pks"
+		},
+		{
+			"columns": ["id"],
+			"nameExplicit": false,
+			"name": "users_pk",
+			"table": "users",
+			"entityType": "pks"
+		},
+		{
+			"columns": ["id"],
+			"nameExplicit": false,
+			"name": "values_pk",
+			"table": "values",
+			"entityType": "pks"
+		},
+		{
+			"columns": ["id"],
+			"nameExplicit": false,
+			"name": "view_values_pk",
+			"table": "view_values",
+			"entityType": "pks"
+		},
+		{
+			"columns": ["id"],
+			"nameExplicit": false,
+			"name": "views_pk",
+			"table": "views",
+			"entityType": "pks"
+		},
+		{
+			"columns": [
+				{
+					"value": "user_id",
+					"isExpression": false
+				}
+			],
+			"isUnique": false,
+			"where": null,
+			"origin": "manual",
+			"name": "api_keys_user_id_idx",
+			"entityType": "indexes",
+			"table": "api_keys"
+		},
+		{
+			"columns": [
+				{
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
+					"value": "slug",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "stances_topic_id_slug_unique",
+			"entityType": "indexes",
+			"table": "stances"
+		},
+		{
+			"columns": [
+				{
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
+					"value": "order",
+					"isExpression": false
+				}
+			],
+			"isUnique": false,
+			"where": null,
+			"origin": "manual",
+			"name": "stances_topic_id_order_idx",
+			"entityType": "indexes",
+			"table": "stances"
+		},
+		{
+			"columns": [
+				{
+					"value": "subdomain",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "topics_subdomain_unique",
+			"entityType": "indexes",
+			"table": "topics"
+		},
+		{
+			"columns": [
+				{
+					"value": "did",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "users_did_idx",
+			"entityType": "indexes",
+			"table": "users"
+		},
+		{
+			"columns": [
+				{
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
+					"value": "slug",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "values_topic_id_slug_unique",
+			"entityType": "indexes",
+			"table": "values"
+		},
+		{
+			"columns": [
+				{
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
+					"value": "order",
+					"isExpression": false
+				}
+			],
+			"isUnique": false,
+			"where": null,
+			"origin": "manual",
+			"name": "values_topic_id_order_idx",
+			"entityType": "indexes",
+			"table": "values"
+		},
+		{
+			"columns": [
+				{
+					"value": "view_id",
+					"isExpression": false
+				},
+				{
+					"value": "value_id",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "view_values_view_id_value_id_unique",
+			"entityType": "indexes",
+			"table": "view_values"
+		},
+		{
+			"columns": [
+				{
+					"value": "user_id",
+					"isExpression": false
+				},
+				{
+					"value": "topic_id",
+					"isExpression": false
+				},
+				{
+					"value": "label",
+					"isExpression": false
+				}
+			],
+			"isUnique": true,
+			"where": null,
+			"origin": "manual",
+			"name": "views_user_id_topic_id_label_unique",
+			"entityType": "indexes",
+			"table": "views"
+		}
+	],
+	"renames": []
+}
