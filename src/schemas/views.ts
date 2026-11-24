@@ -5,6 +5,6 @@ const apiUpsertSchema = z.object({
 	overallStanceId: z.string().uuid(),
 });
 
-export const positionsSchemas = {
+export const viewsSchemas = {
 	apiUpsert: apiUpsertSchema,
 };
