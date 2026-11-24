@@ -1,3 +1,4 @@
-export { syncStanceAtpRecord } from './stances';
-export { syncTopicAtpRecord } from './topics';
-export { syncValueAtpRecord } from './values';
+export * from './positions';
+export * from './stances';
+export * from './topics';
+export * from './values';

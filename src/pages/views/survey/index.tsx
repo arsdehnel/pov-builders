@@ -1,7 +1,8 @@
 import type { RequestInfo } from 'rwsdk/worker';
+import { NoRecordFoundError } from 'rwsdk-atp/errors';
 import StanceRadioCards from '@/components/survey/stance-radio-cards';
 import StandardLayout from '@/layouts/standard';
-import { getPositionByUserIdAndTopicId, getStancesByTopicId } from '@/repositories';
+import { d1 } from '@/repositories';
 import stanceRadioCardsStylesUrl from '../../../components/survey/stance-radio-cards.less?url';
 import surveyStylesUrl from './survey.less?url';
 
@@ -13,13 +14,19 @@ export default async function Pages__views__survey({ ctx, request }: RequestInfo
 	// Redirect users who already have an overall stance, unless they're here to change it.
 	const isChanging = new URL(request.url).searchParams.has('change');
 	if (!isChanging && ctx.user) {
-		const existing = await getPositionByUserIdAndTopicId(ctx.user.id, ctx.topic.id, ctx.logger);
-		if (existing) {
+		let hasPosition = false;
+		try {
+			await d1.getPositionByUserIdAndTopicId(ctx.user.id, ctx.topic.id, ctx.logger);
+			hasPosition = true;
+		} catch (err) {
+			if (!(err instanceof NoRecordFoundError)) throw err;
+		}
+		if (hasPosition) {
 			throw new Response(null, { status: 302, headers: { Location: '/views/survey/reflect' } });
 		}
 	}
 
-	const stancesFromDb = await getStancesByTopicId(ctx.topic.id, ctx.logger);
+	const stancesFromDb = await d1.getStancesByTopicId(ctx.topic.id, ctx.logger);
 	const stances = stancesFromDb.map(s => ({
 		id: s.id,
 		icon: s.icon,

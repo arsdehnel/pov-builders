@@ -2,7 +2,7 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { validateUuid } from 'rwsdk-atp/utils';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { createValue, getValuesByTopicId, setValueAtpRecord, syncValueAtpRecord } from '@/repositories';
+import { d1, pds } from '@/repositories';
 import { valuesSchemas } from '@/schemas';
 
 export default {
@@ -18,7 +18,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 	if (!topicId) return Response.json({ success: false, error: 'Invalid topic ID' }, { status: 400 });
 
 	try {
-		const data = await getValuesByTopicId(topicId, ctx.logger);
+		const data = await d1.getValuesByTopicId(topicId, ctx.logger);
 		return apiSuccessResponse(data);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error fetching values', import.meta.env.DEV);
@@ -37,9 +37,9 @@ export async function _postHandler({ request, ctx, params }: RequestInfo): Promi
 	try {
 		const body = await request.json();
 		const parsed = valuesSchemas.apiInsert.parse(body);
-		const value = await createValue({ ...parsed, topicId }, userId, ctx.logger);
-		const { uri, cid } = await syncValueAtpRecord(value, ctx.logger);
-		await setValueAtpRecord(value.id, uri, cid, ctx.logger);
+		const value = await d1.createValue({ ...parsed, topicId }, userId, ctx.logger);
+		const { uri, cid } = await pds.syncValueAtpRecord(value, ctx.logger);
+		await d1.setValueAtpRecord(value.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(value, 201);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error creating value', import.meta.env.DEV);

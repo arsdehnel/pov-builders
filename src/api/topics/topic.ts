@@ -2,19 +2,7 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { validateUuid } from 'rwsdk-atp/utils';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import {
-	deleteTopic,
-	getStancesByTopicId,
-	getTopicById,
-	getValuesByTopicId,
-	setStanceAtpRecord,
-	setTopicAtpRecord,
-	setValueAtpRecord,
-	syncStanceAtpRecord,
-	syncTopicAtpRecord,
-	syncValueAtpRecord,
-	updateTopic,
-} from '@/repositories';
+import { d1, pds } from '@/repositories';
 import { topicsSchemas } from '@/schemas';
 
 export default {
@@ -35,7 +23,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 	if (!id) return Response.json({ success: false, error: 'Invalid topic ID' }, { status: 400 });
 
 	try {
-		const topic = await getTopicById(id, ctx.logger);
+		const topic = await d1.getTopicById(id, ctx.logger);
 		return apiSuccessResponse(topic);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error fetching topic', import.meta.env.DEV);
@@ -54,18 +42,18 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 	try {
 		const body = await request.json();
 		const parsed = topicsSchemas.apiUpdate.parse(body);
-		const topic = await updateTopic(id, parsed, userId, ctx.logger);
-		const { uri, cid } = await syncTopicAtpRecord(topic, ctx.logger);
-		await setTopicAtpRecord(topic.id, uri, cid, ctx.logger);
+		const topic = await d1.updateTopic(id, parsed, userId, ctx.logger);
+		const { uri, cid } = await pds.syncTopicAtpRecord(topic, ctx.logger);
+		await d1.setTopicAtpRecord(topic.id, uri, cid, ctx.logger);
 
-		const [stances, values] = await Promise.all([getStancesByTopicId(id, ctx.logger), getValuesByTopicId(id, ctx.logger)]);
+		const [stances, values] = await Promise.all([d1.getStancesByTopicId(id, ctx.logger), d1.getValuesByTopicId(id, ctx.logger)]);
 		for (const stance of stances) {
-			const { uri: stanceUri, cid: stanceCid } = await syncStanceAtpRecord(stance, ctx.logger);
-			await setStanceAtpRecord(stance.id, stanceUri, stanceCid, ctx.logger);
+			const { uri: stanceUri, cid: stanceCid } = await pds.syncStanceAtpRecord(stance, ctx.logger);
+			await d1.setStanceAtpRecord(stance.id, stanceUri, stanceCid, ctx.logger);
 		}
 		for (const value of values) {
-			const { uri: valueUri, cid: valueCid } = await syncValueAtpRecord(value, ctx.logger);
-			await setValueAtpRecord(value.id, valueUri, valueCid, ctx.logger);
+			const { uri: valueUri, cid: valueCid } = await pds.syncValueAtpRecord(value, ctx.logger);
+			await d1.setValueAtpRecord(value.id, valueUri, valueCid, ctx.logger);
 		}
 
 		return apiSuccessResponse(topic);
@@ -84,7 +72,7 @@ export async function _deleteHandler({ ctx, params }: RequestInfo): Promise<Resp
 	if (!id) return Response.json({ success: false, error: 'Invalid topic ID' }, { status: 400 });
 
 	try {
-		const topic = await deleteTopic(id, userId, ctx.logger);
+		const topic = await d1.deleteTopic(id, userId, ctx.logger);
 		return apiSuccessResponse(topic);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error deleting topic', import.meta.env.DEV);

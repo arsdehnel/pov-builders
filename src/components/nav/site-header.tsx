@@ -1,6 +1,6 @@
 import { requestInfo } from 'rwsdk/worker';
 import { getNavItems } from '@/data/navigation';
-import { getTopics } from '@/repositories';
+import { d1 } from '@/repositories';
 import type { AppContext } from '@/types';
 import NavMenu from './nav-menu';
 import navMenuStylesUrl from './nav-menu.less?url';
@@ -21,7 +21,7 @@ export default async function SiteHeader({
 	const { request } = requestInfo;
 	const currentHostname = new URL(request.url).hostname;
 	const profileNavItems = getNavItems('profile', ctx.permissions).map(({ icon: _, ...item }) => item);
-	const topics = await getTopics(ctx.logger);
+	const topics = await d1.getTopics(ctx.logger);
 
 	return (
 		<>

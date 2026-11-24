@@ -3,14 +3,14 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { DSLink } from '@/components/design-system';
 import ApiKeysTable from '@/components/tables/ApiKeysTable';
 import StandardLayout from '@/layouts/standard';
-import { getApiKeysByUserId } from '@/repositories';
+import { d1 } from '@/repositories';
 
 export default async function Pages__profile__api_keys({ ctx }: RequestInfo): Promise<React.JSX.Element> {
 	// biome-ignore lint/style/noNonNullAssertion: guaranteed by requireAuthentication in route chain
 	const userId = ctx.user!.id;
 
 	try {
-		const apiKeys = await getApiKeysByUserId(userId, ctx.logger);
+		const apiKeys = await d1.getApiKeysByUserId(userId, ctx.logger);
 		return (
 			<StandardLayout siteSection="profile" ctx={ctx}>
 				<h2>API Keys</h2>

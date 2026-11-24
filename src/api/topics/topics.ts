@@ -1,7 +1,7 @@
 import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { createTopic, getTopics, setTopicAtpRecord, syncTopicAtpRecord } from '@/repositories';
+import { d1, pds } from '@/repositories';
 import { topicsSchemas } from '@/schemas';
 
 export default {
@@ -14,7 +14,7 @@ export default {
  */
 export async function _getHandler({ ctx }: RequestInfo): Promise<Response> {
 	try {
-		const data = await getTopics(ctx.logger);
+		const data = await d1.getTopics(ctx.logger);
 		return apiSuccessResponse(data);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error fetching topics', import.meta.env.DEV);
@@ -31,9 +31,9 @@ export async function _postHandler({ request, ctx }: RequestInfo): Promise<Respo
 	try {
 		const body = await request.json();
 		const parsed = topicsSchemas.apiInsert.parse(body);
-		const topic = await createTopic(parsed, userId, ctx.logger);
-		const { uri, cid } = await syncTopicAtpRecord(topic, ctx.logger);
-		await setTopicAtpRecord(topic.id, uri, cid, ctx.logger);
+		const topic = await d1.createTopic(parsed, userId, ctx.logger);
+		const { uri, cid } = await pds.syncTopicAtpRecord(topic, ctx.logger);
+		await d1.setTopicAtpRecord(topic.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(topic, 201);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error creating topic', import.meta.env.DEV);

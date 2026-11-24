@@ -3,7 +3,7 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { DSPopMenu } from '@/components/design-system';
 import ApiKeyForm from '@/forms/api-key';
 import StandardLayout from '@/layouts/standard';
-import { getApiKeyById } from '@/repositories';
+import { d1 } from '@/repositories';
 import type { ApiKeyDBRead } from '@/types';
 
 export default async function Pages__profile__edit_api_key({ ctx, params }: RequestInfo): Promise<React.JSX.Element> {
@@ -16,7 +16,7 @@ export default async function Pages__profile__edit_api_key({ ctx, params }: Requ
 	if (!apiKeyId) {
 		apiKey = undefined;
 	} else {
-		apiKey = await getApiKeyById(params.apiKeyId, ctx.logger);
+		apiKey = await d1.getApiKeyById(params.apiKeyId, ctx.logger);
 	}
 
 	return (

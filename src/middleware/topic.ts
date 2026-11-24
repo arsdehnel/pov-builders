@@ -1,5 +1,5 @@
 import type { DefaultAppContext, RequestInfo } from 'rwsdk/worker';
-import { getTopicBySubdomain } from '@/repositories';
+import { d1 } from '@/repositories';
 
 export default async function topicMiddleware({ ctx, request }: RequestInfo<DefaultAppContext>): Promise<void> {
 	let subdomain: string | undefined;
@@ -14,7 +14,7 @@ export default async function topicMiddleware({ ctx, request }: RequestInfo<Defa
 
 	if (subdomain) {
 		try {
-			ctx.topic = await getTopicBySubdomain(subdomain, ctx.logger);
+			ctx.topic = await d1.getTopicBySubdomain(subdomain, ctx.logger);
 		} catch {
 			ctx.logger.warn(`Topic ${subdomain} failed to be retrieved`);
 		}

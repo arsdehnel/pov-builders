@@ -1,0 +1,33 @@
+{
+	"id": "dev.stance-build.position",
+	"lexicon": 1,
+	"defs": {
+		"valueStance": {
+			"type": "object",
+			"description": "A user's stance on a specific value within a topic",
+			"required": ["value", "stance"],
+			"properties": {
+				"value": { "type": "ref", "ref": "dev.stance-build.value#strongRef" },
+				"stance": { "type": "ref", "ref": "dev.stance-build.stance#strongRef" }
+			}
+		},
+		"main": {
+			"type": "record",
+			"key": "tid",
+			"description": "A user's position on a topic, including their overall stance and per-value stances",
+			"record": {
+				"type": "object",
+				"required": ["topic", "overallStance", "createdAt"],
+				"properties": {
+					"topic": { "type": "ref", "ref": "dev.stance-build.topic#strongRef" },
+					"overallStance": { "type": "ref", "ref": "dev.stance-build.stance#strongRef" },
+					"valueStances": {
+						"type": "array",
+						"items": { "type": "ref", "ref": "#valueStance" }
+					},
+					"createdAt": { "type": "string", "format": "datetime" }
+				}
+			}
+		}
+	}
+}

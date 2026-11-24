@@ -2,11 +2,11 @@ import type { RequestInfo } from 'rwsdk/worker';
 import DSCard from '@/components/design-system/card/ds-card';
 import { topicUrl } from '@/data/navigation';
 import StandardLayout from '@/layouts/standard';
-import { getTopics } from '@/repositories';
+import { d1 } from '@/repositories';
 import homeStylesUrl from './home.less?url';
 
 export default async function Pages__root({ ctx, request }: RequestInfo): Promise<React.JSX.Element> {
-	const topics = await getTopics(ctx.logger);
+	const topics = await d1.getTopics(ctx.logger);
 	const hostname = new URL(request.url).hostname;
 
 	return (

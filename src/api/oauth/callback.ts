@@ -2,7 +2,7 @@ import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
 import { getOAuthClient, type OAuthSession } from 'rwsdk-atp/auth';
 import { saveSession } from 'rwsdk-atp/browser-sessions';
-import { upsertUser } from '@/repositories';
+import { d1 } from '@/repositories';
 
 async function get({ ctx, request, response }: RequestInfo): Promise<Response> {
 	const client = await getOAuthClient(env);
@@ -31,7 +31,7 @@ async function get({ ctx, request, response }: RequestInfo): Promise<Response> {
 		ctx.logger.warn(`Could not fetch handle for ${session.did}: ${err}`);
 	}
 
-	const savedUser = await upsertUser(session.did, handle, null, ctx.logger);
+	const savedUser = await d1.upsertUser(session.did, handle, null, ctx.logger);
 	ctx.logger.info(`Upserted user for did: ${session.did}`);
 
 	await saveSession(env, request.url, null, response.headers, { did: session.did, userId: savedUser.id });

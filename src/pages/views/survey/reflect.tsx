@@ -1,13 +1,9 @@
 import type { RequestInfo } from 'rwsdk/worker';
+import { NoRecordFoundError } from 'rwsdk-atp/errors';
 import { DSCard } from '@/components/design-system';
 import { STANCE_ICONS } from '@/content/icons-map';
 import StandardLayout from '@/layouts/standard';
-import {
-	getPositionByUserIdAndTopicId,
-	getPositionValuesByPositionId,
-	getStancesByTopicId,
-	getValuesByTopicId,
-} from '@/repositories';
+import { d1 } from '@/repositories';
 import valueCardsStylesUrl from '../../../components/survey/value-cards.less?url';
 import reflectStylesUrl from './reflect.less?url';
 
@@ -19,8 +15,8 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 	}
 
 	const [values, stances] = await Promise.all([
-		getValuesByTopicId(ctx.topic.id, ctx.logger),
-		getStancesByTopicId(ctx.topic.id, ctx.logger),
+		d1.getValuesByTopicId(ctx.topic.id, ctx.logger),
+		d1.getStancesByTopicId(ctx.topic.id, ctx.logger),
 	]);
 
 	const stanceMap = new Map<string, StanceSummary>(stances.map(s => [s.id, { icon: s.icon, label: s.label, color: s.color }]));
@@ -29,14 +25,19 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 	let overallStance: StanceSummary | undefined;
 	const userId = ctx.user?.id;
 	if (userId) {
-		const position = await getPositionByUserIdAndTopicId(userId, ctx.topic.id, ctx.logger);
-		if (position) {
+		try {
+			const position = await d1.getPositionByUserIdAndTopicId(userId, ctx.topic.id, ctx.logger);
 			overallStance = stanceMap.get(position.overallStanceId);
-			const positionValues = await getPositionValuesByPositionId(position.id, ctx.logger);
+			const positionValues = await d1.getPositionValuesByPositionId(position.id, ctx.logger);
 			for (const pv of positionValues) {
 				const stance = stanceMap.get(pv.stanceId);
 				if (stance) positionValueMap.set(pv.valueId, stance);
 			}
+		} catch (err) {
+			if (err instanceof NoRecordFoundError) {
+				throw new Response(null, { status: 302, headers: { Location: '/views/survey' } });
+			}
+			throw err;
 		}
 	}
 

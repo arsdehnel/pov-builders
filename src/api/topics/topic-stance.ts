@@ -2,7 +2,7 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { validateUuid } from 'rwsdk-atp/utils';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { deleteStance, getStanceById, setStanceAtpRecord, syncStanceAtpRecord, updateStance } from '@/repositories';
+import { d1, pds } from '@/repositories';
 import { stancesSchemas } from '@/schemas';
 
 export default {
@@ -19,7 +19,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 	if (!id) return Response.json({ success: false, error: 'Invalid stance ID' }, { status: 400 });
 
 	try {
-		const stance = await getStanceById(id, ctx.logger);
+		const stance = await d1.getStanceById(id, ctx.logger);
 		return apiSuccessResponse(stance);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error fetching stance', import.meta.env.DEV);
@@ -38,9 +38,9 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 	try {
 		const body = await request.json();
 		const parsed = stancesSchemas.apiUpdate.parse(body);
-		const stance = await updateStance(id, parsed, userId, ctx.logger);
-		const { uri, cid } = await syncStanceAtpRecord(stance, ctx.logger);
-		await setStanceAtpRecord(stance.id, uri, cid, ctx.logger);
+		const stance = await d1.updateStance(id, parsed, userId, ctx.logger);
+		const { uri, cid } = await pds.syncStanceAtpRecord(stance, ctx.logger);
+		await d1.setStanceAtpRecord(stance.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(stance);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error updating stance', import.meta.env.DEV);
@@ -57,7 +57,7 @@ export async function _deleteHandler({ ctx, params }: RequestInfo): Promise<Resp
 	if (!id) return Response.json({ success: false, error: 'Invalid stance ID' }, { status: 400 });
 
 	try {
-		const stance = await deleteStance(id, userId, ctx.logger);
+		const stance = await d1.deleteStance(id, userId, ctx.logger);
 		return apiSuccessResponse(stance);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error deleting stance', import.meta.env.DEV);

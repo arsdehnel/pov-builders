@@ -3,7 +3,7 @@ import { MissingAtpRecordError } from 'rwsdk-atp/errors';
 import type { Logger } from 'rwsdk-atp/logger';
 import { getTopicById } from '@/repositories/d1';
 import type { ValueDBRead } from '@/types';
-import { getServicePdsClient } from './client';
+import { getServicePdsClient } from './clients';
 
 export async function syncValueAtpRecord(value: ValueDBRead, logger: Logger): Promise<{ uri: string; cid: string }> {
 	const topic = await getTopicById(value.topicId, logger);

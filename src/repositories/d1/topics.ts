@@ -34,12 +34,19 @@ export async function getTopicById(id: string, logger: Logger): Promise<TopicDBR
 	return matched[0];
 }
 
-export async function getTopicBySubdomain(subdomain: string, logger: Logger): Promise<TopicDBRead | undefined> {
+export async function getTopicBySubdomain(subdomain: string, logger: Logger): Promise<TopicDBRead> {
 	logger.debug(`Fetching topic by subdomain ${subdomain}`);
 	const matched = await db
 		.select()
 		.from(topics)
 		.where(and(eq(topics.subdomain, subdomain), isNull(topics.deletedAt)));
+
+	if (matched.length === 0) {
+		throw new NoRecordFoundError('Topic');
+	}
+	if (matched.length !== 1) {
+		throw new TooManyRecordsFoundError('Topic', matched.length, 1);
+	}
 
 	return matched[0];
 }

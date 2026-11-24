@@ -1,7 +1,7 @@
 import { AtUri } from '@atproto/syntax';
 import type { Logger } from 'rwsdk-atp/logger';
 import type { TopicDBRead } from '@/types';
-import { getServicePdsClient } from './client';
+import { getServicePdsClient } from './clients';
 
 export async function syncTopicAtpRecord(topic: TopicDBRead, logger: Logger): Promise<{ uri: string; cid: string }> {
 	const client = await getServicePdsClient();

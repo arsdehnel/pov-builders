@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
 import type { DefaultAppContext, RequestInfo } from 'rwsdk/worker';
 import { clearSession } from 'rwsdk-atp/browser-sessions';
-import { getUserById } from '@/repositories';
+import { d1 } from '@/repositories';
 
 export default async function userMiddleware({
 	ctx,
@@ -10,7 +10,7 @@ export default async function userMiddleware({
 }: RequestInfo<DefaultAppContext>): Promise<Response | undefined> {
 	if (ctx.session?.userId) {
 		try {
-			ctx.user = await getUserById(ctx.session.userId, ctx.logger);
+			ctx.user = await d1.getUserById(ctx.session.userId, ctx.logger);
 			ctx.logger = ctx.logger.child({ userId: ctx.user.id });
 		} catch (err) {
 			ctx.logger.error(`Error fetching current user: ${err}`);

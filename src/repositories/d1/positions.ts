@@ -1,5 +1,7 @@
 import { and, eq, isNull, sql } from 'drizzle-orm';
+import { InvalidUUIDError, NoRecordFoundError, TooManyRecordsFoundError } from 'rwsdk-atp/errors';
 import type { Logger } from 'rwsdk-atp/logger';
+import { validateUuid } from 'rwsdk-atp/utils';
 import db from '@/db';
 import { positions } from '@/models';
 import type { PositionDBRead } from '@/types';
@@ -34,15 +36,38 @@ export async function upsertPosition(
 	return result;
 }
 
-export async function getPositionByUserIdAndTopicId(
-	userId: string,
-	topicId: string,
-	logger: Logger,
-): Promise<PositionDBRead | undefined> {
+export async function setPositionAtpRecord(id: string, atpUri: string, atpCid: string, logger: Logger): Promise<PositionDBRead> {
+	if (!validateUuid(id)) {
+		throw new InvalidUUIDError(id, 'Position');
+	}
+	logger.debug(`Setting ATP record for position ${id}`);
+	const updated = await db
+		.update(positions)
+		.set({ atpUri, atpCid })
+		.where(and(eq(positions.id, id), isNull(positions.deletedAt)))
+		.returning();
+
+	if (updated.length === 0) {
+		throw new NoRecordFoundError('Position');
+	}
+
+	logger.info(`Set ATP record for position ${id}: ${atpUri}`);
+	return updated[0];
+}
+
+export async function getPositionByUserIdAndTopicId(userId: string, topicId: string, logger: Logger): Promise<PositionDBRead> {
 	logger.debug(`Fetching position for user ${userId} topic ${topicId}`);
 	const results = await db
 		.select()
 		.from(positions)
 		.where(and(eq(positions.userId, userId), eq(positions.topicId, topicId), isNull(positions.deletedAt)));
+
+	if (results.length === 0) {
+		throw new NoRecordFoundError('Position');
+	}
+	if (results.length !== 1) {
+		throw new TooManyRecordsFoundError('Position', results.length, 1);
+	}
+
 	return results[0];
 }

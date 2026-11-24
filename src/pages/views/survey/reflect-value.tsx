@@ -1,7 +1,8 @@
 import type { RequestInfo } from 'rwsdk/worker';
+import { NoRecordFoundError } from 'rwsdk-atp/errors';
 import StanceRadioCards from '@/components/survey/stance-radio-cards';
 import StandardLayout from '@/layouts/standard';
-import { getPositionByUserIdAndTopicId, getPositionValuesByPositionId, getStancesByTopicId, getValueById } from '@/repositories';
+import { d1 } from '@/repositories';
 import stanceRadioCardsStylesUrl from '../../../components/survey/stance-radio-cards.less?url';
 import reflectStylesUrl from './reflect.less?url';
 
@@ -16,8 +17,8 @@ export default async function Pages__views__reflect_value({ ctx, params }: Reque
 	}
 
 	const [value, stancesFromDb] = await Promise.all([
-		getValueById(valueId, ctx.logger),
-		getStancesByTopicId(ctx.topic.id, ctx.logger),
+		d1.getValueById(valueId, ctx.logger),
+		d1.getStancesByTopicId(ctx.topic.id, ctx.logger),
 	]);
 
 	const stances = stancesFromDb.map(s => ({
@@ -31,10 +32,15 @@ export default async function Pages__views__reflect_value({ ctx, params }: Reque
 	let initialStanceId: string | undefined;
 	const userId = ctx.user?.id;
 	if (userId) {
-		const position = await getPositionByUserIdAndTopicId(userId, ctx.topic.id, ctx.logger);
-		if (position) {
-			const positionValues = await getPositionValuesByPositionId(position.id, ctx.logger);
+		try {
+			const position = await d1.getPositionByUserIdAndTopicId(userId, ctx.topic.id, ctx.logger);
+			const positionValues = await d1.getPositionValuesByPositionId(position.id, ctx.logger);
 			initialStanceId = positionValues.find(pv => pv.valueId === valueId)?.stanceId;
+		} catch (err) {
+			if (err instanceof NoRecordFoundError) {
+				throw new Response(null, { status: 302, headers: { Location: '/views/survey' } });
+			}
+			throw err;
 		}
 	}
 

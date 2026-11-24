@@ -3,7 +3,7 @@
 import { requestInfo, serverAction } from 'rwsdk/worker';
 import { type ActionState, actionErrorResponse, actionSuccessResponse, actionValidationError } from 'rwsdk-atp/response';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { createApiKey, deleteApiKey as deleteApiKeyMethod, updateApiKey } from '@/repositories';
+import { d1 } from '@/repositories';
 import { apiKeysSchemas } from '@/schemas';
 import type { ApiKeyDBRead, ApiKeyFormInput } from '@/types';
 
@@ -18,7 +18,7 @@ export async function _deleteApiKey(apiKeyId: string): Promise<ActionState<ApiKe
 	const userId = ctx.user!.id;
 
 	try {
-		const deleted = await deleteApiKeyMethod(apiKeyId, userId, ctx.logger);
+		const deleted = await d1.deleteApiKey(apiKeyId, userId, ctx.logger);
 		ctx.logger.info('API key deleted', { apiKeyId: deleted.id });
 		return actionSuccessResponse<ApiKeyDBRead>(deleted);
 	} catch (error) {
@@ -52,9 +52,9 @@ export async function _saveApiKey(formData: ApiKeyFormInput): Promise<ActionStat
 	let apiKey: ApiKeyDBRead;
 	try {
 		if (parsed.data.id) {
-			apiKey = await updateApiKey(parsed.data.id, parsed.data, userId, requestInfo.ctx.logger);
+			apiKey = await d1.updateApiKey(parsed.data.id, parsed.data, userId, requestInfo.ctx.logger);
 		} else {
-			apiKey = await createApiKey(parsed.data, userId, requestInfo.ctx.logger);
+			apiKey = await d1.createApiKey(parsed.data, userId, requestInfo.ctx.logger);
 		}
 		requestInfo.ctx.logger.info('API key saved', { apiKeyId: apiKey.id });
 

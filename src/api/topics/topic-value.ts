@@ -2,7 +2,7 @@ import type { RequestInfo } from 'rwsdk/worker';
 import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { validateUuid } from 'rwsdk-atp/utils';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
-import { deleteValue, getValueById, setValueAtpRecord, syncValueAtpRecord, updateValue } from '@/repositories';
+import { d1, pds } from '@/repositories';
 import { valuesSchemas } from '@/schemas';
 
 export default {
@@ -19,7 +19,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 	if (!id) return Response.json({ success: false, error: 'Invalid value ID' }, { status: 400 });
 
 	try {
-		const value = await getValueById(id, ctx.logger);
+		const value = await d1.getValueById(id, ctx.logger);
 		return apiSuccessResponse(value);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error fetching value', import.meta.env.DEV);
@@ -38,9 +38,9 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 	try {
 		const body = await request.json();
 		const parsed = valuesSchemas.apiUpdate.parse(body);
-		const value = await updateValue(id, parsed, userId, ctx.logger);
-		const { uri, cid } = await syncValueAtpRecord(value, ctx.logger);
-		await setValueAtpRecord(value.id, uri, cid, ctx.logger);
+		const value = await d1.updateValue(id, parsed, userId, ctx.logger);
+		const { uri, cid } = await pds.syncValueAtpRecord(value, ctx.logger);
+		await d1.setValueAtpRecord(value.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(value);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error updating value', import.meta.env.DEV);
@@ -57,7 +57,7 @@ export async function _deleteHandler({ ctx, params }: RequestInfo): Promise<Resp
 	if (!id) return Response.json({ success: false, error: 'Invalid value ID' }, { status: 400 });
 
 	try {
-		const value = await deleteValue(id, userId, ctx.logger);
+		const value = await d1.deleteValue(id, userId, ctx.logger);
 		return apiSuccessResponse(value);
 	} catch (err) {
 		return apiErrorResponse(err, 'Error deleting value', import.meta.env.DEV);
