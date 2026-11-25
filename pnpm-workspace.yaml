@@ -5,11 +5,10 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
-  rwsdk-atp@git+https://tangled.org/arsdehnel.com/rwsdk-atp.git#f05bd294ae398d1177334514bcb34e753f84cbff: true
+  rwsdk-atp@git+https://tangled.org/arsdehnel.com/rwsdk-atp.git#7a4b8e8006d71eb8140ab4115ded38029de477ed: true
   core-js: true
   "@parcel/watcher": true
 overrides:
-  rwsdk-atp: link:../rwsdk-atp
   undici: "^8"
 patchedDependencies:
   solid-js@1.9.19: patches/solid-js@1.9.19.patch

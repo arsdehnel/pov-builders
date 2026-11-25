@@ -1,0 +1,19 @@
+when:
+  - event: ["push", "pull_request"]
+
+engine: microvm
+image: nixos
+
+dependencies:
+  - nodejs_26
+  - pnpm
+
+steps:
+  - name: Install dependencies
+    command: pnpm install --frozen-lockfile
+
+  - name: Lint
+    command: pnpm ci:lint
+
+  - name: Build
+    command: pnpm ci:tests
