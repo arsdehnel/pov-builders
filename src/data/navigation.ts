@@ -60,7 +60,7 @@ export function topicUrl(subdomain: string, currentHostname: string): string {
 	if (import.meta.env.DEV) {
 		return `/dev/topic/${subdomain}`;
 	}
-	const cfDomain = 'stance.build';
+	const cfDomain = 'pov.builders';
 	const envs = ['integration', 'staging'];
 	const [firstPortion, ...rest] = currentHostname.split('.');
 	if (envs.includes(firstPortion) || firstPortion === cfDomain) {

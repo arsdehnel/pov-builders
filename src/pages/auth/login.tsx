@@ -31,7 +31,7 @@ export default async function Pages__auth__login({ ctx }: RequestInfo): Promise<
 	}
 
 	return (
-		<StandardLayout siteSection="home" ctx={ctx} userHandle={userHandle}>
+		<StandardLayout siteSection="home" ctx={ctx}>
 			{did ? (
 				<section className="section">
 					<p>Already logged in as {userHandle}</p>

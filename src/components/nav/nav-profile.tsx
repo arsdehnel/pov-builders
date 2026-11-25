@@ -11,12 +11,10 @@ function getInitials(handle: string): string {
 export default function NavProfile({
 	userDid,
 	userHandle,
-	userAvatarUrl = null,
 	profileNavItems,
 }: {
 	userDid: string | null;
-	userHandle: string | null;
-	userAvatarUrl?: string | null;
+	userHandle?: string | null;
 	profileNavItems: ClientNavItem[];
 }): React.ReactNode {
 	if (!userDid) {
@@ -36,7 +34,6 @@ export default function NavProfile({
 			<DropdownMenu.Trigger asChild>
 				<button type="button" className={styles.trigger} aria-label="Profile menu">
 					<Avatar.Root className={styles.avatarRoot}>
-						{userAvatarUrl && <Avatar.Image src={userAvatarUrl} alt={userHandle ?? 'User'} className={styles.avatarImage} />}
 						<Avatar.Fallback className={styles.avatarFallback} delayMs={0}>
 							{initials}
 						</Avatar.Fallback>

@@ -9,13 +9,9 @@ import stylesUrl from './site-header.less?url';
 
 export default async function SiteHeader({
 	ctx,
-	userHandle = null,
-	userAvatarUrl = null,
 	siteSection,
 }: {
 	ctx: AppContext;
-	userHandle?: string | null;
-	userAvatarUrl?: string | null;
 	siteSection: string;
 }): Promise<React.ReactNode> {
 	const { request } = requestInfo;
@@ -41,12 +37,7 @@ export default async function SiteHeader({
 					/>
 				</div>
 				<div className="profile-wrapper">
-					<NavProfile
-						userDid={ctx.session?.did ?? null}
-						userHandle={userHandle}
-						userAvatarUrl={userAvatarUrl}
-						profileNavItems={profileNavItems}
-					/>
+					<NavProfile userDid={ctx.session?.did ?? null} userHandle={ctx.user?.handle} profileNavItems={profileNavItems} />
 				</div>
 			</header>
 		</>

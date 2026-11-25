@@ -10,7 +10,7 @@ export default async function Pages__root({ ctx, request }: RequestInfo): Promis
 	const hostname = new URL(request.url).hostname;
 
 	return (
-		<StandardLayout siteSection="home" ctx={ctx} userHandle={ctx.user?.handle ?? null}>
+		<StandardLayout siteSection="home" ctx={ctx}>
 			<link rel="stylesheet" href={homeStylesUrl} precedence="page" />
 			<div className="home-hero">
 				<div className="home-hero-inner">
