@@ -8,6 +8,5 @@ pnpm dlx \
   --package=@semantic-release/changelog@7 \
   --package=@semantic-release/npm@13 \
   --package=@semantic-release/git@11 \
-  --package=@semantic-release/github@12 \
   --package=conventional-changelog-conventionalcommits@9 \
   semantic-release "$@"
