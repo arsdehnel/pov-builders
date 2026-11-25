@@ -31,6 +31,18 @@ async function get({ ctx, request, response }: RequestInfo): Promise<Response> {
 		ctx.logger.warn(`Could not fetch handle for ${session.did}: ${err}`);
 	}
 
+	const allowedDids = env.ALLOWED_DIDS
+		? env.ALLOWED_DIDS.split(',')
+				.map(d => d.trim())
+				.filter(Boolean)
+		: [];
+
+	if (allowedDids.length > 0 && !allowedDids.includes(session.did)) {
+		ctx.logger.warn(`Login rejected: DID ${session.did} not in allowlist`);
+		response.headers.set('Location', '/auth/login?error=not_allowed');
+		return new Response(null, { status: 302, headers: response.headers });
+	}
+
 	const savedUser = await d1.upsertUser(session.did, handle, null, ctx.logger);
 	ctx.logger.info(`Upserted user for did: ${session.did}`);
 
