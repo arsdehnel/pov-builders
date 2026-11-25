@@ -11,7 +11,7 @@ async function get({ ctx, request, response }: RequestInfo): Promise<Response> {
 		({ session } = await client.callback(new URL(request.url).searchParams));
 	} catch {
 		ctx.logger.error('OAuth callback failed, redirecting to login to try again');
-		response.headers.set('Location', '/api/oauth/login');
+		response.headers.set('Location', '/auth/login');
 		return new Response(null, { status: 302, headers: response.headers });
 	}
 

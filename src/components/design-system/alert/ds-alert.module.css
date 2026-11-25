@@ -1,0 +1,28 @@
+.ds-alert {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 10px 14px;
+	border-radius: 6px;
+	border: 1px solid;
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.ds-alert[data-variant="error"] {
+	background-color: var(--red-3);
+	border-color: var(--red-7);
+	color: var(--red-11);
+}
+
+.ds-alert[data-variant="warning"] {
+	background-color: var(--amber-3);
+	border-color: var(--amber-7);
+	color: var(--amber-11);
+}
+
+.ds-alert[data-variant="info"] {
+	background-color: var(--blue-3);
+	border-color: var(--blue-7);
+	color: var(--blue-11);
+}

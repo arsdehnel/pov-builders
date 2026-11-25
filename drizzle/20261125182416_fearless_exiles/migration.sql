@@ -38,7 +38,7 @@ CREATE TABLE `stances` (
 	`updated_by` text,
 	`deleted_at` text,
 	`deleted_by` text,
-	CONSTRAINT `fk_stances_topic_id_topics_id_fk` FOREIGN KEY (`topic_id`) REFERENCES `topics`(`id`),
+	CONSTRAINT `fk_stances_topic_id_topics_id_fk` FOREIGN KEY (`topic_id`) REFERENCES `topics`(`id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_stances_created_by_users_id_fk` FOREIGN KEY (`created_by`) REFERENCES `users`(`id`),
 	CONSTRAINT `fk_stances_updated_by_users_id_fk` FOREIGN KEY (`updated_by`) REFERENCES `users`(`id`),
 	CONSTRAINT `fk_stances_deleted_by_users_id_fk` FOREIGN KEY (`deleted_by`) REFERENCES `users`(`id`)
@@ -63,7 +63,7 @@ CREATE TABLE `topics` (
 --> statement-breakpoint
 CREATE TABLE `users` (
 	`id` text PRIMARY KEY,
-	`did` text,
+	`did` text NOT NULL,
 	`handle` text,
 	`role` text DEFAULT 'BASIC' NOT NULL,
 	`created_at` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now')) NOT NULL,
@@ -72,9 +72,9 @@ CREATE TABLE `users` (
 	`updated_by` text,
 	`deleted_at` text,
 	`deleted_by` text,
-	CONSTRAINT `fk_users_created_by_users_did_fk` FOREIGN KEY (`created_by`) REFERENCES `users`(`did`),
-	CONSTRAINT `fk_users_updated_by_users_did_fk` FOREIGN KEY (`updated_by`) REFERENCES `users`(`did`),
-	CONSTRAINT `fk_users_deleted_by_users_did_fk` FOREIGN KEY (`deleted_by`) REFERENCES `users`(`did`)
+	CONSTRAINT `fk_users_created_by_users_id_fk` FOREIGN KEY (`created_by`) REFERENCES `users`(`id`),
+	CONSTRAINT `fk_users_updated_by_users_id_fk` FOREIGN KEY (`updated_by`) REFERENCES `users`(`id`),
+	CONSTRAINT `fk_users_deleted_by_users_id_fk` FOREIGN KEY (`deleted_by`) REFERENCES `users`(`id`)
 );
 --> statement-breakpoint
 CREATE TABLE `values` (
@@ -92,7 +92,7 @@ CREATE TABLE `values` (
 	`updated_by` text,
 	`deleted_at` text,
 	`deleted_by` text,
-	CONSTRAINT `fk_values_topic_id_topics_id_fk` FOREIGN KEY (`topic_id`) REFERENCES `topics`(`id`),
+	CONSTRAINT `fk_values_topic_id_topics_id_fk` FOREIGN KEY (`topic_id`) REFERENCES `topics`(`id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_values_created_by_users_id_fk` FOREIGN KEY (`created_by`) REFERENCES `users`(`id`),
 	CONSTRAINT `fk_values_updated_by_users_id_fk` FOREIGN KEY (`updated_by`) REFERENCES `users`(`id`),
 	CONSTRAINT `fk_values_deleted_by_users_id_fk` FOREIGN KEY (`deleted_by`) REFERENCES `users`(`id`)
@@ -109,9 +109,9 @@ CREATE TABLE `view_values` (
 	`updated_by` text,
 	`deleted_at` text,
 	`deleted_by` text,
-	CONSTRAINT `fk_view_values_view_id_views_id_fk` FOREIGN KEY (`view_id`) REFERENCES `views`(`id`),
-	CONSTRAINT `fk_view_values_value_id_values_id_fk` FOREIGN KEY (`value_id`) REFERENCES `values`(`id`),
-	CONSTRAINT `fk_view_values_stance_id_stances_id_fk` FOREIGN KEY (`stance_id`) REFERENCES `stances`(`id`),
+	CONSTRAINT `fk_view_values_view_id_views_id_fk` FOREIGN KEY (`view_id`) REFERENCES `views`(`id`) ON DELETE CASCADE,
+	CONSTRAINT `fk_view_values_value_id_values_id_fk` FOREIGN KEY (`value_id`) REFERENCES `values`(`id`) ON DELETE CASCADE,
+	CONSTRAINT `fk_view_values_stance_id_stances_id_fk` FOREIGN KEY (`stance_id`) REFERENCES `stances`(`id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_view_values_created_by_users_id_fk` FOREIGN KEY (`created_by`) REFERENCES `users`(`id`),
 	CONSTRAINT `fk_view_values_updated_by_users_id_fk` FOREIGN KEY (`updated_by`) REFERENCES `users`(`id`),
 	CONSTRAINT `fk_view_values_deleted_by_users_id_fk` FOREIGN KEY (`deleted_by`) REFERENCES `users`(`id`)
@@ -131,9 +131,9 @@ CREATE TABLE `views` (
 	`updated_by` text,
 	`deleted_at` text,
 	`deleted_by` text,
-	CONSTRAINT `fk_views_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-	CONSTRAINT `fk_views_topic_id_topics_id_fk` FOREIGN KEY (`topic_id`) REFERENCES `topics`(`id`),
-	CONSTRAINT `fk_views_overall_stance_id_stances_id_fk` FOREIGN KEY (`overall_stance_id`) REFERENCES `stances`(`id`),
+	CONSTRAINT `fk_views_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+	CONSTRAINT `fk_views_topic_id_topics_id_fk` FOREIGN KEY (`topic_id`) REFERENCES `topics`(`id`) ON DELETE CASCADE,
+	CONSTRAINT `fk_views_overall_stance_id_stances_id_fk` FOREIGN KEY (`overall_stance_id`) REFERENCES `stances`(`id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_views_created_by_users_id_fk` FOREIGN KEY (`created_by`) REFERENCES `users`(`id`),
 	CONSTRAINT `fk_views_updated_by_users_id_fk` FOREIGN KEY (`updated_by`) REFERENCES `users`(`id`),
 	CONSTRAINT `fk_views_deleted_by_users_id_fk` FOREIGN KEY (`deleted_by`) REFERENCES `users`(`id`)

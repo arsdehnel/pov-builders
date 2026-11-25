@@ -11,6 +11,7 @@ import permissionsMiddleware from '@/middleware/permissions';
 import sessionMiddleware from '@/middleware/session';
 import topicMiddleware from '@/middleware/topic';
 import userMiddleware from '@/middleware/user';
+import Pages__about from '@/pages/about';
 import authRoutes from '@/pages/auth/_routes';
 import builderRoutes from '@/pages/builders/_routes';
 import devRoutes from '@/pages/dev/_routes';
@@ -35,6 +36,7 @@ const app = defineApp([
 	render(DefaultDocument, [
 		except<RequestInfo<DefaultAppContext>>(handlePageError),
 		route('/', Pages__root),
+		route('/about', Pages__about),
 		prefix('/auth', authRoutes.default),
 		prefix('/profile', profileRoutes.default),
 		prefix('/builders', builderRoutes.default),

@@ -57,7 +57,7 @@ export function LoginForm(): React.ReactNode {
 					) : (
 						<>
 							<EnterIcon />
-							'Sign in with Atmosphere'
+							Sign in with Atmosphere
 						</>
 					)}
 				</button>

@@ -2,8 +2,9 @@ import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
 import { getOAuthClient } from 'rwsdk-atp/auth';
 import { clearSession, loadSessionFromRequest } from 'rwsdk-atp/browser-sessions';
+import { requireAuthentication, requirePermissions } from '@/interrupters';
 
-async function post({ request, response }: RequestInfo): Promise<Response> {
+async function _postHandler({ request, response }: RequestInfo): Promise<Response> {
 	const session = await loadSessionFromRequest(env, request, response.headers);
 	if (session?.did) {
 		const client = await getOAuthClient(env);
@@ -15,4 +16,4 @@ async function post({ request, response }: RequestInfo): Promise<Response> {
 	return new Response(null, { status: 302, headers: response.headers });
 }
 
-export default { post };
+export default { post: [requireAuthentication, requirePermissions('auth:logout'), _postHandler] as const };

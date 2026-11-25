@@ -1,10 +1,17 @@
 import { env } from 'cloudflare:workers';
 import type { RequestInfo } from 'rwsdk/worker';
 import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/auth';
+import { DSAlert } from '@/components/design-system';
 import { LoginForm } from '@/components/login-form';
 import StandardLayout from '@/layouts/standard';
 
-export default async function Pages__auth__login({ ctx }: RequestInfo): Promise<React.JSX.Element> {
+const LOGIN_ERRORS: Record<string, string> = {
+	not_allowed: 'Your account is not currently permitted to access this site.',
+};
+
+export default async function Pages__auth__login({ ctx, request }: RequestInfo): Promise<React.JSX.Element> {
+	const errorParam = new URL(request.url).searchParams.get('error');
+	const errorMessage = errorParam ? (LOGIN_ERRORS[errorParam] ?? 'An error occurred during login.') : null;
 	let did = ctx.session?.did ?? null;
 
 	let userHandle: string | null = null;
@@ -18,8 +25,10 @@ export default async function Pages__auth__login({ ctx }: RequestInfo): Promise<
 				userPdsUrl = `https://${userPdsUrl}`;
 			}
 			const handleRes = await fetch(`${userPdsUrl}/xrpc/com.atproto.repo.describeRepo?repo=${did}`);
-			const handleData = (await handleRes.json()) as { handle?: string };
-			userHandle = handleData.handle ?? null;
+			if (handleRes.ok) {
+				const handleData = (await handleRes.json()) as { handle?: string };
+				userHandle = handleData.handle ?? null;
+			}
 		} catch (err) {
 			console.log(`Error fetching session for did ${did}: ${err}`);
 			if (oauthClient) {
@@ -39,6 +48,7 @@ export default async function Pages__auth__login({ ctx }: RequestInfo): Promise<
 			) : (
 				<section className="section">
 					<h2 className="sectionTitle">Sign in with Bluesky</h2>
+					{errorMessage && <DSAlert variant="error">{errorMessage}</DSAlert>}
 					<p className="prose">
 						Enter your Bluesky handle to authenticate via AT Protocol OAuth. You'll be redirected to Bluesky to approve access,
 						then back here.

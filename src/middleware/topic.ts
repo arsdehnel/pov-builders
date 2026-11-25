@@ -5,7 +5,6 @@ export default async function topicMiddleware({ ctx, request }: RequestInfo<Defa
 	let subdomain: string | undefined;
 	if (import.meta.env.DEV) {
 		// In dev, topic is controlled via /dev/topic/:subdomain and stored on globalThis.
-		(globalThis as { __devTopic?: string }).__devTopic ?? 'ai';
 		subdomain = (globalThis as { __devTopic?: string }).__devTopic ?? 'ai';
 	} else {
 		const hostname = new URL(request.url).hostname;

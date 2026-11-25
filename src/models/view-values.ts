@@ -14,13 +14,13 @@ export const viewValues = snakeCase.table(
 			.$defaultFn(() => crypto.randomUUID()),
 		viewId: text()
 			.notNull()
-			.references((): AnySQLiteColumn => views.id),
+			.references((): AnySQLiteColumn => views.id, { onDelete: 'cascade' }),
 		valueId: text()
 			.notNull()
-			.references((): AnySQLiteColumn => values.id),
+			.references((): AnySQLiteColumn => values.id, { onDelete: 'cascade' }),
 		stanceId: text()
 			.notNull()
-			.references((): AnySQLiteColumn => stances.id),
+			.references((): AnySQLiteColumn => stances.id, { onDelete: 'cascade' }),
 		createdAt: text().notNull().default(sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`),
 		createdBy: text().references((): AnySQLiteColumn => users.id),
 		updatedAt: text(),

@@ -25,7 +25,7 @@ export default async function SiteHeader({
 			<link rel="stylesheet" href={navMenuStylesUrl} precedence="component" />
 			<header className="site-header">
 				<a href="/" className="logo">
-					Stance Build
+					POV Builders
 				</a>
 				{ctx.topic && <span className="topic-name">{ctx.topic.title}</span>}
 				<div className="header-controls">

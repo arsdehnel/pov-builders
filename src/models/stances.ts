@@ -12,7 +12,7 @@ export const stances = snakeCase.table(
 			.$defaultFn(() => crypto.randomUUID()),
 		topicId: text()
 			.notNull()
-			.references((): AnySQLiteColumn => topics.id),
+			.references((): AnySQLiteColumn => topics.id, { onDelete: 'cascade' }),
 		slug: text().notNull(),
 		label: text().notNull(),
 		icon: text().notNull(),

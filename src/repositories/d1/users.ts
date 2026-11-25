@@ -74,10 +74,3 @@ export async function upsertUser(
 
 	return user;
 }
-
-// Returns the stored handle for a DID if we've seen this user before, null otherwise.
-// Used by the webhook handler to skip HTTP resolution for known users.
-export async function getUserHandle(did: string): Promise<string | null> {
-	const rows = await db.select({ handle: users.handle }).from(users).where(eq(users.did, did)).limit(1);
-	return rows[0]?.handle ?? null;
-}

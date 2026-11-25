@@ -23,7 +23,6 @@ const permissions = {
 	},
 	views: {
 		read: ['BASIC', 'ADMIN'],
-		create: [],
 		update: ['BASIC', 'ADMIN'],
 		delete: ['BASIC', 'ADMIN'],
 	},

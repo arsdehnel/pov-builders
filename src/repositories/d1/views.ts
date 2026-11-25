@@ -7,18 +7,19 @@ import { views } from '@/models';
 import type { ViewDBRead } from '@/types';
 
 export async function upsertView(
-	data: { topicId: string; overallStanceId: string },
+	data: { topicId: string; overallStanceId: string; label?: string },
 	actingUserId: string,
 	logger: Logger,
 ): Promise<ViewDBRead> {
-	logger.debug(`Upserting view for user ${actingUserId} topic ${data.topicId}`);
+	const label = data.label ?? 'Default';
+	logger.debug(`Upserting view for user ${actingUserId} topic ${data.topicId} label ${label}`);
 
 	const [result] = await db
 		.insert(views)
 		.values({
 			userId: actingUserId,
 			topicId: data.topicId,
-			label: 'Default',
+			label,
 			overallStanceId: data.overallStanceId,
 			createdBy: actingUserId,
 		})

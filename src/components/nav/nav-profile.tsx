@@ -27,6 +27,7 @@ export default function NavProfile({
 	}
 
 	const initials = userHandle ? getInitials(userHandle) : '?';
+	const logoutItem = profileNavItems.find(i => i.key === 'logout');
 	const menuItems = profileNavItems.filter(i => i.key !== 'login' && i.key !== 'logout');
 
 	return (
@@ -55,14 +56,18 @@ export default function NavProfile({
 							</a>
 						</DropdownMenu.Item>
 					))}
-					<DropdownMenu.Separator className={styles.separator} />
-					<DropdownMenu.Item className={styles.item} onSelect={(e: Event): void => e.preventDefault()}>
-						<form method="post" action="/api/oauth/logout" className={styles.signOutForm}>
-							<button type="submit" className={styles.signOutButton}>
-								Sign out
-							</button>
-						</form>
-					</DropdownMenu.Item>
+					{logoutItem && (
+						<>
+							<DropdownMenu.Separator className={styles.separator} />
+							<DropdownMenu.Item className={styles.item} onSelect={(e: Event): void => e.preventDefault()}>
+								<form method="post" action={logoutItem.href} className={styles.signOutForm}>
+									<button type="submit" className={styles.signOutButton}>
+										{logoutItem.label}
+									</button>
+								</form>
+							</DropdownMenu.Item>
+						</>
+					)}
 				</DropdownMenu.Content>
 			</DropdownMenu.Portal>
 		</DropdownMenu.Root>

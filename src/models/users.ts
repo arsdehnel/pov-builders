@@ -9,15 +9,15 @@ export const users = snakeCase.table(
 		id: text()
 			.primaryKey()
 			.$defaultFn(() => crypto.randomUUID()),
-		did: text().primaryKey(),
+		did: text().notNull(),
 		handle: text(),
 		role: text({ enum: userDbRecordRoles }).default('BASIC').notNull(),
 		createdAt: text().notNull().default(sql`(strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))`),
-		createdBy: text().references((): AnySQLiteColumn => users.did),
+		createdBy: text().references((): AnySQLiteColumn => users.id),
 		updatedAt: text(),
-		updatedBy: text().references((): AnySQLiteColumn => users.did),
+		updatedBy: text().references((): AnySQLiteColumn => users.id),
 		deletedAt: text(),
-		deletedBy: text().references((): AnySQLiteColumn => users.did),
+		deletedBy: text().references((): AnySQLiteColumn => users.id),
 	},
 	table => [uniqueIndex('users_did_idx').on(table.did)],
 );

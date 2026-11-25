@@ -47,7 +47,7 @@ export const navItems: Record<string, NavItem[]> = {
 		{
 			key: 'logout',
 			label: 'Logout',
-			href: '/auth/logout',
+			href: '/api/oauth/logout',
 			icon: ExitIcon,
 			requiredPermission: 'auth:logout',
 			basePage: 'auth',
@@ -63,7 +63,7 @@ export function topicUrl(subdomain: string, currentHostname: string): string {
 	const cfDomain = 'pov.builders';
 	const envs = ['integration', 'staging'];
 	const [firstPortion, ...rest] = currentHostname.split('.');
-	if (envs.includes(firstPortion) || firstPortion === cfDomain) {
+	if (envs.includes(firstPortion) || currentHostname === cfDomain) {
 		return `https://${subdomain}.${currentHostname}`;
 	}
 	return `https://${subdomain}.${rest.join('.')}`;
