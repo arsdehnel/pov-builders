@@ -12,11 +12,11 @@ import sessionMiddleware from '@/middleware/session';
 import topicMiddleware from '@/middleware/topic';
 import userMiddleware from '@/middleware/user';
 import authRoutes from '@/pages/auth/_routes';
+import builderRoutes from '@/pages/builders/_routes';
 import devRoutes from '@/pages/dev/_routes';
 import Pages__root from '@/pages/home';
 import NotFound from '@/pages/not-found';
 import profileRoutes from '@/pages/profile/_routes';
-import viewRoutes from '@/pages/views/_routes';
 
 export { BrowserSessionDurableObject } from 'rwsdk-atp/browser-sessions';
 export { AtpOAuthDurableObject } from 'rwsdk-atp/oauth';
@@ -37,7 +37,7 @@ const app = defineApp([
 		route('/', Pages__root),
 		prefix('/auth', authRoutes.default),
 		prefix('/profile', profileRoutes.default),
-		prefix('/views', viewRoutes.default),
+		prefix('/builders', builderRoutes.default),
 		route('*', NotFound),
 	]),
 ]);

@@ -22,7 +22,7 @@ export default async function Pages__views__survey({ ctx, request }: RequestInfo
 			if (!(err instanceof NoRecordFoundError)) throw err;
 		}
 		if (hasView) {
-			throw new Response(null, { status: 302, headers: { Location: '/views/survey/reflect' } });
+			throw new Response(null, { status: 302, headers: { Location: '/builders/survey/reflect' } });
 		}
 	}
 
@@ -36,12 +36,12 @@ export default async function Pages__views__survey({ ctx, request }: RequestInfo
 	}));
 
 	return (
-		<StandardLayout siteSection="views" ctx={ctx}>
+		<StandardLayout siteSection="builders" ctx={ctx}>
 			<link rel="stylesheet" href={surveyStylesUrl} precedence="component" />
 			<link rel="stylesheet" href={stanceRadioCardsStylesUrl} precedence="component" />
 			<div className="survey-view">
 				<p>Which one of these best describes your overall stance on {ctx.topic.title}?</p>
-				<StanceRadioCards stances={stances} topicId={ctx.topic.id} name="stance" redirectTo="/views/survey/reflect" />
+				<StanceRadioCards stances={stances} topicId={ctx.topic.id} name="stance" redirectTo="/builders/survey/reflect" />
 			</div>
 		</StandardLayout>
 	);

@@ -35,7 +35,7 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 			}
 		} catch (err) {
 			if (err instanceof NoRecordFoundError) {
-				throw new Response(null, { status: 302, headers: { Location: '/views/survey' } });
+				throw new Response(null, { status: 302, headers: { Location: '/builders/survey' } });
 			}
 			throw err;
 		}
@@ -70,7 +70,7 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 				}
 				actions={[
 					{
-						href: `/views/survey/reflect/${value.id}`,
+						href: `/builders/survey/reflect/${value.id}`,
 						label: 'Change',
 						requiredPermission: 'views:update',
 					},
@@ -80,7 +80,7 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 	});
 
 	return (
-		<StandardLayout siteSection="views" ctx={ctx}>
+		<StandardLayout siteSection="builders" ctx={ctx}>
 			<link rel="stylesheet" href={reflectStylesUrl} precedence="component" />
 			<link rel="stylesheet" href={valueCardsStylesUrl} precedence="component" />
 			<div className="reflect-view">
@@ -90,7 +90,7 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 						<span>
 							Overall stance: <strong>{overallStance.label}</strong>
 						</span>
-						<a href="/views/survey?change=true" className="overall-stance-change">
+						<a href="/builders/survey?change=true" className="overall-stance-change">
 							Change
 						</a>
 					</div>
@@ -112,7 +112,7 @@ export default async function Pages__views__reflect({ ctx }: RequestInfo): Promi
 										userPermissions={ctx.permissions}
 										actions={[
 											{
-												href: `/views/survey/reflect/${value.id}`,
+												href: `/builders/survey/reflect/${value.id}`,
 												label: 'Set',
 												requiredPermission: 'views:update',
 											},

@@ -38,18 +38,18 @@ export default async function Pages__views__reflect_value({ ctx, params }: Reque
 			initialStanceId = viewValues.find(pv => pv.valueId === valueId)?.stanceId;
 		} catch (err) {
 			if (err instanceof NoRecordFoundError) {
-				throw new Response(null, { status: 302, headers: { Location: '/views/survey' } });
+				throw new Response(null, { status: 302, headers: { Location: '/builders/survey' } });
 			}
 			throw err;
 		}
 	}
 
 	return (
-		<StandardLayout siteSection="views" ctx={ctx}>
+		<StandardLayout siteSection="builders" ctx={ctx}>
 			<link rel="stylesheet" href={reflectStylesUrl} precedence="component" />
 			<link rel="stylesheet" href={stanceRadioCardsStylesUrl} precedence="component" />
 			<div className="reflect-view">
-				<a href="/views/survey/reflect" className="reflect-back-link">
+				<a href="/builders/survey/reflect" className="reflect-back-link">
 					← Back to all values
 				</a>
 				<h2>{value.label}</h2>
@@ -59,7 +59,7 @@ export default async function Pages__views__reflect_value({ ctx, params }: Reque
 					topicId={ctx.topic.id}
 					valueId={value.id}
 					initialStanceId={initialStanceId}
-					redirectTo="/views/survey/reflect"
+					redirectTo="/builders/survey/reflect"
 				/>
 			</div>
 		</StandardLayout>

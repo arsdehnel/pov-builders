@@ -40,15 +40,15 @@ export default function NavMenu({
 				</NavigationMenu.Item>
 
 				<NavigationMenu.Item className="nav-menu-item">
-					<NavigationMenu.Trigger className="nav-menu-trigger" data-active={siteSection === 'views' || undefined}>
-						Views
+					<NavigationMenu.Trigger className="nav-menu-trigger" data-active={siteSection === 'builders' || undefined}>
+						Builders
 						<ChevronDownIcon className="nav-menu-caret" aria-hidden />
 					</NavigationMenu.Trigger>
 					<NavigationMenu.Content className="nav-menu-content">
 						<ul className="nav-menu-dropdown-list">
 							{VIEW_MODES.map(view => (
 								<li key={view.key}>
-									<NavigationMenu.Link href={`/views/${view.key}`} className="nav-menu-dropdown-link">
+									<NavigationMenu.Link href={`/builders/${view.key}`} className="nav-menu-dropdown-link">
 										{view.label}
 									</NavigationMenu.Link>
 								</li>
