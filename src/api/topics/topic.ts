@@ -58,6 +58,7 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 
 		return apiSuccessResponse(topic);
 	} catch (err) {
+		ctx.logger.error(`Error updating topic`, { error: err });
 		return apiErrorResponse(err, 'Error updating topic', import.meta.env.DEV);
 	}
 }

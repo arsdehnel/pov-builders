@@ -90,7 +90,13 @@
 			],
 			"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "KV_OAUTH_STATE_DOCKER" }],
 			"secrets": {
-				"required": ["BROWSER_SESSION_SIGNING_KEY", "OAUTH_STATE_KV_ENCRYPTION_KEYS", "OAUTH_TOKEN_KV_ENCRYPTION_KEYS"]
+				"required": [
+					"BROWSER_SESSION_SIGNING_KEY",
+					"OAUTH_STATE_KV_ENCRYPTION_KEYS",
+					"OAUTH_TOKEN_KV_ENCRYPTION_KEYS",
+					"ATP_SERVICE_DID",
+					"ATP_SERVICE_APP_PASSWORD"
+				]
 			},
 			"vars": {
 				"ATPROTO_OAUTH_SCOPE": "atproto",

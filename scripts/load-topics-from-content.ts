@@ -19,10 +19,10 @@ class SyncError extends Error {
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const CONTENT_DIR = join(__dirname, '..', 'content', 'topics');
 
-const STANCE_BUILD_API_HOST = process.env.STANCE_BUILD_API_HOST ?? 'http://localhost:5173';
-const STANCE_BUILD_API_KEY = process.env.STANCE_BUILD_API_KEY;
+const POV_BUILDERS_API_HOST = process.env.POV_BUILDERS_API_HOST ?? 'http://localhost:5173';
+const POV_BUILDERS_API_KEY = process.env.POV_BUILDERS_API_KEY;
 
-if (!STANCE_BUILD_API_KEY) {
+if (!POV_BUILDERS_API_KEY) {
 	console.error('Error: API_KEY environment variable is required');
 	process.exit(1);
 }
@@ -62,10 +62,10 @@ function toTitleCase(str: string): string {
 }
 
 async function apiRequest<T>(method: string, path: string, body?: unknown): Promise<T> {
-	const res = await fetch(`${STANCE_BUILD_API_HOST}/api${path}`, {
+	const res = await fetch(`${POV_BUILDERS_API_HOST}/api${path}`, {
 		method,
 		headers: {
-			Authorization: `Bearer ${STANCE_BUILD_API_KEY}`,
+			Authorization: `Bearer ${POV_BUILDERS_API_KEY}`,
 			'Content-Type': 'application/json',
 		},
 		body: body !== undefined ? JSON.stringify(body) : undefined,
@@ -208,6 +208,11 @@ async function main(): Promise<void> {
 			topicsBySubdomain.set(subdomain, topic);
 			console.log(chalk`  ✅ Created topic (${topic.id})`);
 		} else {
+			// resaving so we re-sync the ATP
+			topic = await apiRequest<Topic>('PUT', `/topics/${topic.id}`, {
+				...topic,
+				subdomain,
+			});
 			console.log(chalk`  ✅ Found topic (${topic.id})`);
 		}
 
