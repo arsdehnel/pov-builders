@@ -14,7 +14,7 @@ dependencies:
 
 steps:
   - name: Lint
-    command: npm run ci:lint
+    command: npm run types:check && npm run biome:check && npm run knip:check
 
   - name: Build
     command: ESBUILD_BINARY_PATH=$(which esbuild) npm run build
