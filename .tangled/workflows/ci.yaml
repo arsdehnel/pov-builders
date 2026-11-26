@@ -13,6 +13,9 @@ dependencies:
     - esbuild
 
 steps:
+  - name: Install
+    command: npm install --no-package-lock
+
   - name: Lint
     command: npm run types:check && npm run biome:check && npm run knip:check
 
