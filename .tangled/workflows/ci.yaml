@@ -14,7 +14,7 @@ dependencies:
 
 steps:
   - name: Install
-    command: npm install --no-package-lock
+    command: npm install --no-package-lock --legacy-peer-deps
 
   - name: Lint
     command: npm run types:check && npm run biome:check && npm run knip:check
