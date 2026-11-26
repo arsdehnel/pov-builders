@@ -9,7 +9,7 @@ dependencies:
 
 steps:
   - name: Install pnpm
-    command: npm install --prefix /workspace/.pnpm pnpm@12.7.0
+    command: npm config set allow-scripts.pnpm true && npm install --prefix /workspace/.pnpm pnpm@12.7.0
 
   - name: Install dependencies
     command: PATH="/workspace/.pnpm/node_modules/.bin:$PATH" pnpm install --frozen-lockfile
