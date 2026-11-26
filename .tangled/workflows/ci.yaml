@@ -1,13 +1,17 @@
 when:
-  - event: ["push", "pull_request", "manual"]
+  - event: ["push", "manual"]
+    branch: ["main", "starting-tangled-ci"]
 
-engine: microvm
-image: almalinux10
+engine: "nixery"
+
+dependencies:
+  nixpkgs:
+    - coreutils
+    - gnused
+    - nodejs_26
+    - pnpm
 
 steps:
-  - name: Install Node.js
-    command: dnf install -y nodejs
-
   - name: Install dependencies
     command: pnpm install --frozen-lockfile
 
