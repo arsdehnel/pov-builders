@@ -5,9 +5,12 @@ engine: microvm
 image: nixos
 
 dependencies:
-  - pnpm
+  - nodejs_26
 
 steps:
+  - name: Install pnpm
+    command: npm install -g pnpm@12.7.0
+
   - name: Install dependencies
     command: pnpm install --frozen-lockfile
 
