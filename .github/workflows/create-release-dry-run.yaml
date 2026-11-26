@@ -1,0 +1,78 @@
+name: Create Release Dry Run
+
+on:
+  workflow_call:
+
+jobs:
+  create-release-dry-run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run release dry run
+        run: |
+          set -euxo pipefail
+          env -u GITHUB_ACTIONS pnpm dlx \
+            --package=semantic-release@25 \
+            --package=@semantic-release/commit-analyzer@13 \
+            --package=@semantic-release/release-notes-generator@14 \
+            --package=@semantic-release/changelog@7 \
+            --package=@semantic-release/npm@13 \
+            --package=@semantic-release/git@11 \
+            --package=@semantic-release/github@12 \
+            --package=conventional-changelog-conventionalcommits@9 \
+            semantic-release --dry-run --no-ci 2>&1 | tee /tmp/release-dry-run.txt
+          sed 's/\x1b\[[0-9;]*m//g' /tmp/release-dry-run.txt > /tmp/release-dry-run-clean.txt
+          {
+            echo "## Release Dry Run"
+            echo '```'
+            cat /tmp/release-dry-run-clean.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          NEXT_VERSION=$(grep 'The next release version is' /tmp/release-dry-run-clean.txt | awk '{print $NF}' || true)
+          if [ -n "$NEXT_VERSION" ]; then
+            echo "### Release Dry Run: v${NEXT_VERSION}" > /tmp/pr-comment.md
+            echo "" >> /tmp/pr-comment.md
+            awk '/Release note for version/{found=1; next} /^Done in/{found=0} found' \
+              /tmp/release-dry-run-clean.txt \
+              | sed -E \
+                  -e 's/ \(https:[^)]*\)//' \
+                  -e 's/\(\[([a-f0-9]+)\]\([^)]*\)\)/(\1)/g' \
+              >> /tmp/pr-comment.md
+          else
+            echo "### Release Dry Run: No release" > /tmp/pr-comment.md
+            echo "" >> /tmp/pr-comment.md
+            echo "No commits found that would trigger a release." >> /tmp/pr-comment.md
+          fi
+          echo "" >> /tmp/pr-comment.md
+          echo "[View job details](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> /tmp/pr-comment.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment release preview on PR
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          file-path: /tmp/pr-comment.md
+          comment-tag: release-dry-run
+          github-token: ${{ secrets.GITHUB_TOKEN }}
