@@ -5,6 +5,7 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
+  rwsdk-atp: true
   rwsdk-atp@git+https://tangled.org/arsdehnel.com/rwsdk-atp.git#7a4b8e8006d71eb8140ab4115ded38029de477ed: true
   core-js: true
   "@parcel/watcher": true

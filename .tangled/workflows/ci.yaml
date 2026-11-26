@@ -12,8 +12,13 @@ steps:
   # pnpm v12 reads `packageManager` and downloads a managed native binary when
   # the nix pnpm version doesn't match — that binary is unpatched ELF and fails
   # on NixOS. Remove the field so nix pnpm runs directly without self-managing.
+  # Also strip the versioned allowBuilds key for rwsdk-atp — older pnpm versions
+  # can't parse git+url#commit as a version specifier; the unversioned entry
+  # (rwsdk-atp: true) covers it and works across all pnpm versions.
   - name: Configure pnpm
-    command: node -e "const fs=require('fs'),p=JSON.parse(fs.readFileSync('package.json'));delete p.packageManager;fs.writeFileSync('package.json',JSON.stringify(p,null,'\t')+'\n')"
+    command: |
+      node -e "const fs=require('fs'),p=JSON.parse(fs.readFileSync('package.json'));delete p.packageManager;fs.writeFileSync('package.json',JSON.stringify(p,null,'\t')+'\n')"
+      sed -i '/rwsdk-atp@git+/d' pnpm-workspace.yaml
 
   - name: Install dependencies
     command: pnpm install --frozen-lockfile
