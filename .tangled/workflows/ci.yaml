@@ -9,12 +9,11 @@ dependencies:
   - pnpm
 
 steps:
-  # pnpm v12 tries to self-manage by downloading a native binary to match the
-  # packageManager field, which fails on NixOS. Disable that behavior so it
-  # uses the nix-patched pnpm binary directly. Also disable corepack shims in
-  # case corepack is what's intercepting and triggering the download.
+  # pnpm v12 reads `packageManager` and downloads a managed native binary when
+  # the nix pnpm version doesn't match — that binary is unpatched ELF and fails
+  # on NixOS. Remove the field so nix pnpm runs directly without self-managing.
   - name: Configure pnpm
-    command: corepack disable || true && echo 'manage-package-manager-versions=false' >> ~/.npmrc
+    command: node -e "const fs=require('fs'),p=JSON.parse(fs.readFileSync('package.json'));delete p.packageManager;fs.writeFileSync('package.json',JSON.stringify(p,null,'\t')+'\n')"
 
   - name: Install dependencies
     command: pnpm install --frozen-lockfile
