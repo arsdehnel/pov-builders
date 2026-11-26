@@ -8,7 +8,7 @@ dependencies:
   nixpkgs:
     - coreutils
     - gnused
-    - nodejs_26
+    - nodejs_24
     - pnpm
 
 steps:
