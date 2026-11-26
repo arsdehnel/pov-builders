@@ -17,7 +17,7 @@ steps:
     command: npm install --no-package-lock --legacy-peer-deps
 
   - name: Lint
-    command: npm run types:check && npm run biome:check && npm run knip:check
+    command: npm run types:check && biome check && npm run knip:check
 
   - name: Build
     command: ESBUILD_BINARY_PATH=$(which esbuild) npm run build
