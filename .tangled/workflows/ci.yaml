@@ -7,11 +7,14 @@ image: almalinux10
 steps:
   - name: Install Node.js
     command: |
-      # Download and install Homebrew
-      curl -o- https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
+      # Download and install nvm:
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash
+
+      # in lieu of restarting the shell
+      \. "$HOME/.nvm/nvm.sh"
 
       # Download and install Node.js:
-      brew install node@26
+      nvm install 26
 
       # Verify the Node.js version:
       node -v # Should print "v26.13.1".
