@@ -11,20 +11,13 @@ dependencies:
 steps:
   # pnpm v12 reads `packageManager` and downloads a managed native binary when
   # the nix pnpm version doesn't match — that binary is unpatched ELF and fails
-  # on NixOS. Two-part fix:
-  # 1. Strip `packageManager` from package.json so nix pnpm runs for the top-level
-  #    install without trying to self-manage to a specific version.
-  # 2. Disable manage-package-manager-versions globally so pnpm also won't
-  #    self-manage when preparing git-hosted deps (e.g. rwsdk-atp has its own
-  #    `packageManager` field — pnpm spawns a child `pnpm install` inside it
-  #    which would otherwise download another unpatched native binary).
+  # on NixOS. Remove the field so nix pnpm runs directly without self-managing.
   # Also strip the versioned allowBuilds key for rwsdk-atp — older pnpm versions
   # can't parse git+url#commit as a version specifier in allowBuilds keys; the
   # unversioned entry (rwsdk-atp: true) covers it across all pnpm versions.
   - name: Configure pnpm
     command: |
       node -e "const fs=require('fs'),p=JSON.parse(fs.readFileSync('package.json'));delete p.packageManager;fs.writeFileSync('package.json',JSON.stringify(p,null,'\t')+'\n')"
-      pnpm config set manage-package-manager-versions false --global
       sed -i '/rwsdk-atp@git+/d' pnpm-workspace.yaml
 
   - name: Install dependencies
