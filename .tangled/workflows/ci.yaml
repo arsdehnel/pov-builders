@@ -2,23 +2,21 @@ when:
   - event: ["push", "pull_request", "manual"]
 
 engine: microvm
-image: nixos
-
-dependencies:
-  - nodejs_26
-  - pnpm
+image: almalinux10
 
 steps:
-  # pnpm v12 reads `packageManager` and downloads a managed native binary when
-  # the nix pnpm version doesn't match — that binary is unpatched ELF and fails
-  # on NixOS. Remove the field so nix pnpm runs directly without self-managing.
-  # Also strip the versioned allowBuilds key for rwsdk-atp — older pnpm versions
-  # can't parse git+url#commit as a version specifier in allowBuilds keys; the
-  # unversioned entry (rwsdk-atp: true) covers it across all pnpm versions.
-  - name: Configure pnpm
+  - name: Install Node.js
     command: |
-      node -e "const fs=require('fs'),p=JSON.parse(fs.readFileSync('package.json'));delete p.packageManager;fs.writeFileSync('package.json',JSON.stringify(p,null,'\t')+'\n')"
-      sed -i '/rwsdk-atp@git+/d' pnpm-workspace.yaml
+      curl -fsSL https://raw.githubusercontent.com/mklement0/n-install/stable/bin/n-install | bash -s 26
+
+      # Node.js already installs during n-install, but you can also install it manually:
+      #   n install 26
+
+      # Verify the Node.js version:
+      node -v # Should print "v26.13.1".
+
+      # Verify npm version:
+      npm -v # Should print "11.20.0".
 
   - name: Install dependencies
     command: pnpm install --frozen-lockfile
