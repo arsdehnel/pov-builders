@@ -6,16 +6,21 @@ image: nixos
 
 dependencies:
   - nodejs_26
+  - pnpm
 
 steps:
-  - name: Install pnpm
-    command: npm config set allow-scripts.pnpm true && npm install --prefix /workspace/.pnpm pnpm@12.7.0
+  # pnpm v12 tries to self-manage by downloading a native binary to match the
+  # packageManager field, which fails on NixOS. Disable that behavior so it
+  # uses the nix-patched pnpm binary directly. Also disable corepack shims in
+  # case corepack is what's intercepting and triggering the download.
+  - name: Configure pnpm
+    command: corepack disable || true && echo 'manage-package-manager-versions=false' >> ~/.npmrc
 
   - name: Install dependencies
-    command: PATH="/workspace/.pnpm/node_modules/.bin:$PATH" pnpm install --frozen-lockfile
+    command: pnpm install --frozen-lockfile
 
   - name: Lint
-    command: PATH="/workspace/.pnpm/node_modules/.bin:$PATH" pnpm ci:lint
+    command: pnpm ci:lint
 
   - name: Tests
-    command: PATH="/workspace/.pnpm/node_modules/.bin:$PATH" pnpm ci:tests
+    command: pnpm ci:tests
