@@ -10,6 +10,8 @@ dependencies:
 steps:
   - name: Install pnpm
     command: npm install -g pnpm@12.7.0
+    environment:
+      NPM_CONFIG_PREFIX: /usr/local
 
   - name: Install dependencies
     command: pnpm install --frozen-lockfile
