@@ -1,3 +1,27 @@
+## [1.3.1](https://github.com/arsdehnel/pov-builders/compare/v1.3.0...v1.3.1) (2026-11-27)
+
+### Bug Fixes
+
+* better routing for oauth endpoints ([4ee4a31](https://github.com/arsdehnel/pov-builders/commit/4ee4a31efa3a5450765d2397f0d0ee4fbe9a4f6f))
+* upgrade rwsdk-atp ([9ca7b0f](https://github.com/arsdehnel/pov-builders/commit/9ca7b0fd8e6ea92820a1af6837bdafff3a94ca8c))
+
+## [1.3.0](https://github.com/arsdehnel/pov-builders/compare/v1.2.0...v1.3.0) (2026-11-27)
+
+### Features
+
+* add app url for making oauth work ([da27bef](https://github.com/arsdehnel/pov-builders/commit/da27bef71a1de11c350a39b8ce55d347954be6b1))
+
+## [1.2.0](https://github.com/arsdehnel/pov-builders/compare/v1.1.0...v1.2.0) (2026-11-27)
+
+### Features
+
+* add the custom domain route ([1ac2755](https://github.com/arsdehnel/pov-builders/commit/1ac2755c6e10a56e3d311d0a71d31de33346016b))
+* provision and secure gh environments ([59a67e4](https://github.com/arsdehnel/pov-builders/commit/59a67e4fb958176d97cc1e1d9a9b126e46d936f9))
+
+### Bug Fixes
+
+* oops use the right tf module for envs ([1e330b3](https://github.com/arsdehnel/pov-builders/commit/1e330b38f3d391b8b81d4464751c6f3556df0c01))
+
 ## [1.1.0](https://github.com/arsdehnel/pov-builders/compare/v1.0.2...v1.1.0) (2026-11-27)
 
 ### Features
