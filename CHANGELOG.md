@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/arsdehnel/pov-builders/compare/v1.0.0...v1.0.1) (2026-11-27)
+
+### Bug Fixes
+
+* create env definition for integration ([eb1508e](https://github.com/arsdehnel/pov-builders/commit/eb1508e45e53efcbf888a61268204fb6c31f00a4))
+
 ## 1.0.0 (2026-11-27)
 
 ### Features
