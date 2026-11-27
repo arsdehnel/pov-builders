@@ -1,3 +1,21 @@
+## [1.1.0](https://github.com/arsdehnel/pov-builders/compare/v1.0.2...v1.1.0) (2026-11-27)
+
+### Features
+
+* add atproto did well-known to claim handles ([4eceb16](https://github.com/arsdehnel/pov-builders/commit/4eceb1664f62a5ca48e1f51807d3b855245ea76f))
+
+## [1.0.2](https://github.com/arsdehnel/pov-builders/compare/v1.0.1...v1.0.2) (2026-11-27)
+
+### Bug Fixes
+
+* noop for new workflows ([57e3421](https://github.com/arsdehnel/pov-builders/commit/57e3421303bfe667d13e0051d394405058c2c0ca))
+
+## [1.0.1](https://github.com/arsdehnel/pov-builders/compare/v1.0.0...v1.0.1) (2026-11-27)
+
+### Bug Fixes
+
+* create env definition for integration ([eb1508e](https://github.com/arsdehnel/pov-builders/commit/eb1508e45e53efcbf888a61268204fb6c31f00a4))
+
 ## 1.0.0 (2026-11-27)
 
 ### Features
