@@ -108,6 +108,12 @@
 			}
 		},
 		"integration": {
+			"routes": [
+				{
+					"pattern": "int.pov.builders",
+					"custom_domain": true
+				}
+			],
 			"durable_objects": {
 				"bindings": [
 					{
