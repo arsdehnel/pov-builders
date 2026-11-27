@@ -21,6 +21,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 		const data = await d1.getValuesByTopicId(topicId, ctx.logger);
 		return apiSuccessResponse(data);
 	} catch (err) {
+		ctx.logger.error('Error fetching values', { error: err });
 		return apiErrorResponse(err, 'Error fetching values', import.meta.env.DEV);
 	}
 }
@@ -42,6 +43,7 @@ export async function _postHandler({ request, ctx, params }: RequestInfo): Promi
 		await d1.setValueAtpRecord(value.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(value, 201);
 	} catch (err) {
+		ctx.logger.error('Error creating value', { error: err });
 		return apiErrorResponse(err, 'Error creating value', import.meta.env.DEV);
 	}
 }

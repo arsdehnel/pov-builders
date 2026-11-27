@@ -17,6 +17,7 @@ export async function _getHandler({ ctx }: RequestInfo): Promise<Response> {
 		const data = await d1.getTopics(ctx.logger);
 		return apiSuccessResponse(data);
 	} catch (err) {
+		ctx.logger.error('Error fetching topics', { error: err });
 		return apiErrorResponse(err, 'Error fetching topics', import.meta.env.DEV);
 	}
 }
@@ -36,6 +37,7 @@ export async function _postHandler({ request, ctx }: RequestInfo): Promise<Respo
 		await d1.setTopicAtpRecord(topic.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(topic, 201);
 	} catch (err) {
+		ctx.logger.error('Error creating topic', { error: err });
 		return apiErrorResponse(err, 'Error creating topic', import.meta.env.DEV);
 	}
 }

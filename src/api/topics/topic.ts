@@ -26,6 +26,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 		const topic = await d1.getTopicById(id, ctx.logger);
 		return apiSuccessResponse(topic);
 	} catch (err) {
+		ctx.logger.error('Error fetching topic', { error: err });
 		return apiErrorResponse(err, 'Error fetching topic', import.meta.env.DEV);
 	}
 }
@@ -76,6 +77,7 @@ export async function _deleteHandler({ ctx, params }: RequestInfo): Promise<Resp
 		const topic = await d1.deleteTopic(id, userId, ctx.logger);
 		return apiSuccessResponse(topic);
 	} catch (err) {
+		ctx.logger.error('Error deleting topic', { error: err });
 		return apiErrorResponse(err, 'Error deleting topic', import.meta.env.DEV);
 	}
 }

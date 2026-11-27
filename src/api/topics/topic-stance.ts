@@ -22,6 +22,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 		const stance = await d1.getStanceById(id, ctx.logger);
 		return apiSuccessResponse(stance);
 	} catch (err) {
+		ctx.logger.error('Error fetching stance', { error: err });
 		return apiErrorResponse(err, 'Error fetching stance', import.meta.env.DEV);
 	}
 }
@@ -43,6 +44,7 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 		await d1.setStanceAtpRecord(stance.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(stance);
 	} catch (err) {
+		ctx.logger.error('Error updating stance', { error: err });
 		return apiErrorResponse(err, 'Error updating stance', import.meta.env.DEV);
 	}
 }
@@ -60,6 +62,7 @@ export async function _deleteHandler({ ctx, params }: RequestInfo): Promise<Resp
 		const stance = await d1.deleteStance(id, userId, ctx.logger);
 		return apiSuccessResponse(stance);
 	} catch (err) {
+		ctx.logger.error('Error deleting stance', { error: err });
 		return apiErrorResponse(err, 'Error deleting stance', import.meta.env.DEV);
 	}
 }
