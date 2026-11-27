@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/arsdehnel/pov-builders/compare/v1.0.1...v1.0.2) (2026-11-27)
+
+### Bug Fixes
+
+* noop for new workflows ([57e3421](https://github.com/arsdehnel/pov-builders/commit/57e3421303bfe667d13e0051d394405058c2c0ca))
+
 ## [1.0.1](https://github.com/arsdehnel/pov-builders/compare/v1.0.0...v1.0.1) (2026-11-27)
 
 ### Bug Fixes
