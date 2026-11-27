@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/arsdehnel/pov-builders/compare/v1.0.2...v1.1.0) (2026-11-27)
+
+### Features
+
+* add atproto did well-known to claim handles ([4eceb16](https://github.com/arsdehnel/pov-builders/commit/4eceb1664f62a5ca48e1f51807d3b855245ea76f))
+
 ## [1.0.2](https://github.com/arsdehnel/pov-builders/compare/v1.0.1...v1.0.2) (2026-11-27)
 
 ### Bug Fixes
