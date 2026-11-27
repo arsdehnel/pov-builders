@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/arsdehnel/pov-builders/compare/v1.3.1...v1.3.2) (2026-11-27)
+
+### Bug Fixes
+
+* add more logging on API errors ([5f9867e](https://github.com/arsdehnel/pov-builders/commit/5f9867e5ac0bab291b5ba79e0c70d934fac67234))
+
 ## [1.3.1](https://github.com/arsdehnel/pov-builders/compare/v1.3.0...v1.3.1) (2026-11-27)
 
 ### Bug Fixes
