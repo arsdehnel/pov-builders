@@ -106,6 +106,48 @@
 				"ATPROTO_PDS_URL": "http://localhost:3000",
 				"ATPROTO_PLC_URL": "http://localhost:2582"
 			}
+		},
+		"integration": {
+			"durable_objects": {
+				"bindings": [
+					{
+						"name": "DO_BROWSER_SESSION",
+						"class_name": "BrowserSessionDurableObject"
+					},
+					{
+						"name": "DO_ATP_AUTH",
+						"class_name": "AtpOAuthDurableObject"
+					}
+				]
+			},
+			// pnpm exec wrangler d1 create pov-builders-integration
+			"d1_databases": [
+				{
+					"binding": "D1_POV_BUILDERS",
+					"database_name": "pov-builders-integration",
+					"database_id": "a8f7707d-c060-4a26-b64a-a4ef45d29fc3",
+					"migrations_dir": "drizzle",
+					"migrations_pattern": "drizzle/*/migration.sql"
+				}
+			],
+			// pnpm exec wrangler kv namespace create pov-builders-oauth-state-integration
+			"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "0875d02368e745c6869dbcde47a90b4a" }],
+			"secrets": {
+				"required": [
+					"BROWSER_SESSION_SIGNING_KEY",
+					"OAUTH_STATE_KV_ENCRYPTION_KEYS",
+					"OAUTH_TOKEN_KV_ENCRYPTION_KEYS",
+					"ATP_SERVICE_DID",
+					"ATP_SERVICE_APP_PASSWORD",
+					// pnpm wrangler secret put ALLOWED_DIDS --env integration
+					"ALLOWED_DIDS"
+				]
+			},
+			"vars": {
+				"ATPROTO_OAUTH_SCOPE": "atproto",
+				"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
+				"SESSION_TIMEOUT_SECONDS": 1209600
+			}
 		}
 	}
 }
