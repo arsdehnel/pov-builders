@@ -21,6 +21,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 		const data = await d1.getStancesByTopicId(topicId, ctx.logger);
 		return apiSuccessResponse(data);
 	} catch (err) {
+		ctx.logger.error('Error fetching stances', { error: err });
 		return apiErrorResponse(err, 'Error fetching stances', import.meta.env.DEV);
 	}
 }
@@ -42,6 +43,7 @@ export async function _postHandler({ request, ctx, params }: RequestInfo): Promi
 		await d1.setStanceAtpRecord(stance.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(stance, 201);
 	} catch (err) {
+		ctx.logger.error('Error creating stance', { error: err });
 		return apiErrorResponse(err, 'Error creating stance', import.meta.env.DEV);
 	}
 }

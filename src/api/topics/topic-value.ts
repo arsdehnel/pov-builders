@@ -22,6 +22,7 @@ export async function _getHandler({ ctx, params }: RequestInfo): Promise<Respons
 		const value = await d1.getValueById(id, ctx.logger);
 		return apiSuccessResponse(value);
 	} catch (err) {
+		ctx.logger.error('Error fetching value', { error: err });
 		return apiErrorResponse(err, 'Error fetching value', import.meta.env.DEV);
 	}
 }
@@ -43,6 +44,7 @@ export async function _putHandler({ request, ctx, params }: RequestInfo): Promis
 		await d1.setValueAtpRecord(value.id, uri, cid, ctx.logger);
 		return apiSuccessResponse(value);
 	} catch (err) {
+		ctx.logger.error('Error updating value', { error: err });
 		return apiErrorResponse(err, 'Error updating value', import.meta.env.DEV);
 	}
 }
@@ -60,6 +62,7 @@ export async function _deleteHandler({ ctx, params }: RequestInfo): Promise<Resp
 		const value = await d1.deleteValue(id, userId, ctx.logger);
 		return apiSuccessResponse(value);
 	} catch (err) {
+		ctx.logger.error('Error deleting value', { error: err });
 		return apiErrorResponse(err, 'Error deleting value', import.meta.env.DEV);
 	}
 }
