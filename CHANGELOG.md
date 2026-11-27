@@ -1,3 +1,14 @@
+## [1.2.0](https://github.com/arsdehnel/pov-builders/compare/v1.1.0...v1.2.0) (2026-11-27)
+
+### Features
+
+* add the custom domain route ([1ac2755](https://github.com/arsdehnel/pov-builders/commit/1ac2755c6e10a56e3d311d0a71d31de33346016b))
+* provision and secure gh environments ([59a67e4](https://github.com/arsdehnel/pov-builders/commit/59a67e4fb958176d97cc1e1d9a9b126e46d936f9))
+
+### Bug Fixes
+
+* oops use the right tf module for envs ([1e330b3](https://github.com/arsdehnel/pov-builders/commit/1e330b38f3d391b8b81d4464751c6f3556df0c01))
+
 ## [1.1.0](https://github.com/arsdehnel/pov-builders/compare/v1.0.2...v1.1.0) (2026-11-27)
 
 ### Features
