@@ -9,5 +9,6 @@ jobs:
     uses: arsdehnel/automation/.github/workflows/create-release-dry-run.yaml@main
     permissions:
       contents: read
+      packages: read
       pull-requests: write
     secrets: inherit
