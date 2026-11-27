@@ -132,6 +132,7 @@
 			],
 			// pnpm exec wrangler kv namespace create pov-builders-oauth-state-integration
 			"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "0875d02368e745c6869dbcde47a90b4a" }],
+			// pnpm wrangler secret put <secret binding> --env integration
 			"secrets": {
 				"required": [
 					"BROWSER_SESSION_SIGNING_KEY",
@@ -139,7 +140,6 @@
 					"OAUTH_TOKEN_KV_ENCRYPTION_KEYS",
 					"ATP_SERVICE_DID",
 					"ATP_SERVICE_APP_PASSWORD",
-					// pnpm wrangler secret put ALLOWED_DIDS --env integration
 					"ALLOWED_DIDS"
 				]
 			},

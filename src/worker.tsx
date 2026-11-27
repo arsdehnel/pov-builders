@@ -3,6 +3,7 @@ import { type DefaultAppContext, defineApp, type RequestInfo } from 'rwsdk/worke
 import { botMiddleware } from 'rwsdk-atp/middleware';
 import { handlePageError } from 'rwsdk-atp/worker-error';
 import apiRoutes from '@/api/_routes';
+import wellKnownRoutes from '@/api/well-known/_routes';
 import DefaultDocument from '@/documents/default';
 import apiKeyMiddleware from '@/middleware/api-key';
 import headersMiddleware from '@/middleware/headers';
@@ -31,6 +32,8 @@ const app = defineApp([
 	apiKeyMiddleware,
 	userMiddleware,
 	permissionsMiddleware,
+	// did verification
+	prefix('/.well-known', wellKnownRoutes),
 	prefix('/api', apiRoutes),
 	...(import.meta.env.DEV ? [prefix('/dev', devRoutes.default)] : []),
 	render(DefaultDocument, [
