@@ -50,12 +50,12 @@
 	"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "KV_OAUTH_STATE_LOCAL" }],
 	"secrets": {
 		"required": [
+			"ALLOWED_DIDS",
+			"ATP_SERVICE_APP_PASSWORD",
+			"ATP_SERVICE_DID",
 			"BROWSER_SESSION_SIGNING_KEY",
 			"OAUTH_STATE_KV_ENCRYPTION_KEYS",
-			"OAUTH_TOKEN_KV_ENCRYPTION_KEYS",
-			"ATP_SERVICE_DID",
-			"ATP_SERVICE_APP_PASSWORD",
-			"ALLOWED_DIDS"
+			"OAUTH_TOKEN_KV_ENCRYPTION_KEYS"
 		]
 	},
 
@@ -92,19 +92,19 @@
 			"kv_namespaces": [{ "binding": "KV_OAUTH_STATE", "id": "KV_OAUTH_STATE_DOCKER" }],
 			"secrets": {
 				"required": [
+					"ATP_SERVICE_APP_PASSWORD",
+					"ATP_SERVICE_DID",
 					"BROWSER_SESSION_SIGNING_KEY",
 					"OAUTH_STATE_KV_ENCRYPTION_KEYS",
-					"OAUTH_TOKEN_KV_ENCRYPTION_KEYS",
-					"ATP_SERVICE_DID",
-					"ATP_SERVICE_APP_PASSWORD"
+					"OAUTH_TOKEN_KV_ENCRYPTION_KEYS"
 				]
 			},
 			"vars": {
 				"ATPROTO_OAUTH_SCOPE": "atproto",
-				"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
-				"SESSION_TIMEOUT_SECONDS": 1209600,
 				"ATPROTO_PDS_URL": "http://localhost:3000",
-				"ATPROTO_PLC_URL": "http://localhost:2582"
+				"ATPROTO_PLC_URL": "http://localhost:2582",
+				"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
+				"SESSION_TIMEOUT_SECONDS": 1209600
 			}
 		},
 		"integration": {
@@ -141,15 +141,16 @@
 			// pnpm wrangler secret put <secret binding> --env integration
 			"secrets": {
 				"required": [
+					"ALLOWED_DIDS",
+					"ATP_SERVICE_APP_PASSWORD",
+					"ATP_SERVICE_DID",
 					"BROWSER_SESSION_SIGNING_KEY",
 					"OAUTH_STATE_KV_ENCRYPTION_KEYS",
-					"OAUTH_TOKEN_KV_ENCRYPTION_KEYS",
-					"ATP_SERVICE_DID",
-					"ATP_SERVICE_APP_PASSWORD",
-					"ALLOWED_DIDS"
+					"OAUTH_TOKEN_KV_ENCRYPTION_KEYS"
 				]
 			},
 			"vars": {
+				"APP_URL": "https://int.pov.builders",
 				"ATPROTO_OAUTH_SCOPE": "atproto",
 				"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
 				"SESSION_TIMEOUT_SECONDS": 1209600
