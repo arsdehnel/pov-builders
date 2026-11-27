@@ -1,0 +1,36 @@
+name: Verify Changes
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-code:
+    uses: arsdehnel/automation/.github/workflows/lint-code.yaml@main
+    permissions:
+      contents: read
+      packages: read
+
+  lint-commits:
+    uses: arsdehnel/automation/.github/workflows/lint-commits.yaml@main
+    permissions:
+      contents: read
+      packages: read
+
+  run-tests:
+    uses: arsdehnel/automation/.github/workflows/run-tests.yaml@main
+    permissions:
+      contents: read
+      packages: read
+
+  plan-github-setup:
+    uses: arsdehnel/automation/.github/workflows/plan-open-tofu.yaml@main
+    with:
+      app-name: ${{ github.event.repository.name }}
+      state-type: github
+      state-name: setup
+      working-directory: infra/github
+    permissions:
+      contents: read
+      pull-requests: write
+    secrets: inherit
