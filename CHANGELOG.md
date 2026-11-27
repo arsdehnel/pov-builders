@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/arsdehnel/pov-builders/compare/v1.3.0...v1.3.1) (2026-11-27)
+
+### Bug Fixes
+
+* better routing for oauth endpoints ([4ee4a31](https://github.com/arsdehnel/pov-builders/commit/4ee4a31efa3a5450765d2397f0d0ee4fbe9a4f6f))
+* upgrade rwsdk-atp ([9ca7b0f](https://github.com/arsdehnel/pov-builders/commit/9ca7b0fd8e6ea92820a1af6837bdafff3a94ca8c))
+
 ## [1.3.0](https://github.com/arsdehnel/pov-builders/compare/v1.2.0...v1.3.0) (2026-11-27)
 
 ### Features
