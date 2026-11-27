@@ -44,7 +44,8 @@
 			"!**/.pnpm-store",
 			"!**/lexicons/*",
 			"lexicons/builders/**",
-			"!src/lexicons"
+			"!src/lexicons",
+			"!CHANGELOG.md"
 		]
 	},
 	"overrides": [
