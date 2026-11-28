@@ -1,5 +1,5 @@
+import { AccessError } from '@arsdehnel/rwsdk-atp/errors';
 import { getRequestInfo } from 'rwsdk/worker';
-import { AccessError } from 'rwsdk-atp/errors';
 import type { Permission } from '@/types';
 
 export const requirePermissions = (...required: Permission[]): (() => Promise<void>) => {

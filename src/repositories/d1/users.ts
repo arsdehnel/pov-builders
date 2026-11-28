@@ -1,10 +1,11 @@
+import { InvalidDIDError, InvalidUUIDError, NoRecordFoundError, RepositoryError } from '@arsdehnel/rwsdk-atp/errors';
+import type { Logger } from '@arsdehnel/rwsdk-atp/logger';
+import { validateUuid } from '@arsdehnel/rwsdk-atp/utils';
 import { isValidDid } from '@atproto/syntax';
 import { and, eq, isNull, sql } from 'drizzle-orm';
-import { InvalidDIDError, InvalidUUIDError, NoRecordFoundError } from 'rwsdk-atp/errors';
-import type { Logger } from 'rwsdk-atp/logger';
-import { flattenError, validateUuid } from 'rwsdk-atp/utils';
 import db from '@/db';
 import { users } from '@/models';
+import { DatabaseOperationError } from '@/repositories/errors';
 import type { UserDBRead } from '@/types';
 
 export async function getUserById(userId: string, logger: Logger): Promise<UserDBRead> {
@@ -21,12 +22,13 @@ export async function getUserById(userId: string, logger: Logger): Promise<UserD
 			.where(and(eq(users.id, userId), isNull(users.deletedAt)));
 		user = matchedUsers[0];
 	} catch (err) {
-		const { message, error } = flattenError(err);
-		logger.error(`Error fetching user ${userId}${message}`, { err: error });
-		throw error;
+		if (err instanceof RepositoryError) throw err;
+		logger.error(`Error fetching user ${userId}`, { error: err });
+		throw new DatabaseOperationError(`fetching user ${userId}`, err);
 	}
 
 	if (!user) {
+		logger.warn(`User ${userId} not found`);
 		throw new NoRecordFoundError('User');
 	}
 
@@ -63,14 +65,16 @@ export async function upsertUser(
 			.returning();
 		user = upsertedUsers[0];
 	} catch (err) {
-		const { message, error } = flattenError(err);
-		logger.error(`Error upserting user ${did}${message}`, { err: error });
-		throw error;
+		if (err instanceof RepositoryError) throw err;
+		logger.error(`Error upserting user ${did}`, { error: err });
+		throw new DatabaseOperationError(`upserting user ${did}`, err);
 	}
 
 	if (!user) {
+		logger.warn(`Upsert for user ${did} returned no rows`);
 		throw new NoRecordFoundError('User', 500);
 	}
 
+	logger.info(`Upserted user ${user.id}`);
 	return user;
 }

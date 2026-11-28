@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
+import { getOAuthClient, getPasswordClient } from '@arsdehnel/rwsdk-atp/auth';
 import { Client } from '@atproto/lex';
-import { getOAuthClient, getPasswordClient } from 'rwsdk-atp/auth';
 
 export async function getServicePdsClient(): Promise<Client> {
 	const session = await getPasswordClient(env);

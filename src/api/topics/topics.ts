@@ -1,5 +1,5 @@
+import { apiErrorResponse, apiSuccessResponse } from '@arsdehnel/rwsdk-atp/response';
 import type { RequestInfo } from 'rwsdk/worker';
-import { apiErrorResponse, apiSuccessResponse } from 'rwsdk-atp/response';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
 import { d1, pds } from '@/repositories';
 import { topicsSchemas } from '@/schemas';

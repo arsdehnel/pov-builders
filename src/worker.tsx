@@ -1,7 +1,7 @@
+import { botMiddleware } from '@arsdehnel/rwsdk-atp/middleware';
+import { handlePageError } from '@arsdehnel/rwsdk-atp/worker-error';
 import { except, prefix, render, route } from 'rwsdk/router';
 import { type DefaultAppContext, defineApp, type RequestInfo } from 'rwsdk/worker';
-import { botMiddleware } from 'rwsdk-atp/middleware';
-import { handlePageError } from 'rwsdk-atp/worker-error';
 import apiRoutes from '@/api/_routes';
 import wellKnownRoutes from '@/api/well-known/_routes';
 import DefaultDocument from '@/documents/default';
@@ -20,8 +20,8 @@ import Pages__root from '@/pages/home';
 import NotFound from '@/pages/not-found';
 import profileRoutes from '@/pages/profile/_routes';
 
-export { BrowserSessionDurableObject } from 'rwsdk-atp/browser-sessions';
-export { AtpOAuthDurableObject } from 'rwsdk-atp/oauth';
+export { BrowserSessionDurableObject } from '@arsdehnel/rwsdk-atp/browser-sessions';
+export { AtpOAuthDurableObject } from '@arsdehnel/rwsdk-atp/oauth';
 
 const app = defineApp([
 	botMiddleware,

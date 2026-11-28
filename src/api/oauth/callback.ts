@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
+import { getOAuthClient, type OAuthSession } from '@arsdehnel/rwsdk-atp/auth';
+import { saveSession } from '@arsdehnel/rwsdk-atp/browser-sessions';
 import type { RequestInfo } from 'rwsdk/worker';
-import { getOAuthClient, type OAuthSession } from 'rwsdk-atp/auth';
-import { saveSession } from 'rwsdk-atp/browser-sessions';
 import { d1 } from '@/repositories';
 
 async function get({ ctx, request, response }: RequestInfo): Promise<Response> {

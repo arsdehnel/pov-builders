@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
+import { loadSessionFromRequest } from '@arsdehnel/rwsdk-atp/browser-sessions';
 import type { DefaultAppContext, RequestInfo } from 'rwsdk/worker';
-import { loadSessionFromRequest } from 'rwsdk-atp/browser-sessions';
 
 export default async function sessionMiddleware({ ctx, request, response }: RequestInfo<DefaultAppContext>): Promise<void> {
 	try {

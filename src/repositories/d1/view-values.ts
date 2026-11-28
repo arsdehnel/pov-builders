@@ -1,5 +1,5 @@
+import type { Logger } from '@arsdehnel/rwsdk-atp/logger';
 import { and, eq, isNull, sql } from 'drizzle-orm';
-import type { Logger } from 'rwsdk-atp/logger';
 import db from '@/db';
 import { viewValues } from '@/models';
 import type { ViewValueDBRead } from '@/types';

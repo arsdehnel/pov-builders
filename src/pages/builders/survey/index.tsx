@@ -1,5 +1,5 @@
+import { NoRecordFoundError } from '@arsdehnel/rwsdk-atp/errors';
 import type { RequestInfo } from 'rwsdk/worker';
-import { NoRecordFoundError } from 'rwsdk-atp/errors';
 import StanceRadioCards from '@/components/survey/stance-radio-cards';
 import StandardLayout from '@/layouts/standard';
 import { d1 } from '@/repositories';
