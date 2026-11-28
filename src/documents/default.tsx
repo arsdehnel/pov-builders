@@ -7,7 +7,7 @@ const DefaultDocument: React.FC<DocumentProps<RequestInfo>> = ({ children }: Doc
 		<head>
 			<meta charSet="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
-			<title>Stance Build</title>
+			<title>POV Builders</title>
 			<link rel="preconnect" href="https://fonts.googleapis.com" />
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 			<link
