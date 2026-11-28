@@ -1,3 +1,11 @@
+## [1.3.3](https://github.com/arsdehnel/pov-builders/compare/v1.3.2...v1.3.3) (2026-11-28)
+
+### Bug Fixes
+
+* add tests to repos and upgrade to scoped rwsdk-atp package ([1b9b7b8](https://github.com/arsdehnel/pov-builders/commit/1b9b7b8b313e6558891d9719f1d64c81ce672125))
+* noop for new workflows ([2045305](https://github.com/arsdehnel/pov-builders/commit/20453055155cf5fd449de570778ea08558a6ef63))
+* title tag to pov builders ([e036737](https://github.com/arsdehnel/pov-builders/commit/e03673752b121267117be612be2f4e12ffc0d952))
+
 ## [1.3.2](https://github.com/arsdehnel/pov-builders/compare/v1.3.1...v1.3.2) (2026-11-27)
 
 ### Bug Fixes
