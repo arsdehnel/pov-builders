@@ -1,7 +1,7 @@
 import { env } from 'cloudflare:workers';
+import { getOAuthClient } from '@arsdehnel/rwsdk-atp/auth';
+import { clearSession, loadSessionFromRequest } from '@arsdehnel/rwsdk-atp/browser-sessions';
 import type { RequestInfo } from 'rwsdk/worker';
-import { getOAuthClient } from 'rwsdk-atp/auth';
-import { clearSession, loadSessionFromRequest } from 'rwsdk-atp/browser-sessions';
 import { requireAuthentication, requirePermissions } from '@/interrupters';
 
 async function _postHandler({ request, response }: RequestInfo): Promise<Response> {

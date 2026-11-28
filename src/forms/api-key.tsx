@@ -1,7 +1,7 @@
 'use client';
+import { toFormErrors } from '@arsdehnel/rwsdk-atp/response';
 import { Form } from 'radix-ui';
 import { useState } from 'react';
-import { toFormErrors } from 'rwsdk-atp/response';
 import { saveApiKey } from '@/actions/api-keys';
 import permissions from '@/data/permissions';
 import { apiKeysSchemas } from '@/schemas';

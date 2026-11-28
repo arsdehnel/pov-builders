@@ -1,5 +1,5 @@
+import { apiErrorResponse } from '@arsdehnel/rwsdk-atp/response';
 import { except, route } from 'rwsdk/router';
-import { apiErrorResponse } from 'rwsdk-atp/response';
 
 import atProtoDid from './atproto-did';
 

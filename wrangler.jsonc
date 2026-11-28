@@ -61,6 +61,8 @@
 
 	// Environment variables
 	"vars": {
+		"APP_BASE_URL": "http://127.0.0.1:5173",
+		"ATPROTO_OAUTH_USE_LOOPBACK_OVERRIDE": "true",
 		"ATPROTO_OAUTH_SCOPE": "atproto",
 		"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
 		"SESSION_TIMEOUT_SECONDS": 1209600
@@ -100,9 +102,11 @@
 				]
 			},
 			"vars": {
+				"APP_BASE_URL": "http://127.0.0.1:5173",
+				"ATPROTO_OAUTH_USE_LOOPBACK_OVERRIDE": "true",
 				"ATPROTO_OAUTH_SCOPE": "atproto",
-				"ATPROTO_PDS_URL": "http://localhost:3000",
-				"ATPROTO_PLC_URL": "http://localhost:2582",
+				"ATPROTO_HANDLE_RESOLVE_URL_OVERRIDE": "http://localhost:3000",
+				"ATPROTO_PLC_URL_OVERRIDE": "http://localhost:2582",
 				"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
 				"SESSION_TIMEOUT_SECONDS": 1209600
 			}
@@ -150,7 +154,7 @@
 				]
 			},
 			"vars": {
-				"APP_URL": "https://int.pov.builders",
+				"APP_BASE_URL": "https://int.pov.builders",
 				"ATPROTO_OAUTH_SCOPE": "atproto",
 				"SESSION_ID_COOKIE_KEY": "pov-builders-session-id",
 				"SESSION_TIMEOUT_SECONDS": 1209600

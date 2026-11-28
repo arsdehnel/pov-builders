@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
+import { clearSession } from '@arsdehnel/rwsdk-atp/browser-sessions';
 import type { DefaultAppContext, RequestInfo } from 'rwsdk/worker';
-import { clearSession } from 'rwsdk-atp/browser-sessions';
 import { d1 } from '@/repositories';
 
 export default async function userMiddleware({

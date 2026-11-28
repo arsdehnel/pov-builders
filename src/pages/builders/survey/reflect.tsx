@@ -1,5 +1,5 @@
+import { NoRecordFoundError } from '@arsdehnel/rwsdk-atp/errors';
 import type { RequestInfo } from 'rwsdk/worker';
-import { NoRecordFoundError } from 'rwsdk-atp/errors';
 import { DSCard } from '@/components/design-system';
 import { STANCE_ICONS } from '@/content/icons-map';
 import StandardLayout from '@/layouts/standard';

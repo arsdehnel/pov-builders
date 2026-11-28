@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
+import { getOAuthClient, type NodeOAuthClient } from '@arsdehnel/rwsdk-atp/auth';
 import type { RequestInfo } from 'rwsdk/worker';
-import { getOAuthClient, type NodeOAuthClient } from 'rwsdk-atp/auth';
 import { DSAlert } from '@/components/design-system';
 import { LoginForm } from '@/components/login-form';
 import StandardLayout from '@/layouts/standard';

@@ -1,6 +1,6 @@
 import { env } from 'cloudflare:workers';
+import { getOAuthClient } from '@arsdehnel/rwsdk-atp/auth';
 import type { RequestInfo } from 'rwsdk/worker';
-import { getOAuthClient } from 'rwsdk-atp/auth';
 
 async function post({ ctx, request }: RequestInfo): Promise<Response> {
 	const { handle } = (await request.json()) as { handle?: string };

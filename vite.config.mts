@@ -1,10 +1,10 @@
+import { rwsdkAtp } from '@arsdehnel/rwsdk-atp/vite';
 import { cloudflare } from '@cloudflare/vite-plugin';
 import mdx from '@mdx-js/rollup';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkGfm from 'remark-gfm';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { redwood } from 'rwsdk/vite';
-import { rwsdkAtp } from 'rwsdk-atp/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
